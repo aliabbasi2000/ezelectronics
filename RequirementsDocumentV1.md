@@ -6,7 +6,7 @@ Version: V1 - description of EZElectronics in CURRENT form (as received by teach
 
 | Version number | Change |
 | :------------: | :----: |
-|       V1.0.0         |    Initial Change    |
+|       V1.0.0         |    Initial Change1    |
 
 # Contents
 
