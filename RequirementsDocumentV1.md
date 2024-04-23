@@ -6,7 +6,7 @@ Version: V1 - description of EZElectronics in CURRENT form (as received by teach
 
 | Version number | Change |
 | :------------: | :----: |
-|       V1.0.0         |    Initial Change1    |
+|       V1.0.1         |     Add stakeholders    |
 
 # Contents
 
@@ -41,7 +41,10 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 | Stakeholder name | Description |
 | :--------------: | :---------: |
-| Stakeholder x..  |             |
+| Stakeholder Customer  |       Users of Application who purchase product      |
+| Stakeholder Manager  |      Users of Application who sell product       |
+| Stakeholder Start up Company  |    Developer of Software and Admins and CEO         |
+| Stakeholder Competitors  |       Competitor companies E.g. Ebay, Amazon retail, ...      |
 
 # Context Diagram and interfaces
 
