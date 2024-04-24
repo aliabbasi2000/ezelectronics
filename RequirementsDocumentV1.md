@@ -89,9 +89,13 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |  ID   | Description |
 | :---: | :---------: |
-|  FR1  |             |
-|  FR2  |             |
-| FRx.. |             |
+|  FR1: Manage Products  |     • FR1.0 Create a new Product, Delete a Product/ Delete all Products <br /> • FR1.1 Registers the arrival of Products with same model    <br /> • FR1.2 Mark a product as sold  <br /> • FR1.3 Return product (All / with the same Category / Model) |
+|  FR2: Manage Users  |     • FR2.0 Retrieve Users (list of all users/ all users with a role / specific User with username / )  <br /> •FR2.1 Delete User (a user with username / all the users)    |
+|  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart <br /> • FR3.2 Pay the current cart  <br /> • FR3.3  Returns the history of the paid carts <br /> • FR3.4 Delete the cart of current user / all carts |
+|  FR4: Manage Prices  |       • FR4.0 Add Price, Update it, manage discounts     |
+|  FR5: Authorization and Authentication |     • FR5.0 Log in/Log out       |
+
+
 
 ## Non Functional Requirements
 
