@@ -6,7 +6,7 @@ Version: V1 - description of EZElectronics in CURRENT form (as received by teach
 
 | Version number | Change |
 | :------------: | :----: |
-|       V1.0.1         |     Add stakeholders    |
+|       V1.0.2         |     Add ContextDiagram    |
 
 # Contents
 
@@ -41,10 +41,11 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 | Stakeholder name | Description |
 | :--------------: | :---------: |
-| Stakeholder Customer  |       Users of Application who purchase product      |
-| Stakeholder Manager  |      Users of Application who sell product       |
-| Stakeholder Start up Company  |    Developer of Software and Admins and CEO         |
-| Stakeholder Competitors  |       Competitor companies E.g. Ebay, Amazon retail, ...      |
+| Customer  |       Users of Application who purchase product      |
+| Manager  |      Users of Application who sell product       |
+| Start up Company  |    Developer of Software and Admins and CEO         |
+| Product Company  |      The Company producing the Product       |
+| Competitors  |       Competitor companies E.g. Ebay, Amazon retail, ...      |
 
 # Context Diagram and interfaces
 
@@ -62,7 +63,13 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |   Actor   | Logical Interface | Physical Interface |
 | :-------: | :---------------: | :----------------: |
-| Actor x.. |                   |                    |
+| Users: Customer, Manager |           Smartphone, PC        |       GUI(To be defined - key functions, show products and thier price, purchase a product, Sell a Product)             |
+| Tech Admin,  Business Admin |         PC          |           GUI(To be defined - all functions + manage accouns)         |
+| Payment Service |       Internet Link           |       https://developer.paypal.com/api/rest/             |
+
+
+
+
 
 # Stories and personas
 
