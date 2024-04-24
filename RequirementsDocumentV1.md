@@ -103,10 +103,10 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |   ID    | Type (efficiency, reliability, ..) | Description | Refers to |
 | :-----: | :--------------------------------: | :---------: | :-------: |
-|  NFR1   |                                    |             |           |
-|  NFR2   |                                    |             |           |
-|  NFR3   |                                    |             |           |
-| NFRx .. |                                    |             |           |
+|  NFR1   |              Reliability                      |      • No more than one defect per user      |      user????     |
+|  NFR2   |                 Usability                   |      • User(Manager or Customer) should be able to use Web app with no training less than 10 min.       |           |
+|  NFR3   |                 Efficiency                   |      • execution of functions take less than 0.1 min  storage      |           |
+| NFR4 |               Portability                     |     • Web App  should availabe on chrome    |           |
 
 # Use case diagram and use cases
 
