@@ -10,7 +10,7 @@ Version: V1 - description of EZElectronics in CURRENT form (as received by teach
 
 | Version number | Change |
 | :------------: | :----: |
-|       V1.0.2         |     Add ContextDiagram    |
+|       V1.0.3         |     V1    |
 
 # Contents
 
@@ -68,8 +68,8 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |   Actor   | Logical Interface | Physical Interface |
 | :-------: | :---------------: | :----------------: |
-| Users: Customer, Manager |           Smartphone, PC        |       GUI(To be defined - key functions, show products and thier price, purchase a product, Sell a Product)             |
-| Tech Admin |         PC          |           GUI(To be defined - all functions + manage accouns)         |
+| Users: Customer, Manager |           Smartphone, PC        |       Web Page              |
+| Tech Admin |         PC          |           Web Page         |
 | Payment Service |       Internet Link           |       https://developer.paypal.com/api/rest/             |
 | Data Base |      SQL           |      Server              |
 
@@ -96,8 +96,8 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  ID   | Description |
 | :---: | :---------: |
 |  FR1: Manage Products  |     • FR1.0 Create a new Product / Delete a Product/ Delete all Products <br /> • FR1.1 Registers the arrival of Products with same model    <br /> • FR1.2 Mark a product as sold  <br /> • FR1.3 Retrieve a product (All / with the same Category / Model)  <br /> • FR1.4 Registers the arrival of a set of products <br /> • FR1.5 Mark a product as sold |
-|  FR2: Manage Users  |   • FR2.0 Retrieves logged in user's Info.  <br /> • FR2.0 Retrieve a User (list of all users/ all users with a role / specific User with username)  <br /> •FR2.1 Create User / Delete User / Delete user with username / Delete all the users    |
-|  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart   <br /> • FR3.3  Returns the history of the paid carts of the User <br /> • FR3.4 Delete the cart of current user /Delete all carts |
+|  FR2: Manage Users  |   • FR2.0 Retrieves logged in user's Info.  <br /> • FR2.1 Retrieve a User (list of all users/ all users with a role / specific User with username)  <br /> •FR2.2 Create User / Delete User / Delete user with username / Delete all the users    |
+|  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart   <br /> • FR3.2  Returns the history of the paid carts of the User <br /> • FR3.3 Delete the cart of current user /Delete all carts |
 |  FR4: Manage Payment  |     • FR4.0 Pay the current cart |
 |  FR5: Authorization and Authentication  |       • FR5.0 Log in/Log out     |
 
@@ -109,10 +109,14 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |   ID    | Type (efficiency, reliability, ..) | Description | Refers to |
 | :-----: | :--------------------------------: | :---------: | :-------: |
-|  NFR1   |              Reliability                      |      • No more than one defect per user      |      Customer, Manager     |
-|  NFR2   |                 Usability                   |      • User(Manager or Customer) should be able to use Web app with no training less than 5 min.       |     Customer, Manager      |
-|  NFR3   |                 Efficiency                   |      • execution of functions take less than 0.1 min  storage      |      Tech Admin     |
-| NFR4 |               Portability                     |     • Web App  should availabe on chrome    |     Customer, Manager      |
+|  NFR1   |              Reliability                      |      • No more than one defect per user      |      All Functions     |
+|  NFR2   |                 Usability                   |      •  Customer should be able to use Web app with no training less than 2 min.       |     FR3, FR4, FR5      |
+|  NFR3   |                 Usability                   |      • Manager  should be able to use Web app with no training less than 5 min.       |     FR1, FR5      |
+|  NFR4   |                 Efficiency                   |    • Website should be loaded in less than 2 sec <br /> • execution of functions take less than 0.1 sec      |      All Functions     |
+| NFR5 |               Portability                     |     • Web App  should be compatible with different browsers (Chrome, Edge, Safari, Mozila)    |     All Functions      |
+| NFR6 |               Portability                     |     • Web App  should have different versrions for Devices (Desktop Version, Smartphone Version)     |     All Functions      |
+| NFR7 |               Privacy                     |     • Customer data should not be used for commercial purposes in other companies and the purchase history should be available just for the Customer and the Company.     |     FR2, FR3      |
+| NFR8 |               Security                     |     • The user information should be saved in data base in encrypted format and the payment portal shouold be safe   |     FR2, FR4, FR5      |
 
 # Use case diagram and use cases
 
@@ -125,124 +129,187 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
-### Use case 1, FR2.0 Retrieves logged in user's Info
+### Use case 1, View Account Info
 
-| Actors Involved  |                                                                      |
+| Actors Involved  |            Customer, Manager               |
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   | \<Boolean expression, must evaluate to true before the UC can start> |
-|  Post condition  |  \<Boolean expression, must evaluate to true after UC is finished>   |
-| Nominal Scenario |         \<Textual description of actions executed by the UC>         |
-|     Variants     |                      \<other normal executions>                      |
-|    Exceptions    |                        \<exceptions, errors >                        |
+|   Precondition   | User has account and is Logged in (authenticated) |
+|  Post condition  | User See his Account Information  |
+| Nominal Scenario | 1.1 The Page Containting Customer info pop ups  </br> 1.2 The Page Containting Manager info pop ups   |
+|     Variants     |                                  |
+|    Exceptions    | 1.3 Connection with database is lost and cannot retrieve the data       |
 
 ##### Scenario 1.1
 
-\<describe here scenarios instances of UC1>
-
-\<a scenario is a sequence of steps that corresponds to a particular execution of one use case>
-
-\<a scenario is a more formal description of a story>
-
-\<only relevant scenarios should be described>
-
-|  Scenario 1.1  |                                                                            |
+|  Scenario 1.1  |       The Page Containting Customer info pop ups        |
 | :------------: | :------------------------------------------------------------------------: |
-|  Precondition  | \<Boolean expression, must evaluate to true before the scenario can start> |
-| Post condition |  \<Boolean expression, must evaluate to true after scenario is finished>   |
-|     Step#      |                                Description                                 |
-|       1        |                                                                            |
-|       2        |                                                                            |
-|      ...       |                                                                            |
+|  Precondition  | User has account and is Logged in as Customer (authenticated) |
+| Post condition |  Customer See his Account Information |
+|     Step#      |            Description                   |
+|       1        |   The User Clicks on the Account Info    |
+|       2        |   FR2.0 Retrieves logged in user's Info.  |
+|       3       |    Show it on the web page                      |
 
 ##### Scenario 1.2
 
-##### Scenario 1.x
+|  Scenario 1.2  |       The Page Containting Manager info pop ups        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has account and is Logged in as Manager (authenticated) |
+| Post condition |  Manager See his Account Information |
+|     Step#      |            Description                   |
+|       1        |   The User Clicks on the Account Info    |
+|       2        |   FR2.0 Retrieves logged in user's Info.  |
+|       3       |    Show it on the web page                      |
+
+##### Scenario 1.3
+
+|  Scenario 1.3  |   1.3 Connection with database is lost and cannot retrieve the data  |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has account and is Logged in (authenticated) |
+| Post condition |  User See an Error |
+|     Step#      |            Description                   |
+|       1        |   The User Clicks on the Account Info    |
+|       2        |   FR2.0 Retrieves logged in user's Info. |
+|       3        |    The dataBase returns an error for internal reason        |
+|       4        |    User see the Error message on the Web Page        |
 
 
 
-### Use case 1, UC1
+### Use case 2, Delete Account
 
-| Actors Involved  |                                                                      |
+| Actors Involved  |             Customer, Manager               |
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   | \<Boolean expression, must evaluate to true before the UC can start> |
-|  Post condition  |  \<Boolean expression, must evaluate to true after UC is finished>   |
-| Nominal Scenario |         \<Textual description of actions executed by the UC>         |
-|     Variants     |                      \<other normal executions>                      |
-|    Exceptions    |                        \<exceptions, errors >                        |
+|   Precondition   | User is not logged in (it is a problem the fixed in Version 2) |
+|  Post condition  | User has been Deleted his Account  |
+| Nominal Scenario |  2.1 User has been Deleted his Account  |
+|     Variants     |                                  |
+|    Exceptions    |  2.2 404 Error, Username does not exist in the dataBase    |
 
-##### Scenario 1.1
+##### Scenario 2.1
 
-\<describe here scenarios instances of UC1>
-
-\<a scenario is a sequence of steps that corresponds to a particular execution of one use case>
-
-\<a scenario is a more formal description of a story>
-
-\<only relevant scenarios should be described>
-
-|  Scenario 1.1  |                                                                            |
+|  Scenario 2.1  |       User has been Deleted his Account        |
 | :------------: | :------------------------------------------------------------------------: |
-|  Precondition  | \<Boolean expression, must evaluate to true before the scenario can start> |
-| Post condition |  \<Boolean expression, must evaluate to true after scenario is finished>   |
-|     Step#      |                                Description                                 |
-|       1        |                                                                            |
-|       2        |                                                                            |
-|      ...       |                                                                            |
+|  Precondition  | User is not logged in |
+| Post condition |  User has been Deleted his Account |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the Delete Account button    |
+|       2        |  User Provides its username (It should be fixed in V2, deleting account without authentication !!)   |
+|       4        |  FR.2.1 Delete User     |
+|       5        |  A message pops up that your account has been deleted       |
+|       6        |  Redirect user to the home page       |
 
-##### Scenario 1.2
+##### Scenario 2.2
 
-##### Scenario 1.x
+|  Scenario 2.1  |       404 Error, Username does not exist in the dataBase         |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User is not logged in |
+| Post condition |  User has been faced with 404 Error |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the Delete Account button    |
+|       2        |  User provides its username   |
+|       3        |  database says there in no record with Provided info! |
+|       5        |  404 Error message pops up      |
 
 
 
+### Use case 3, Create Account
 
-
-### Use case 1, UC1
-
-| Actors Involved  |                                                                      |
+| Actors Involved  |             Customer, Manager               |
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   | \<Boolean expression, must evaluate to true before the UC can start> |
-|  Post condition  |  \<Boolean expression, must evaluate to true after UC is finished>   |
-| Nominal Scenario |         \<Textual description of actions executed by the UC>         |
-|     Variants     |                      \<other normal executions>                      |
-|    Exceptions    |                        \<exceptions, errors >                        |
+|   Precondition   | User has no account  |
+|  Post condition  | User has been Created an Account  |
+| Nominal Scenario |  3.1 User has been Created a Customer Account </br> 3.2 User has been Created a Manager Account |
+|     Variants     |                                  |
+|    Exceptions    |  3.3 409 Error, user already exist in database    |
 
-##### Scenario 1.1
 
-\<describe here scenarios instances of UC1>
+##### Scenario 3.1
 
-\<a scenario is a sequence of steps that corresponds to a particular execution of one use case>
-
-\<a scenario is a more formal description of a story>
-
-\<only relevant scenarios should be described>
-
-|  Scenario 1.1  |                                                                            |
+|  Scenario 3.1  |       User has been Created a Customer Account        |
 | :------------: | :------------------------------------------------------------------------: |
-|  Precondition  | \<Boolean expression, must evaluate to true before the scenario can start> |
-| Post condition |  \<Boolean expression, must evaluate to true after scenario is finished>   |
-|     Step#      |                                Description                                 |
-|       1        |                                                                            |
-|       2        |                                                                            |
-|      ...       |                                                                            |
+|  Precondition  | User has no account |
+| Post condition |  User has been Created a Customer Account |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the Create Account button    |
+|       2        |  Enter the information as input and the role is Customer  |
+|       3        |  FR2.1 Create User  |
+|       4        |  A message pops up that your account has been created       |
+|       5        |  Redirect user to the Login page       |
 
-##### Scenario 1.2
+##### Scenario 3.2
 
-##### Scenario 1.x
+|  Scenario 3.2  |       User has been Created a Manager Account        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has no account |
+| Post condition |  User has been Created a Manager Account |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the Create Account button    |
+|       2        |  Enter the information as input and the role is Manager  |
+|       3        |  FR2.1 Create User  |
+|       4        |  A message pops up that your account has been created       |
+|       5        |  Redirect user to the Login page       |
+
+##### Scenario 3.3
+
+|  Scenario 3.3  |       409 Error, user already exist in database        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account |
+| Post condition |  409 Error, user already exist in database |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the Create Account button    |
+|       2        |  Enter the information as input and the role is Manager  |
+|       2        |  FR2.1 Create User  |
+|       3        |  database retrieves an error that the username is already exist  |
+|       5        |  409 Error pops up: user already exist in database       |
+|       6        |  Redirect user to the Login page       |
 
 
 
 
+### Use case 4, View Product List
+
+| Actors Involved  |             Customer, Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in (Authenticated) |
+|  Post condition  | User see the result as list of products   |
+| Nominal Scenario |  4.1 User Views the product list based on Model </br> 4.2 User Views the product list based on Category |
+|     Variants     |                                  |
+|    Exceptions    |  4.3 No Product Found based on the criteria    |
 
 
+##### Scenario 4.1
 
-### Use case 2, UC2
+|  Scenario 4.1  |       User Views the product list based on Model       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User Views the product list based on Model |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the View by Model button    |
+|       2        |  FR1.3 Retrieve product list with same model  |
+|       3        |  the list of products with same model show up in the web page  |
 
-..
+##### Scenario 4.2
 
-### Use case x, UCx
+|  Scenario 4.2  |       User Views the product list based on Category       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User Views the product list based on Category |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the View by Category button    |
+|       2        |  FR1.3 Retrieve product list with same Category  |
+|       3        |  the list of products with same Category show up in the web page  |
 
-..
+##### Scenario 4.3
+
+|  Scenario 4.3  |       No Product Found based on the criteria       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  No Product Found based on the criteria |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the View by Category button    |
+|       2        |  FR1.3 Retrieve product list with same Category  |
+|       3        |  Database Retrieves: Null  |
+|       4        |  This message pops up: No Product Found based on the criteria  |
 
 # Glossary
 
