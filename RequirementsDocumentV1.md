@@ -50,6 +50,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Start up Company  |    Developer of Software and Admins and CEO         |
 | Product Company  |      The Company producing the Product       |
 | Competitors  |       Competitor companies E.g. Ebay, Amazon retail, ...      |
+| Payment Sevice ???  |       pay online / Pay by cash - E.g. paypal      |
 
 # Context Diagram and interfaces
 
@@ -70,6 +71,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Users: Customer, Manager |           Smartphone, PC        |       GUI(To be defined - key functions, show products and thier price, purchase a product, Sell a Product)             |
 | Tech Admin |         PC          |           GUI(To be defined - all functions + manage accouns)         |
 | Payment Service |       Internet Link           |       https://developer.paypal.com/api/rest/             |
+| Data Base |      SQL           |      Server              |
 
 
 
@@ -95,8 +97,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | :---: | :---------: |
 |  FR1: Manage Products  |     • FR1.0 Create a new Product / Delete a Product/ Delete all Products <br /> • FR1.1 Registers the arrival of Products with same model    <br /> • FR1.2 Mark a product as sold  <br /> • FR1.3 Retrieve a product (All / with the same Category / Model)  <br /> • FR1.4 Registers the arrival of a set of products <br /> • FR1.5 Mark a product as sold |
 |  FR2: Manage Users  |   • FR2.0 Retrieves logged in user's Info.  <br /> • FR2.0 Retrieve a User (list of all users/ all users with a role / specific User with username)  <br /> •FR2.1 Create User / Delete User / Delete user with username / Delete all the users    |
-|  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart <br /> • FR3.2 Pay the current cart  <br /> • FR3.3  Returns the history of the paid carts <br /> • FR3.4 Delete the cart of current user /Delete all carts |
-|  FR4: Authorization and Authentication  |       • FR4.0 Log in/Log out     |
+|  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart   <br /> • FR3.3  Returns the history of the paid carts of the User <br /> • FR3.4 Delete the cart of current user /Delete all carts |
+|  FR4: Manage Payment  |     • FR4.0 Pay the current cart |
+|  FR5: Authorization and Authentication  |       • FR5.0 Log in/Log out     |
 
 
 
@@ -106,10 +109,10 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |   ID    | Type (efficiency, reliability, ..) | Description | Refers to |
 | :-----: | :--------------------------------: | :---------: | :-------: |
-|  NFR1   |              Reliability                      |      • No more than one defect per user      |      user????     |
-|  NFR2   |                 Usability                   |      • User(Manager or Customer) should be able to use Web app with no training less than 10 min.       |           |
-|  NFR3   |                 Efficiency                   |      • execution of functions take less than 0.1 min  storage      |           |
-| NFR4 |               Portability                     |     • Web App  should availabe on chrome    |           |
+|  NFR1   |              Reliability                      |      • No more than one defect per user      |      Customer, Manager     |
+|  NFR2   |                 Usability                   |      • User(Manager or Customer) should be able to use Web app with no training less than 5 min.       |     Customer, Manager      |
+|  NFR3   |                 Efficiency                   |      • execution of functions take less than 0.1 min  storage      |      Tech Admin     |
+| NFR4 |               Portability                     |     • Web App  should availabe on chrome    |     Customer, Manager      |
 
 # Use case diagram and use cases
 
@@ -118,6 +121,44 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 \<define here UML Use case diagram UCD summarizing all use cases, and their relationships>
 
 \<next describe here each use case in the UCD>
+
+
+
+
+### Use case 1, FR2.0 Retrieves logged in user's Info
+
+| Actors Involved  |                                                                      |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | \<Boolean expression, must evaluate to true before the UC can start> |
+|  Post condition  |  \<Boolean expression, must evaluate to true after UC is finished>   |
+| Nominal Scenario |         \<Textual description of actions executed by the UC>         |
+|     Variants     |                      \<other normal executions>                      |
+|    Exceptions    |                        \<exceptions, errors >                        |
+
+##### Scenario 1.1
+
+\<describe here scenarios instances of UC1>
+
+\<a scenario is a sequence of steps that corresponds to a particular execution of one use case>
+
+\<a scenario is a more formal description of a story>
+
+\<only relevant scenarios should be described>
+
+|  Scenario 1.1  |                                                                            |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | \<Boolean expression, must evaluate to true before the scenario can start> |
+| Post condition |  \<Boolean expression, must evaluate to true after scenario is finished>   |
+|     Step#      |                                Description                                 |
+|       1        |                                                                            |
+|       2        |                                                                            |
+|      ...       |                                                                            |
+
+##### Scenario 1.2
+
+##### Scenario 1.x
+
+
 
 ### Use case 1, UC1
 
@@ -151,6 +192,49 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 ##### Scenario 1.2
 
 ##### Scenario 1.x
+
+
+
+
+
+### Use case 1, UC1
+
+| Actors Involved  |                                                                      |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | \<Boolean expression, must evaluate to true before the UC can start> |
+|  Post condition  |  \<Boolean expression, must evaluate to true after UC is finished>   |
+| Nominal Scenario |         \<Textual description of actions executed by the UC>         |
+|     Variants     |                      \<other normal executions>                      |
+|    Exceptions    |                        \<exceptions, errors >                        |
+
+##### Scenario 1.1
+
+\<describe here scenarios instances of UC1>
+
+\<a scenario is a sequence of steps that corresponds to a particular execution of one use case>
+
+\<a scenario is a more formal description of a story>
+
+\<only relevant scenarios should be described>
+
+|  Scenario 1.1  |                                                                            |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | \<Boolean expression, must evaluate to true before the scenario can start> |
+| Post condition |  \<Boolean expression, must evaluate to true after scenario is finished>   |
+|     Step#      |                                Description                                 |
+|       1        |                                                                            |
+|       2        |                                                                            |
+|      ...       |                                                                            |
+
+##### Scenario 1.2
+
+##### Scenario 1.x
+
+
+
+
+
+
 
 ### Use case 2, UC2
 
