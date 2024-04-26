@@ -2,11 +2,11 @@
 
 Date:
 
-Version: V1 - description of EZElectronics in FUTURE form (as proposed by the team)
+Version: V2 - description of EZElectronics in FUTURE form (as proposed by the team)
 
 | Version number | Change |
 | :------------: | :----: |
-|                |        |
+|      V2.0.1          |    Delete user usecase changes (should need authentication)    |
 
 # Contents
 
