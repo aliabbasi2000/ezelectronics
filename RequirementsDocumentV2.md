@@ -2,11 +2,11 @@
 
 Date:
 
-Version: V1 - description of EZElectronics in FUTURE form (as proposed by the team)
+Version: V2 - description of EZElectronics in FUTURE form (as proposed by the team)
 
 | Version number | Change |
 | :------------: | :----: |
-|                |        |
+|      V2.0.1          |    Delete user usecase changes (should need authentication)    |
 
 # Contents
 
@@ -98,50 +98,48 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ## Use case diagram
 
-\<define here UML Use case diagram UCD summarizing all use cases, and their relationships>
+### Use case 1, XXX
 
-\<next describe here each use case in the UCD>
 
-### Use case 1, UC1
+### Use case 2, Delete Account
 
-| Actors Involved  |                                                                      |
+| Actors Involved  |             Customer, Manager               |
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   | \<Boolean expression, must evaluate to true before the UC can start> |
-|  Post condition  |  \<Boolean expression, must evaluate to true after UC is finished>   |
-| Nominal Scenario |         \<Textual description of actions executed by the UC>         |
-|     Variants     |                      \<other normal executions>                      |
-|    Exceptions    |                        \<exceptions, errors >                        |
+|   Precondition   | User has account and is Logged in (authenticated) |
+|  Post condition  | User has been Deleted his Account  |
+| Nominal Scenario |  2.1 User has been Deleted his Account  |
+|     Variants     |                                  |
+|    Exceptions    |  2.2 Connection with database is lost and cannot delete the record    |
 
-##### Scenario 1.1
+##### Scenario 2.1
 
-\<describe here scenarios instances of UC1>
-
-\<a scenario is a sequence of steps that corresponds to a particular execution of one use case>
-
-\<a scenario is a more formal description of a story>
-
-\<only relevant scenarios should be described>
-
-|  Scenario 1.1  |                                                                            |
+|  Scenario 2.1  |       User has been Deleted his Account        |
 | :------------: | :------------------------------------------------------------------------: |
-|  Precondition  | \<Boolean expression, must evaluate to true before the scenario can start> |
-| Post condition |  \<Boolean expression, must evaluate to true after scenario is finished>   |
-|     Step#      |                                Description                                 |
-|       1        |                                                                            |
-|       2        |                                                                            |
-|      ...       |                                                                            |
+|  Precondition  | User has account and is Logged in (authenticated) |
+| Post condition |  User has been Deleted his Account |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the Delete Account button    |
+|       2        |  FR2.0 Retrieve the Logged in User Info   |
+|       3        |  FR4.0 Perform Log out   |
+|       4        |  FR.2.1 Delete User     |
+|       5        |  A message pops up that your account has been deleted       |
+|       6        |  Redirect user to the home page       |
 
-##### Scenario 1.2
+##### Scenario 2.2
 
-##### Scenario 1.x
+|  Scenario 2.1  |       Connection with database is lost and cannot delete the         |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has account and is Logged in (authenticated) |
+| Post condition |  User has been faced an Error |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the Delete Account button    |
+|       2        |  FR2.0 Retrieve the Logged in User Info   |
+|       3        |  We got an Error from DataBase side |
+|       5        |  An Error message pops up      |
 
-### Use case 2, UC2
 
-..
 
-### Use case x, UCx
 
-..
 
 # Glossary
 
