@@ -56,9 +56,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ## Context Diagram
 
-\<Define here Context diagram using UML use case diagram>
-
-\<actors are a subset of stakeholders>
+![ContextDiagram.jpg](./Diagrams/v1/ContextDiagram.jpg)
 
 ## Interfaces
 
@@ -122,12 +120,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ## Use case diagram
 
-\<define here UML Use case diagram UCD summarizing all use cases, and their relationships>
-
-\<next describe here each use case in the UCD>
-
-
-
+![UseCaseDiagram.jpg](./Diagrams/v1/UseCaseDiagram.jpg)
 
 ### Use case 1, View Account Info
 
