@@ -52,7 +52,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ## Context Diagram
 
-![ContextDiagram.png](./Diagrams/v1/ContextDiagram.png)
+![context_diagram.png](./diagrams/v1/context_diagram.png)
 
 ## Interfaces
 
@@ -116,7 +116,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ## Use case diagram
 
-![UseCaseDiagram.png](./Diagrams/v1/UseCaseDiagram.png)
+![usecase_diagram.png](./diagrams/v1/usecase_diagram.png)
 
 ### Use case 1, View Account Info
 
