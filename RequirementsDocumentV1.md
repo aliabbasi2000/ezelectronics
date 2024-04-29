@@ -56,7 +56,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ## Context Diagram
 
-![ContextDiagram.jpg](./Diagrams/v1/ContextDiagram.jpg)
+![context_diagram.png](./diagrams/v1/context_diagram.png)
 
 ## Interfaces
 
@@ -66,7 +66,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |   Actor   | Logical Interface | Physical Interface |
 | :-------: | :---------------: | :----------------: |
-| Users: Customer, Manager |           Smartphone, PC        |       Web Page              |
+| Users: Customer, Manager |           PC        |       Web Page              |
 | Tech Admin |         PC          |           Web Page         |
 | Payment Service |       Internet Link           |       https://developer.paypal.com/api/rest/             |
 | Data Base |      SQL           |      Server              |
@@ -120,7 +120,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ## Use case diagram
 
-![UseCaseDiagram.jpg](./Diagrams/v1/UseCaseDiagram.jpg)
+![usecase_diagram.png](./diagrams/v1/usecase_diagram.png)
 
 ### Use case 1, View Account Info
 
