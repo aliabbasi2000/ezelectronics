@@ -92,6 +92,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 2.	Persona: Marco - Tech Customer
   
 •	Background: 
+
     1.	Marco is a college student with a passion for electronics. 
     2.	He frequently shops online for the latest gadgets and components.
 
