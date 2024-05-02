@@ -77,11 +77,30 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 # Stories and personas
 
-\<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
+1.	Persona: Giulia - Electronics Store Manager
+  •	Background: 
+      1.	Giulia is the manager of a small electronics store. 
+      2.	She's tech-savvy but lacks experience in managing online platforms.
+  •	Story: 
+      1.	Giulia needs a solution to streamline her store's operations and expand its reach online. She discovers EZElectronics and sees its potential to simplify inventory management and reach a wider customer base. 
+      2.	She uses the platform to easily add new products, update stock levels, and fulfill online orders, ultimately boosting her store's revenue.
 
-\<Persona is-an-instance-of actor>
+2.	Persona: Marco - Tech Customer
+  •	Background: 
+    1.	Marco is a college student with a passion for electronics. 
+    2.	He frequently shops online for the latest gadgets and components.
+  •	Story: 
+    1.	Marco comes across EZElectronics while searching for a specific electronic component. Impressed by the website's user-friendly interface and diverse product range, he creates an account and starts browsing. He finds the component he needs, adds it to his cart, and completes the purchase hassle-free. 
+    2.	Satisfied with his experience, Marco becomes a loyal customer, regularly checking EZElectronics for new arrivals.
 
-\<stories will be formalized later as scenarios in use cases>
+3.	Persona: Tommaso - Tech Admin
+  •	Background: 
+    1.	Tommaso is the tech admin at EZElectronics, responsible for overseeing the development and maintenance of the software application. 
+    2.	He has a strong passion for technology and innovation.
+  •	Story: 
+    1.	Tommaso is tasked with leading the development team in enhancing EZElectronics to meet the evolving needs of electronics store managers and customers. He conducts regular meetings to gather feedback from users and identifies areas for improvement. 
+    2.	Tommaso works closely with the development team to implement new features and optimize the platform's performance. Through his expertise and dedication, Tommaso ensures that EZElectronics remains a top choice for electronics retailers seeking a reliable and user-friendly management solution.
+
 
 # Functional and non functional requirements
 
