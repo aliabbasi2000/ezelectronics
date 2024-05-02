@@ -46,7 +46,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Start up Company  |    Developer of Software and Admins and CEO         |
 | Product Company  |      The Company producing the Product       |
 | Competitors  |       Competitor companies E.g. Ebay, Amazon retail, ...      |
-| Payment Sevice ???  |       pay online / Pay by cash - E.g. paypal      |
+
 
 # Context Diagram and interfaces
 
@@ -56,16 +56,10 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ## Interfaces
 
-\<describe here each interface in the context diagram>
-
-\<GUIs will be described graphically in a separate document>
-
 |   Actor   | Logical Interface | Physical Interface |
 | :-------: | :---------------: | :----------------: |
 | Users: Customer, Manager |           PC        |       Web Page              |
-| Tech Admin |         PC          |           Web Page         |
-| Payment Service |       Internet Link           |       https://developer.paypal.com/api/rest/             |
-| Data Base |      SQL           |      Server              |
+| Data Base |      SQL           |      sqlite3              |
 
 
 
