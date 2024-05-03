@@ -65,17 +65,17 @@ PS: Payment System is not included because it's not in the API. We know it's imp
 |   Actor   | Logical Interface | Physical Interface |
 | :-------: | :---------------: | :----------------: |
 | Users: Customer, Manager |           PC        |       Web Page              |
-| Tech Admin |         PC          |           Web Page         |
 | Data Base |      SQL           |      Server              |
 
 
 
-PS: Payment System is not included because it's not in the API. We know it's impossible for a store to not have a way to pay.
+PS: Payment System & Tech Admin is not included because it's not in the API. We know it's impossible for a store to not have a way to pay and some of the functions in API must be accessible only by Tech Admin.
     IT WILL BE INCLUDED IN V2
 
 |   Actor   | Logical Interface | Physical Interface |
 | :-------: | :---------------: | :----------------: |
 | Payment Service |       Internet Link           |       https://developer.paypal.com/api/rest/             |
+| Tech Admin |         PC          |           Web Page         |
 
 
 
