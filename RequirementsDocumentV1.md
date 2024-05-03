@@ -806,4 +806,4 @@ IT WILL BE INCLUDED IN V2
 
 # Deployment Diagram
 
-\<describe here deployment diagram >
+![Deployment Diagram.png](./diagrams/v1/Deployment Diagram.png)
