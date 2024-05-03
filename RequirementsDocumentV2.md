@@ -43,10 +43,13 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | :--------------: | :---------: |
 | Customer  |       Users of Application who purchase product      |
 | Manager, Premium Manager  |      Users of Application who sell product       |
-| Start up Company  |    Developer of Software and Admins and CEO         |
+| Start up Company  |    Developer of Software and Admins and CEO and Client Assistante         |
 | Product Company  |      The Company producing the Product       |
 | Competitors  |       Competitor companies E.g. Ebay, Amazon retail, ...      |
 | Payment Sevice   |       Online Payment service E.g. paypal      |
+| Pick up points   |       Stores that user can pick them as pick up pints     |
+| Delivery Services   |       The Service provieds delivery E.G. DHL    |
+
 
 # Context Diagram and interfaces
 
@@ -58,10 +61,14 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |   Actor   | Logical Interface | Physical Interface |
 | :-------: | :---------------: | :----------------: |
-| Users: Customer, Manager, Premium Manager |           PC        |       Web Page              |
+| Users: Customer, Manager, Premium Manager, Premium Customer |           PC        |       Web Page              |
 | Tech Admin |         PC          |           Web Page         |
 | Payment Service |       Internet Link           |       https://developer.paypal.com/api/rest/             |
 | Data Base |      SQL           |      sqlite3              |
+| Client Assisstante |      PC           |      Web Page              |
+| Delivery Service |      Internet Link           |      https://developer.dhl.com/api-catalog              |
+| Pick up Points |      PC        |      Web Page              |
+
 
 
 # Stories and personas
