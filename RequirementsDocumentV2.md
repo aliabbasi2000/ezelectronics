@@ -65,20 +65,41 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 # Stories and personas
+1.	Persona: Giulia - Electronics Store Manager
+      •	Background: 
+      1.	Giulia is the manager of a small electronics store. 
+      2.	She's tech-savvy but lacks experience in managing online platforms.
+      •	Story: 
+      1.	Giulia needs a solution to streamline her store's operations and expand its reach online. She discovers EZElectronics and sees its potential to simplify inventory management and reach a wider customer base. 
+      2.	She uses the platform to easily add new products, update stock levels, and fulfill online orders, ultimately boosting her store's revenue.
+2.	Persona: Marco - Tech Customer
+•	Background: 
+1.	Marco is a college student with a passion for electronics. 
+2.	He frequently shops online for the latest gadgets and components.
+•	Story: 
+1.	Marco comes across EZElectronics while searching for a specific electronic component. Impressed by the website's user-friendly interface and diverse product range, he creates an account and starts browsing. He finds the component he needs, adds it to his cart, and completes the purchase hassle-free. 
+2.	Satisfied with his experience, Marco becomes a loyal customer, regularly checking EZElectronics for new arrivals.
+3.	Persona: Tommaso - Tech Admin
+•	Background: 
+1.	Tommaso is the tech admin at EZElectronics, responsible for overseeing the development and maintenance of the software application. 
+2.	He has a strong passion for technology and innovation.
+•	Story: 
+1.	Tommaso is tasked with leading the development team in enhancing EZElectronics to meet the evolving needs of electronics store managers and customers. He conducts regular meetings to gather feedback from users and identifies areas for improvement. 
+2.	Tommaso works closely with the development team to implement new features and optimize the platform's performance. Through his expertise and dedication, Tommaso ensures that EZElectronics remains a top choice for electronics retailers seeking a reliable and user-friendly management solution.
+4.	Persona: Sofia - Premium Customer
+•	Background: 
+1.	Sofia is a frequent shopper at EZElectronics and has opted for the premium membership, which offers benefits like free shipping and exclusive deals.
+•	Story: 
+1.	Sofia, being a premium member, enjoys the perks of free shipping on all her purchases from EZElectronics. She appreciates the convenience and cost savings this offers, making her more inclined to shop regularly on the platform. 
+2.	Additionally, Sofia feels valued as a customer due to the exclusive deals and personalized recommendations she receives as part of her premium membership.
+5.	Persona: Matteo - Premium Manager
+•	Background: 
+1.	Matteo is the manager of a top-performing electronics store that partners with EZElectronics. 
+2.	He has opted for the premium manager package, which includes premium placement of his products on the website's top pages.
+•	Story: 
+1.	Matteo leverages his premium manager status on EZElectronics to ensure that his products receive maximum visibility on the platform. With his products featured prominently on the top pages of the website, Matteo attracts more customers and drives higher sales for his store.
+2.	He appreciates the additional exposure and marketing support provided by EZElectronics, which helps him stay ahead of the competition and grow his business.
 
-\<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
-
-\<Persona is-an-instance-of actor>
-
-\<stories will be formalized later as scenarios in use cases>
-
-# Functional and non functional requirements
-
-## Functional Requirements
-
-\<In the form DO SOMETHING, or VERB NOUN, describe high level capabilities of the system>
-
-\<they match to high level use cases>
 
 |  ID   | Description |
 | :---: | :---------: |
