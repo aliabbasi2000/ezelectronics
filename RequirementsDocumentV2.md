@@ -91,10 +91,14 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |   ID    | Type (efficiency, reliability, ..) | Description | Refers to |
 | :-----: | :--------------------------------: | :---------: | :-------: |
-|  NFR1   |                                    |             |           |
-|  NFR2   |                                    |             |           |
-|  NFR3   |                                    |             |           |
-| NFRx .. |                                    |             |           |
+|  NFR1   |              Reliability                      |      • No more than one defect per user      |      All Functions     |
+|  NFR2   |                 Usability                   |      •  Customer should be able to use Web app with no training less than 2 min.       |     FR3, FR4, FR5      |
+|  NFR3   |                 Usability                   |      • Manager  should be able to use Web app with no training less than 5 min.       |     FR1, FR5      |
+|  NFR4   |                 Efficiency                   |    • Website should be loaded in less than 2 sec <br /> • execution of functions take less than 0.1 sec      |      All Functions     |
+| NFR5 |               Portability                     |     • Web App  should be compatible with different browsers (Chrome, Edge, Safari, Mozila)    |     All Functions      |
+| NFR6 |               Portability                     |     • Web App  should have different versrions for Devices (Desktop Version, Smartphone Version)     |     All Functions      |
+| NFR7 |               Privacy                     |     • Customer data should not be used for commercial purposes in other companies and the purchase history should be available just for the Customer and the Company.     |     FR2, FR3      |
+| NFR8 |               Security                     |     • The user information should be saved in data base in encrypted format and the payment portal shouold be safe   |     FR2, FR4, FR5      |
 
 # Use case diagram and use cases
 
