@@ -123,6 +123,14 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
     1.	Matteo leverages his premium manager status on EZElectronics to ensure that his products receive maximum visibility on the platform. With his products featured prominently on the top pages of the website, Matteo attracts more customers and drives higher sales for his store.
     2.	He appreciates the additional exposure and marketing support provided by EZElectronics, which helps him stay ahead of the competition and grow his business.
 
+# Functional and non functional requirements
+
+## Functional Requirements
+
+\<In the form DO SOMETHING, or VERB NOUN, describe high level capabilities of the system>
+
+\<they match to high level use cases>
+
 |  ID   | Description |
 | :---: | :---------: |
 |  FR1: Manage Products  |     • FR1.0 Create a new Product(ONLY MANAGER) / Delete a Product(ONLY MANAGER)/ Delete all Products(ONLY TECH ADMIN) <br /> • FR1.1 Registers the arrival of Products of same model (ONLY MANAGER)   <br /> • FR1.2 Mark a product as sold  <br /> • FR1.3 Retrieve a product (All / with the same Category / Model)  <br /> • FR1.4 Registers the arrival of a set of products  <br /> • FR1.5 Add a Product as sponssored (ONLY BY PREMIUM MANAGER) |
