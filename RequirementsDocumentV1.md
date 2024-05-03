@@ -794,7 +794,7 @@ PS: Payment System is not included because it's not in the API. We know it's imp
 
 *Payment: A process that handles payments of the current cart.>
 
-
+![uml.png](./diagrams/v1/uml.png)
 
 # System Design
 
