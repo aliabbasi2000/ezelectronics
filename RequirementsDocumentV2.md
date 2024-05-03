@@ -47,7 +47,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Product Company  |      The Company producing the Product       |
 | Competitors  |       Competitor companies E.g. Ebay, Amazon retail, ...      |
 | Payment Sevice   |       Online Payment service E.g. paypal      |
-| Pick up points   |       Stores that user can pick them as pick up pints     |
+| Pick up points   |    Physical location for shipping and pickup with the help of delivery services.    |
 | Delivery Services   |       The Service provieds delivery E.G. DHL    |
 
 
@@ -66,7 +66,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Payment Service |       Internet Link           |       https://developer.paypal.com/api/rest/             |
 | Data Base |      SQL           |      sqlite3              |
 | Delivery Service |      Internet Link           |      https://developer.dhl.com/api-catalog              |
-| Pick up Points |      PC        |      Web Page              |
+
 
 
 
@@ -132,14 +132,14 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |  ID   | Description |
 | :---: | :---------: |
-|  FR1: Manage Products  |     • FR1.0 Create a new Product(ONLY MANAGER) / Delete a Product(ONLY MANAGER)/ Delete all Products(ONLY TECH ADMIN) <br /> • FR1.1 Registers the arrival of Products of same model (ONLY MANAGER)   <br /> • FR1.2 Mark a product as sold  <br /> • FR1.3 Retrieve a product (All / with the same Category / Model)  <br /> • FR1.4 Registers the arrival of a set of products  <br /> • FR1.5 Add a Product as sponssored (ONLY BY PREMIUM MANAGER) |
-|  FR2: Manage Users  |   • FR2.0 Retrieves logged in user's Info.  <br /> • FR2.1 Retrieve a User (list of all users/ all users with a role (ONLY TECH ADMIN) / specific User with username)  <br /> •FR2.2 Create User / Delete User(USER AND TECH ADMIN) / Delete user with username  / Delete all the users (ONLY TECH ADMIN)   <br /> •FR2.3 Create Premium User |
+|  FR1: Manage Products  |     • FR1.0 Create a new Product(ONLY MANAGER) / Delete a Product(ONLY MANAGER)/ Delete all Products(ONLY TECH ADMIN) <br /> • FR1.1 Registers the arrival of Products of same model (ONLY MANAGER)   <br /> • FR1.2 Mark a product as sold  <br /> • FR1.3 Retrieve a product (All / with the same Category / Model)  <br /> • FR1.4 Registers the arrival of a set of products  <br /> • FR1.5 Add a Product as sponssored (ONLY BY PREMIUM MANAGER) <br />• FR1.6 Sponsor products (ONLY PREMIUM MANAGER) |
+|  FR2: Manage Users  |   • FR2.0 Retrieves logged in user's Info.  <br /> • FR2.1 Retrieve a User (list of all users/ all users with a role (ONLY TECH ADMIN) / specific User with username)  <br /> •FR2.2 Create User / Delete User(USER AND TECH ADMIN) / Delete user with username  / Delete all the users (ONLY TECH ADMIN)   <br /> •FR2.3 Create Premium User<br /> • FR2.4 Choose to be Premium User (Manager or Customer)|
 |  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart   <br /> • FR3.2  Returns the history of the paid carts of the User <br /> • FR3.3 Delete the cart of current user (USER) /Delete all carts (ONLY TECH ADMIN) |
 |  FR4: Manage Payment  |     • FR4.0 Choose a payment method<br /> • FR4.1 Pay the current cart<br /> • FR4.2 Pay the Premium Account  |
 |  FR5: Authorization and Authentication  |       • FR5.0 Log in/Log out  <br /> • FR5.1 Password Recovery   |
-|  FR6: Manage Shipping  |     • FR6.0 Choose a shipping method (Delivery or Pick Up) <br /> • FR6.1 Show the shipping price <br /> • FR6.2 Insert Address <br /> • FR6.3 Track delivery |
-|  FR7: Manage Pemium User  |     • FR7.0 Choose to be Premium User (Manager or Customer)|
-|  FR8: Manage Whishlist  |      • FR8.0 Return the curent whislist <br /> • FR8.1 Add / Remove a product to whislist (ONLY CUSTOMERS) |
+|  FR6: Manage Shipping  |     • FR6.0 Choose a shipping method (Delivery Company) <br /> • FR6.1 Show the shipping price <br /> • FR6.2 Insert Address <br /> • FR6.3 Track delivery <br />• FR6.4 Zero out shipping costs (ONLY PREMIUM CUSTOMER)|
+
+|  FR7: Manage Whishlist  |      • FR7.0 Return the curent whislist <br /> • FR7.1 Add / Remove a product to whislist (ONLY CUSTOMER) |
 
 
 
