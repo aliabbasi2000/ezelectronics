@@ -66,9 +66,11 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 # Stories and personas
 1.	Persona: Giulia - Electronics Store Manager
+      
       •	Background: 
       1.	Giulia is the manager of a small electronics store. 
       2.	She's tech-savvy but lacks experience in managing online platforms.
+      
       •	Story: 
       1.	Giulia needs a solution to streamline her store's operations and expand its reach online. She discovers EZElectronics and sees its potential to simplify inventory management and reach a wider customer base. 
       2.	She uses the platform to easily add new products, update stock levels, and fulfill online orders, ultimately boosting her store's revenue.
