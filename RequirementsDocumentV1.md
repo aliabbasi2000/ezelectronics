@@ -798,12 +798,6 @@ IT WILL BE INCLUDED IN V2
 
 ![uml.png](./diagrams/v1/uml.png)
 
-# System Design
-
-\<describe here system design>
-
-\<must be consistent with Context diagram>
-
 # Deployment Diagram
 
 ![Deployment Diagram.png](./diagrams/v1/Deployment Diagram.png)
