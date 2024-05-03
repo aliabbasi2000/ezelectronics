@@ -67,10 +67,6 @@ PS: Payment System is not included because it's not in the API. We know it's imp
 
 ## Interfaces
 
-\<describe here each interface in the context diagram>
-
-\<GUIs will be described graphically in a separate document>
-
 |   Actor   | Logical Interface | Physical Interface |
 | :-------: | :---------------: | :----------------: |
 | Users: Customer, Manager |           PC        |       Web Page              |
