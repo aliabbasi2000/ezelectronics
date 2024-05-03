@@ -1,9 +1,5 @@
 # Requirements Document - current EZElectronics
 
-<<<<<<< HEAD
-
-
->>>>>>> team-origin/main
 
 Version: V1 - description of EZElectronics in CURRENT form (as received by teachers)
 test test
