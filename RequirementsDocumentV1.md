@@ -51,9 +51,11 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Product Company  |      The Company producing the Product       |
 | Competitors  |       Competitor companies E.g. Ebay, Amazon retail, ...      |
 
-|---------------|
-PS: Payment System is not included because is not in API, we know it's impossible for a store have not a way to pay.
-    IT WILL BE INCLUDED IN V2
+
+PS: Payment System is not included because is not in API, we know it's impossible for a store have not a way to pay. IT WILL BE INCLUDED IN V2.
+
+| Stakeholder name | Description |
+| :--------------: | :---------: |
 | Payment Sevice  |       pay online / Pay by cash - E.g. paypal      |
 
 # Context Diagram and interfaces
@@ -73,9 +75,14 @@ PS: Payment System is not included because is not in API, we know it's impossibl
 | Users: Customer, Manager |           PC        |       Web Page              |
 | Tech Admin |         PC          |           Web Page         |
 | Data Base |      SQL           |      Server              |
-|---------------|
+
+
+
 PS: Payment System is not included because is not in API, we know it's impossible for a store have not a way to pay.
     IT WILL BE INCLUDED IN V2
+
+|   Actor   | Logical Interface | Physical Interface |
+| :-------: | :---------------: | :----------------: |
 | Payment Service |       Internet Link           |       https://developer.paypal.com/api/rest/             |
 
 
