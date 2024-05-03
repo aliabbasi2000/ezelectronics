@@ -43,7 +43,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | :--------------: | :---------: |
 | Customer  |       Users of Application who purchase product      |
 | Manager, Premium Manager  |      Users of Application who sell product       |
-| Start up Company  |    Developer of Software and Admins and CEO and Client Assistante         |
+| Start up Company  |    Developer of Software and Admins and CEO         |
 | Product Company  |      The Company producing the Product       |
 | Competitors  |       Competitor companies E.g. Ebay, Amazon retail, ...      |
 | Payment Sevice   |       Online Payment service E.g. paypal      |
@@ -65,7 +65,6 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Tech Admin |         PC          |           Web Page         |
 | Payment Service |       Internet Link           |       https://developer.paypal.com/api/rest/             |
 | Data Base |      SQL           |      sqlite3              |
-| Client Assisstante |      PC           |      Web Page              |
 | Delivery Service |      Internet Link           |      https://developer.dhl.com/api-catalog              |
 | Pick up Points |      PC        |      Web Page              |
 
@@ -138,8 +137,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart   <br /> • FR3.2  Returns the history of the paid carts of the User <br /> • FR3.3 Delete the cart of current user (USER) /Delete all carts (ONLY TECH ADMIN) |
 |  FR4: Manage Payment  |     • FR4.0 Choose a payment method<br /> • FR4.1 Pay the current cart<br /> • FR4.2 Pay the Premium Account  |
 |  FR5: Authorization and Authentication  |       • FR5.0 Log in/Log out  <br /> • FR5.1 Password Recovery   |
-|  FR6: Manage Shipping  |     • FR6.0 Choose a shipping method (Delivery or Pick Up) <br /> • FR6.1 Show the shipping price <br /> • FR6.2 Insert Address |
+|  FR6: Manage Shipping  |     • FR6.0 Choose a shipping method (Delivery or Pick Up) <br /> • FR6.1 Show the shipping price <br /> • FR6.2 Insert Address <br /> • FR6.3 Track delivery |
 |  FR7: Manage Pemium User  |     • FR7.0 Choose to be Premium User (Manager or Customer)|
+|  FR8: Manage Whishlist  |      • FR8.0 Return the curent whislist <br /> • FR8.1 Add / Remove a product to whislist (ONLY CUSTOMERS) |
 
 
 
