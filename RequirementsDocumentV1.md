@@ -141,9 +141,11 @@ PS: Payment System is not included because it's not in the API. We know it's imp
 |  FR2: Manage Users  |   • FR2.0 Retrieves logged in user's Info.  <br /> • FR2.1 Retrieve a User (list of all users/ all users with a role / specific User with username)  <br /> •FR2.2 Create User / Delete User / Delete user with username / Delete all the users    |
 |  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart   <br /> • FR3.2  Returns the history of the paid carts of the User <br /> • FR3.3 Delete the cart of current user /Delete all carts |
 |  FR4: Authorization and Authentication  |       • FR4.0 Log in/Log out     |
-|---------------|
+
+
+
 PS: Payment System is not included because it's not in the API. We know it's impossible for a store to not have a way to pay.
-    IT WILL BE INCLUDED IN V2
+IT WILL BE INCLUDED IN V2
 
 
 
