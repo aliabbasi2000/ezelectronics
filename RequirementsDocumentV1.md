@@ -1,9 +1,13 @@
 # Requirements Document - current EZElectronics
 
-Date: 22/04/2024
+<<<<<<< HEAD
+
+=======
+
+>>>>>>> team-origin/main
 
 Version: V1 - description of EZElectronics in CURRENT form (as received by teachers)
-
+test test
 | Version number | Change |
 | :------------: | :----: |
 |       V1.0.3         |     V1    |
@@ -48,6 +52,13 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Competitors  |       Competitor companies E.g. Ebay, Amazon retail, ...      |
 
 
+PS: Payment System is not included because it's not in the API. We know it's impossible for a store to not have a way to pay.
+ IT WILL BE INCLUDED IN V2.
+
+| Stakeholder name | Description |
+| :--------------: | :---------: |
+| Payment Sevice  |       pay online / Pay by cash - E.g. paypal      |
+
 # Context Diagram and interfaces
 
 ## Context Diagram
@@ -59,19 +70,58 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |   Actor   | Logical Interface | Physical Interface |
 | :-------: | :---------------: | :----------------: |
 | Users: Customer, Manager |           PC        |       Web Page              |
-| Data Base |      SQL           |      sqlite3              |
+| Tech Admin |         PC          |           Web Page         |
+| Data Base |      SQL           |      Server              |
 
 
+
+PS: Payment System is not included because it's not in the API. We know it's impossible for a store to not have a way to pay.
+    IT WILL BE INCLUDED IN V2
+
+|   Actor   | Logical Interface | Physical Interface |
+| :-------: | :---------------: | :----------------: |
+| Payment Service |       Internet Link           |       https://developer.paypal.com/api/rest/             |
 
 
 
 # Stories and personas
 
-\<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
+1.	Persona: Giulia - Electronics Store Manager
 
-\<Persona is-an-instance-of actor>
+•	Background: 
 
-\<stories will be formalized later as scenarios in use cases>
+      1.	Giulia is the manager of a small electronics store. 
+      2.	She's tech-savvy but lacks experience in managing online platforms.
+
+•	Story: 
+
+      1.	Giulia needs a solution to streamline her store's operations and expand its reach online. She discovers EZElectronics and sees its potential to simplify inventory management and reach a wider customer base. 
+      2.	She uses the platform to easily add new products, update stock levels, and fulfill online orders, ultimately boosting her store's revenue.
+
+2.	Persona: Marco - Tech Customer
+  
+•	Background: 
+
+    1.	Marco is a college student with a passion for electronics. 
+    2.	He frequently shops online for the latest gadgets and components.
+
+•	Story: 
+
+    1.	Marco comes across EZElectronics while searching for a specific electronic component. Impressed by the website's user-friendly interface and diverse product range, he creates an account and starts browsing. He finds the component he needs, adds it to his cart, and completes the purchase hassle-free. 
+    2.	Satisfied with his experience, Marco becomes a loyal customer, regularly checking EZElectronics for new arrivals.
+
+3.	Persona: Tommaso - Tech Admin
+  
+•	Background: 
+
+    1.	Tommaso is the tech admin at EZElectronics, responsible for overseeing the development and maintenance of the software application. 
+    2.	He has a strong passion for technology and innovation.
+
+•	Story: 
+
+    1.	Tommaso is tasked with leading the development team in enhancing EZElectronics to meet the evolving needs of electronics store managers and customers. He conducts regular meetings to gather feedback from users and identifies areas for improvement. 
+    2.	Tommaso works closely with the development team to implement new features and optimize the platform's performance. Through his expertise and dedication, Tommaso ensures that EZElectronics remains a top choice for electronics retailers seeking a reliable and user-friendly management solution.
+
 
 # Functional and non functional requirements
 
@@ -83,11 +133,16 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |  ID   | Description |
 | :---: | :---------: |
-|  FR1: Manage Products  |     • FR1.0 Create a new Product / Delete a Product/ Delete all Products <br /> • FR1.1 Registers the arrival of Products with same model    <br /> • FR1.2 Mark a product as sold  <br /> • FR1.3 Retrieve a product (All / with the same Category / Model)  <br /> • FR1.4 Registers the arrival of a set of products <br /> • FR1.5 Mark a product as sold |
+|  FR1: Manage Products  |     • FR1.0 Create a new Product / Delete a Product/ Delete all Products <br /> • FR1.1 Registers the arrival of Products with same model    <br /> • FR1.2 Mark a product as sold  <br /> • FR1.3 Retrieve a product (All / with the same Category / Model)  <br /> • FR1.4 Registers the arrival of a set of products |
 |  FR2: Manage Users  |   • FR2.0 Retrieves logged in user's Info.  <br /> • FR2.1 Retrieve a User (list of all users/ all users with a role / specific User with username)  <br /> •FR2.2 Create User / Delete User / Delete user with username / Delete all the users    |
 |  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart   <br /> • FR3.2  Returns the history of the paid carts of the User <br /> • FR3.3 Delete the cart of current user /Delete all carts |
-|  FR4: Manage Payment  |     • FR4.0 Pay the current cart |
-|  FR5: Authorization and Authentication  |       • FR5.0 Log in/Log out     |
+|  FR4: Authorization and Authentication  |       • FR4.0 Log in/Log out     |
+
+
+
+PS: Payment System is not included because it's not in the API. We know it's impossible for a store to not have a way to pay.
+IT WILL BE INCLUDED IN V2
+
 
 
 
@@ -721,9 +776,23 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 # Glossary
 
-\<use UML class diagram to define important terms, or concepts in the domain of the application, and their relationships>
 
-\<concepts must be used consistently all over the document, ex in use cases, requirements etc>
+*EZElectronics: The software application designed to help managers of electronics stores manage their products and offer them to customers through a dedicated website.
+
+*User: An individual who uses the EZElectronics application. Users can be either Customers or Managers.
+
+*Manager: A user role in the EZElectronics system. Managers have the ability to manage and sell the products in the store.
+
+*Customer: A user role in the EZElectronics system. Customers can purchase products.
+*Products: Items available for purchase in the electronics store. These are managed by the managers and viewed purchased by the customers.Each product has a code, selling price, model, category, details, and arrival date.
+
+*Database: A set of data of the users and products. 
+
+*Cart: A virtual basket where users can add, remove or delete the products.
+
+*Payment: A process that handles payments of the current cart.>
+
+![uml.png](./diagrams/v1/uml.png)
 
 # System Design
 
