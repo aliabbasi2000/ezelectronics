@@ -134,10 +134,24 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  ID   | Description |
 | :---: | :---------: |
 |  FR1: Manage Products  |     • FR1.0 Create a new Product(ONLY MANAGER) / Delete a Product(ONLY MANAGER)/ Delete all Products(ONLY TECH ADMIN) <br /> • FR1.1 Registers the arrival of Products of same model (ONLY MANAGER)   <br /> • FR1.2 Mark a product as sold  <br /> • FR1.3 Retrieve a product (All / with the same Category / Model)  <br /> • FR1.4 Registers the arrival of a set of products  <br /> • FR1.5 Add a Product as sponssored (ONLY BY PREMIUM MANAGER) |
-|  FR2: Manage Users  |   • FR2.0 Retrieves logged in user's Info.  <br /> • FR2.1 Retrieve a User (list of all users/ all users with a role / specific User with username)  <br /> •FR2.2 Create User / Delete User / Delete user with username / Delete all the users    |
-|  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart   <br /> • FR3.2  Returns the history of the paid carts of the User <br /> • FR3.3 Delete the cart of current user /Delete all carts |
-|  FR4: Manage Payment  |     • FR4.0 Pay the current cart |
-|  FR5: Authorization and Authentication  |       • FR5.0 Log in/Log out     |
+
+|  FR2: Manage Users  |   • FR2.0 Retrieves logged in user's Info.  <br /> • FR2.1 Retrieve a User (list of all users/ all users with a role (ONLY TECH ADMIN) / specific User with username)  <br /> •FR2.2 Create User / Delete User(USER AND TECH ADMIN) / Delete user with username  / Delete all the users (ONLY TECH ADMIN)   <br /> •FR2.3 Create Premium User |
+
+
+|  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart   <br /> • FR3.2  Returns the history of the paid carts of the User <br /> • FR3.3 Delete the cart of current user (USER) /Delete all carts (ONLY TECH ADMIN) |
+
+
+|  FR4: Manage Payment  |     • FR4.0 Choose a payment method<br /> • FR4.1 Pay the current cart<br /> • FR4.2 Pay the Premium Account  |
+
+
+|  FR5: Authorization and Authentication  |       • FR5.0 Log in/Log out  <br /> • FR5.1 Password Recovery   |
+
+|  FR6: Manage Shipping  |     • FR6.0 Choose a shipping method (Delivery or Pick Up) <br /> • FR6.1 Show the shipping price <br /> • FR6.2 Insert Address |
+
+|  FR7: Manage Pemium User  |     • FR7.0 Choose to be Premium User (Manager or Customer)|
+
+
+
 
 ## Non Functional Requirements
 
