@@ -162,6 +162,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ## Use case diagram
 
+
+![usecase_diagram.png](./diagrams/v2/usecase_diagram.png)
+
 ### Use case 1, XXX
 
 
