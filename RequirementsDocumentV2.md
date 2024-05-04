@@ -1042,4 +1042,4 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 # Deployment Diagram
 
-![Deployment Diagram (2).png](./diagrams/v2/Deployment Diagram (2).png)
+![Deployment_Diagram_V2.png](./diagrams/v2/Deployment_Diagram_V2.png)
