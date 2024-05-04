@@ -207,6 +207,51 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
+### Use case 4, View Product List
+
+| Actors Involved  |             Customer, Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in (Authenticated) |
+|  Post condition  | User see the result as list of products   |
+| Nominal Scenario |  4.1 User Views the product list based on Model </br> 4.2 User Views the product list based on Category |
+|     Variants     |                                  |
+|    Exceptions    |  4.3 No Product Found based on the criteria    |
+
+
+##### Scenario 4.1
+
+|  Scenario 4.1  |       User Views the product list based on Model       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User Views the product list based on Model |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the View by Model button    |
+|       2        |  FR1.3 Retrieve product list with same model  |
+|       3        |  the list of products with same model show up in the web page  |
+
+##### Scenario 4.2
+
+|  Scenario 4.2  |       User Views the product list based on Category       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User Views the product list based on Category |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the View by Category button    |
+|       2        |  FR1.3 Retrieve product list with same Category  |
+|       3        |  the list of products with same Category show up in the web page  |
+
+##### Scenario 4.3
+
+|  Scenario 4.3  |       No Product Found based on the criteria       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  No Product Found based on the criteria |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the View by Category button    |
+|       2        |  FR1.3 Retrieve product list with same Category  |
+|       3        |  Database Retrieves: Null  |
+|       4        |  This message pops up: No Product Found based on the criteria  |
+
 
 # Glossary
 
