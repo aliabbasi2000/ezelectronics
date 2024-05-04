@@ -727,6 +727,62 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
+### Use case 14, Create a new Product
+
+| Actors Involved  |             Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Manager (Authenticated) |
+|  Post condition  | The product is added to the Inventory   |
+| Nominal Scenario |  14.1 Manager successfully add product to the Inventory |
+|     Variants     |    |
+|    Exceptions    |  14.2 The product is already exist in the database - 409 Error </br> 14.3 The arrivalDate of the product is after the current date    |
+
+
+##### Scenario 14.1
+
+|  Scenario 14.1  |       Manager add a product to his cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product is added to the Inventory |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on Add a new Product  button    |
+|       2        |  The Manager enters the information of the product    |
+|       3        |  FR1.0 Create a new product |
+|       4        |  Insert the Product in DataBase |
+|       5        |  DataBase Returns success |
+|       6        |  "The product has been added" msg pops up and manager can see the new product in his product list|
+
+
+##### Scenario 14.2
+|  Scenario 14.2  |      The product is already exist in the database - 409 Error       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product is already exist in the database - 409 Error |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on Add a new Product  button    |
+|       2        |  The Manager enters the information of the product    |
+|       3        |  FR1.0 Create a new product |
+|       4        |  Insert the Product in DataBase |
+|       5        |  DataBase Returns error - "Duplicated product ID" |
+|       6        |  "The product is already exist in our DataBase" msg pops up|
+
+
+##### Scenario 14.3
+
+|  Scenario 14.2  |      Manager Inserts an invalid arrival Date - 409 Error       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |   The arrivalDate of the product is after the current date - 409 Error |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on Add a new Product  button    |
+|       2        |  The Manager enters the information of the product    |
+|       3        |  The Manager inserts the arrival date manually    |
+|       4        |  FR1.4 Register the Arrival of a set of product |
+|       3        |  FR1.0 Create a new product |
+|       4        |  Insert the Product in DataBase |
+|       5        |  we check Arrival date which manager entered is after the current date = True  |
+|       6        |  "The arrivalDate of the product is after the current date - 409 Error" msg pops up|
+
 
 
 
