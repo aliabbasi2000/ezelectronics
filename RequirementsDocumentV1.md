@@ -758,6 +758,43 @@ IT WILL BE INCLUDED IN V2
 |       2        |  SellingDate is before the product's arrivalDate == True |
 |       3        |  error message pops up: "SellingDate is before the product's arrivalDate" |
 
+
+
+### Use case 14, View Product details
+
+| Actors Involved  |             Customer, Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in (Authenticated) |
+|  Post condition  | User see the details of product    |
+| Nominal Scenario |  5.1 User Views the product details  |
+|     Variants     |          |
+|    Exceptions    |  5.2 404 Error - The Product Found    |
+
+
+##### Scenario 14.1
+
+|  Scenario 14.1  |       User Views the product details (is not sponsored)      |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User see the details of product  |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on a normal Product   |
+|       2        |  FR1.3 Retrieve a product  |
+|       3        |  DataBase Retrieves the details of a normal product  |
+|       4        |  The Detail of a product are shown to the user   |
+
+##### Scenario 14.2
+
+|  Scenario 14.2  |       404 Error - The Product Found        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User Encounters an Error - THe Product Found |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on a product    |
+|       2        |  FR1.3 Retrieve a product  |
+|       3        |  Database Reruens an Error  |
+|       4        |  This error msg pops up: 404 Error - The Product Found  |
+
 # Glossary
 
 
