@@ -385,6 +385,70 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        |  DataBase returns NULL |
 |       3        |  No Cart History Message will be desplayed to the Customer |
 
+
+
+
+### Use case 8, Add Product to the Cart
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer (Authenticated) |
+|  Post condition  | The cart contains the product   |
+| Nominal Scenario |  8.1 Customer successfully add normal product to his cart </br> 8.2 Customer successfully add sponsored product to his cart|
+|     Variants     |  8.3 Customer add n product to his cart   |
+|    Exceptions    |  8.4 The product is sold out or unavailable    |
+
+
+##### Scenario 8.1
+
+|  Scenario 8.1  |       Customer adds a normal product to his cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  The cart contains the normal product |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Add Product button    |
+|       2        |  FR3.1 Add product to the current cart |
+|       3        |  The cart contains the product |
+|       4        |  if Customer clicks on "Show Cart" FR3.0 Return current cart|
+
+##### Scenario 8.2
+
+|  Scenario 8.2  |      Customer adds a sponsored product to his cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  The cart contains the sponsored product |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Add Product button    |
+|       2        |  FR3.1 Add product to the current cart |
+|       3        |  The cart contains the product |
+|       4        |  if Customer clicks on "Show Cart" FR3.0 Return current cart|
+
+
+##### Scenario 8.3
+
+|  Scenario 8.3  |      Customer add n product to his cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  The cart contains n product |
+|     Step#      |            Description                   |
+|       1        |  The Customer selects n number of products    |
+|       2        |  The Customer Clicks on Add Product button  |
+|       3        |  n * FR3.1 Add product to the current cart |
+|       4        |   if Customer clicks on "Show Cart" FR3.0 Return current cart  |
+
+
+##### Scenario 8.4
+
+|  Scenario 8.4  |      The product is sold out or unavailable       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition | This msg Pops up: The product is sold out or unavailable |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Add Product button  |
+|       2        |  FR3.1 Add product to the current cart |
+|       3        |  DataBase return an Error  |
+|       4        |  This msg Pops up: The product is sold out or unavailable |
+
 # Glossary
 
 \<use UML class diagram to define important terms, or concepts in the domain of the application, and their relationships>
