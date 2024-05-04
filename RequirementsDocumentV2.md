@@ -266,6 +266,52 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
+### Use case 5, View Product details
+
+| Actors Involved  |             Customer, Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in (Authenticated) |
+|  Post condition  | User see the details of product including the image and description   |
+| Nominal Scenario |  5.1 User Views the product details (is not sponsored) </br> 5.2 User Views the sponsored product details |
+|     Variants     |          |
+|    Exceptions    |  5.3 404 Error - No Product Found    |
+
+
+##### Scenario 5.1
+
+|  Scenario 5.1  |       User Views the product details (is not sponsored)      |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User see the details of product (is not sponsored) including the image and description |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on a normal Product   |
+|       2        |  FR1.3 Retrieve a product  |
+|       3        |  DataBase Retrieves the details of a normal product  |
+
+##### Scenario 5.2
+
+|  Scenario 5.2  |       User Views the sponsored product details     |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User see the details of Sponsored product including the image and description |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on a Sponsored Product    |
+|       2        |  FR1.3 Retrieve a product  |
+|       3        | DataBase Retrieves the details of an Sponsored product  |
+
+##### Scenario 5.3
+
+|  Scenario 5.3  |       404 Error - No Product Found        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User Encounters an Error - No Product Found |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on a product    |
+|       2        |  FR1.3 Retrieve a product  |
+|       3        |  Database Reruens an Error  |
+|       4        |  This error msg pops up: 404 Error - No Product Found  |
+
+
 
 
 # Glossary
