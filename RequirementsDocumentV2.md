@@ -213,14 +213,14 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User has an account and Logged in (Authenticated) |
 |  Post condition  | User see the result as list of products   |
-| Nominal Scenario |  4.1 User Views the product list based on Model </br> 4.2 User Views the product list based on Category |
-|     Variants     |                                  |
-|    Exceptions    |  4.3 No Product Found based on the criteria    |
+| Nominal Scenario |  4.1 User Views the product list based on Model  - Sponsored product on Top </br> 4.2 User Views the product list based on Category - Sponsored product on Top  |
+|     Variants     |  4.3 User Views the product list without Sponsored product on Top        |
+|    Exceptions    |  4.4 No Product Found based on the criteria    |
 
 
 ##### Scenario 4.1
 
-|  Scenario 4.1  |       User Views the product list based on Model       |
+|  Scenario 4.1  |       User Views the product list based on Model - Sponsored product on Top      |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User has an account and Logged in (Authenticated) |
 | Post condition |  User Views the product list based on Model |
@@ -231,7 +231,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ##### Scenario 4.2
 
-|  Scenario 4.2  |       User Views the product list based on Category       |
+|  Scenario 4.2  |       User Views the product list based on Category - Sponsored product on Top     |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User has an account and Logged in (Authenticated) |
 | Post condition |  User Views the product list based on Category |
@@ -242,7 +242,19 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ##### Scenario 4.3
 
-|  Scenario 4.3  |       No Product Found based on the criteria       |
+|  Scenario 4.3  |       User Views the product list without Sponsored product on Top       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User Views the product list based on Catagory/Model without Sponsored product on Top |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the View by Category/Model button    |
+|       2        |  FR1.3 Retrieve product list with same Category/Model  |
+|       3        |  Database Retrieves the list  |
+|       4        |  The list of products with same Category/Model show up in the web page  |
+
+##### Scenario 4.4
+
+|  Scenario 4.4  |       No Product Found based on the criteria       |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User has an account and Logged in (Authenticated) |
 | Post condition |  No Product Found based on the criteria |
@@ -251,6 +263,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       2        |  FR1.3 Retrieve product list with same Category  |
 |       3        |  Database Retrieves: Null  |
 |       4        |  This message pops up: No Product Found based on the criteria  |
+
+
+
 
 
 # Glossary
