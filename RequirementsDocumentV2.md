@@ -525,6 +525,62 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       4        |  "The product does not exist in cart - 404 Error"  Message Pops up  |
 
 
+
+### Use case 11, Delete a Product
+
+| Actors Involved  |             Manager, Premium Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Manager (Authenticated) |
+|  Post condition  | The product is Deleted from the Inventory   |
+| Nominal Scenario |  11.1 Manager successfully Deletes the product from the Inventory </br> 11.2 Premium Manager successfully Deletes the Sponsored product from the Inventory |
+|     Variants     |    |
+|    Exceptions    |  11.3 The product does not represent a product in our database - 404 Error    |
+
+
+##### Scenario 11.1
+
+|  Scenario 11.1  |       Manager successfully Deletes the product from the Inventory       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product is Deleted from the Inventory |
+|     Step#      |            Description                   |
+|       1        |   The Manager Selects the product to be deleted   |
+|       2        |   The Manager Clicks on Delete the Product  button  |
+|       3        |  FR1.0 Delete a product |
+|       4        |  Delete the Product from the DataBase |
+|       5        |  DataBase Returns successfull result |
+|       6        |  "The product has been Deleted" msg pops up|
+
+
+##### Scenario 11.2
+
+|  Scenario 11.2  |       Premium Manager successfully Deletes the product from the Inventory       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The Sponsored product is Deleted from the Inventory |
+|     Step#      |            Description                   |
+|       1        |   The Manager Selects the Sponsored product to be deleted   |
+|       2        |   The Manager Clicks on Delete the Product  button  |
+|       3        |  FR1.0 Delete a product |
+|       4        |  Delete the Product from the DataBase |
+|       5        |  DataBase Returns successfull result |
+|       6        |  "The Sponsored product has been Deleted" msg pops up|
+
+
+##### Scenario 11.3
+|  Scenario 11.3  |      The product does not represent a product in our database       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product does not represent a product in our database - 404 Error |
+|     Step#      |            Description                   |
+|       1        |   The Manager Selects the product to be deleted   |
+|       2        |   The Manager enters the product ID  |
+|       3        |  FR1.0 Delete a product |
+|       4        |  Delete the Product from the DataBase |
+|       5        |  DataBase Returns Error - Does not represent a record in Database |
+|       6        |  "There is no such a Product" msg pops up|
+
+
 # Glossary
 
 \<use UML class diagram to define important terms, or concepts in the domain of the application, and their relationships>
