@@ -786,6 +786,106 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
+### Use case 15, Mark a Product as Sponsored
+
+| Actors Involved  |            Premium Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Premium Manager (Authenticated) |
+|  Post condition  | The product is marked as premium product   |
+| Nominal Scenario |  15.1 The Premium Manager successfully marks thr product as sponsored |
+|     Variants     |    |
+|    Exceptions    |  15.2 The product is already is an sponsored product  </br> 15.3 The manager is not a premium manager    |
+
+
+##### Scenario 15.1
+
+|  Scenario 15.1  |       The Premium Manager marks the product as sponsored       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The Premium Manager successfully marks the product as sponsored |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on mark the Product as sponsored button    |
+|       2        |  Check if the Manager is Premium == True |
+|       3        |  Check if the product is sponsored == False |
+|       4        |  Mark the Sponsored feature in DB as True |
+|       5        |  The premium manager can see the product marked as sponsored |
+
+##### Scenario 15.2
+
+|  Scenario 15.2  |        The product is already is an sponsored product       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The Premium Manager see an Error: Already Sponsored product |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on mark the Product as sponsored button    |
+|       2        |  Check if the Manager is Premium == True |
+|       3        |  Check if the product is sponsored == Ture |
+|       4        |  The premium manager see This Error: "Product is already sponsored" |
+
+
+##### Scenario 15.3
+
+|  Scenario 15.3  |       The manager is not a premium manager       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The Premium Manager encounters with this erro: You are not a Premium Manager!!! |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on mark the Product as sponsored button    |
+|       2        |  Check if the Manager is Premium == False |
+|       3        |  Error: You are not a Premium Manager!!! |
+
+
+
+
+### Use case 16, Unmark a Product as Sponsored
+
+| Actors Involved  |            Premium Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Premium Manager (Authenticated) |
+|  Post condition  | The sponsored product is unmarked    |
+| Nominal Scenario |  16.1 The Premium Manager successfully unmarks the sponsored product  |
+|     Variants     |    |
+|    Exceptions    |  16.2 The product is already is not a sponsored product  </br> 16.3 The manager is not a premium manager    |
+
+
+##### Scenario 16.1
+
+|  Scenario 16.1  |       The Premium Manager successfully unmarks the sponsored product      |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The sponsored product is unmarked |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on Unmark the Product    |
+|       2        |  Check if the Manager is Premium == True |
+|       3        |  Check if the product is sponsored == True |
+|       4        |  UnMark the Sponsored feature in DB as True |
+|       5        |  The premium manager can see the sponsored product Unmarked  |
+
+##### Scenario 16.2
+
+|  Scenario 16.2  |        The product is already is not a sponsored product       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The Premium Manager see an Error: Not Sponsored product |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on mark the Product     |
+|       2        |  Check if the Manager is Premium == True |
+|       3        |  Check if the product is sponsored == False |
+|       4        |  The premium manager see This Error: "Product is not a sponsored Product" |
+
+
+##### Scenario 16.3
+
+|  Scenario 16.3  |       The manager is not a premium manager       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The Premium Manager encounters with this erro: You are not a Premium Manager!!! |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on mark the Product     |
+|       2        |  Check if the Manager is Premium == False |
+|       3        |  Error: You are not a Premium Manager!!! |
+
+
 
 
 
