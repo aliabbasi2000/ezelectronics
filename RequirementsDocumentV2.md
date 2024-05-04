@@ -328,7 +328,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ##### Scenario 6.1
 
-|  Scenario 5.1  |       Customer view the Details of the cart       |
+|  Scenario 6.1  |       Customer view the Details of the cart       |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User has an account and Logged in as Customer (Authenticated) |
 | Post condition |  Customer view the Details of the cart |
@@ -339,7 +339,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ##### Scenario 6.2
 
-|  Scenario 5.2  |       No Product in the Cart       |
+|  Scenario 6.2  |       No Product in the Cart       |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User has an account and Logged in as Customer (Authenticated) |
 | Post condition |  Customer see No Product has been added to cart Message. |
@@ -348,6 +348,42 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       2        | FR3.0 Return the curent cart |
 |       3        |  DataBase returns NULL |
 |       3        |  "No Product has been added to the cart. Keep Shopping.." will pops up. |
+
+
+
+### Use case 7, View Cart History
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer (Authenticated) |
+|  Post condition  | Customer view the history of cart   |
+| Nominal Scenario |  6.1 Customer can view the history of his cart |
+|     Variants     |                                  |
+|    Exceptions    |  6.2 No history for cart is available    |
+
+
+##### Scenario 7.1
+
+|  Scenario 7.1  |       Customer can view the history of his cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  Customer can view the history of his cart |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on the View Cart History button    |
+|       2        |  FR3.2 Return History of the paid carts of the user |
+|       3        |  The list will be Displayed on the web page |
+
+##### Scenario 7.2
+
+|  Scenario 7.2  |       No history for cart is available       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  Error Message: No Cart History Available |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on the View Cart History button    |
+|       2        |  FR3.2 Return History of the paid carts of the user |
+|       3        |  DataBase returns NULL |
+|       3        |  No Cart History Message will be desplayed to the Customer |
 
 # Glossary
 
