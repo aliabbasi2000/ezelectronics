@@ -357,9 +357,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User has an account and Logged in as Customer (Authenticated) |
 |  Post condition  | Customer view the history of cart   |
-| Nominal Scenario |  6.1 Customer can view the history of his cart |
+| Nominal Scenario |  7.1 Customer can view the history of his cart |
 |     Variants     |                                  |
-|    Exceptions    |  6.2 No history for cart is available    |
+|    Exceptions    |  7.2 No history for cart is available    |
 
 
 ##### Scenario 7.1
@@ -448,6 +448,82 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       2        |  FR3.1 Add product to the current cart |
 |       3        |  DataBase return an Error  |
 |       4        |  This msg Pops up: The product is sold out or unavailable |
+
+
+
+### Use case 9, Delete Cart
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer and it has at least one product in Cart  |
+|  Post condition  | The cart has been deleted   |
+| Nominal Scenario |  9.1 Customer successfully deleted his cart |
+|     Variants     |    |
+|    Exceptions    |  9.2 There is no product in the cart    |
+
+
+##### Scenario 9.1
+
+|  Scenario 9.1  |       Customer successfully deleted his cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer and it has at least one product in Cart  |
+| Post condition |  The cart has been deleted |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Delete Cart button    |
+|       2        |  FR3.3 Delete current cart of the current cart |
+|       3        |  Database successfully deletes the records related to the Cart |
+|       4        |  "you Deleted your cart successfully" msg pops up |
+|       5        |  Navigate customer to Home Page |
+
+##### Scenario 9.2
+
+|  Scenario 9.2  |      There is no product in the cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  There is no product in the cart and nothing changed |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Delete Cart button    |
+|       2        |  FR3.3 Delete current cart of the current cart |
+|       3        |  Database Returns an error |
+|       4        |  "You do not have any cart" msg pops up |
+|       5        |  Navigate customer to Home Page |
+
+
+
+### Use case 10, Remove Product from the Cart
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer and it has at least one product in Cart |
+|  Post condition  | The product is Removed from the cart   |
+| Nominal Scenario |  10.1 The product is Successfully Removed from the cart |
+|     Variants     |     |
+|    Exceptions    |  10.2 The product does not exist in cart - 404 Error   |
+
+
+##### Scenario 10.1
+
+|  Scenario 10.1  |       The product is Removed from the cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer and it has at least one product in Cart  |
+| Post condition |  The product is Removed from the cart |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Remove Product button    |
+|       2        |  FR3.1 Remove the product from the current cart |
+|       3        |  if Customer clicks on "Show Cart" FR3.0 Return current cart|
+
+##### Scenario 10.2
+
+|  Scenario 10.2  |      The product does not exist in cart - 404 Error       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer and it has at least one product in Cart  |
+| Post condition |  The product does not exist in cart and nothing changed |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Remove Product button  |
+|       2        |  FR3.1 Remove the product from the current cart |
+|       3        |  Database Returns an Error  |
+|       4        |  "The product does not exist in cart - 404 Error"  Message Pops up  |
+
 
 # Glossary
 
