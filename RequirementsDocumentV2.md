@@ -887,8 +887,151 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
+### Use case 17, Delete All The Carts
+
+| Actors Involved  |            Tech Admin               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Tech Admin (Authenticated) |
+|  Post condition  | All Carts are deleted    |
+| Nominal Scenario |  17.1 The Tech Admin successfully deletes all carts  |
+|     Variants     |    |
+|    Exceptions    |  17.2 All Carts are already deleted (NO CART IN DATABASE ) |
+
+##### Scenario 17.1
+
+|  Scenario 17.1  |       The Tech Admin successfully deletes all carts       |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Tech Admin (Authenticated) |
+|  Post condition  | All Carts are deleted    |
+|     Step#      |            Description                   |
+|       1        |  The Tech Admin  Clicks on Delete ALL carts |
+|       2        |  Check if there is at least one cart == True |
+|       3        |  The Tech Admin  Clicks on confirm to delete |
+|       4        |  The Tech Admin can see the success of the operation  |
+
+##### Scenario 17.2
+
+|  Scenario 17.1  |       The Tech Admin successfully deletes all carts       |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Tech Admin (Authenticated) |
+|  Post condition  | All Carts are deleted    |
+|     Step#      |            Description                   |
+|       1        |  The Tech Admin  Clicks on Delete ALL carts |
+|       2        |  Check if there is at least one cart == False |
+|       3        |  The Tech Admin see This Error: "ERROR: No Cart exist" |
+
+### Use case 18, Delete All The Carts
+
+| Actors Involved  |            Tech Admin               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Tech Admin (Authenticated) |
+|  Post condition  | Will be  a list of all users    |
+| Nominal Scenario |  18.1 The Tech Admin successfully see all User |
+|     Variants     |    |
+|    Exceptions    | NONE |
+
+##### Scenario 18.1
+
+|  Scenario 18.1  |       The Tech Admin successfully deletes all carts       |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Tech Admin (Authenticated) |
+|  Post condition  | A list of all users will be displayed  |
+|     Step#      |            Description                   |
+|       1        |  The Tech Admin  Clicks on Retrive ALL users|
+|       2        |  The Tech Admin can see A list of all users  |
+
+### Use case 18, Retrive all Users
+
+| Actors Involved  |            Tech Admin               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Tech Admin (Authenticated) |
+|  Post condition  | Will be  a list of all users    |
+| Nominal Scenario |  18.1 The Tech Admin successfully see all User |
+|     Variants     |    |
+|    Exceptions    | NONE |
+
+##### Scenario 18.1
+
+|  Scenario 18.1  |       The Tech Admin successfully Retrives all users       |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Tech Admin (Authenticated) |
+|  Post condition  | A list of all users will be displayed  |
+|     Step#      |            Description                   |
+|       1        |  The Tech Admin  Clicks on Retrive ALL users|
+|       2        |  The Tech Admin can see A list of all users  |
 
 
+
+### Use case 19, Manage Payment
+
+| Actors Involved  |            Payment Services, Customers, Managers              |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | The customer has items in their online shopping cart. |
+|  Post condition  | The customer's payment has been successfully processed.  |
+| Nominal Scenario |  19.1 The Customer PAY, The payment service acts as an intermediary, Maneger Access the money   |
+|     Variants     |    |
+|    Exceptions    | 19.2 The Customer PAY, The payment service acts as an intermediary, The manager does not access the money |
+
+
+##### Scenario 19.1
+
+|  Scenario 19.1  |      The Customer PAY, The payment service acts as an intermediary, Maneger Access the money     |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Precondition   | The customer has items in their online shopping cart. |
+|  Post condition  | The customer's payment has been successfully processed.  |
+|     Step#      |            Description                   |
+|       1        |  The customer navigates to the checkout page.|
+|       2        |  The customer reviews the items in their cart and verifies the total amount. |
+|       3        | The customer selects a payment method from the available options (e.g., credit card, PayPal, etc.).   |
+|       4        | The customer enters their payment details, including credit card information or PayPal account details. |
+|       5        | The customer reviews the entered payment information for accuracy.  |
+|       6        | The customer confirms the purchase by clicking on the "Place Order" or "Confirm Purchase" button. |
+|       7        | The payment service validates the transaction by verifying the payment details provided by the customer. |
+|       8        | If the transaction is valid, the payment service processes the payment by charging the customer's selected payment method. |
+|       9       | The payment service sends a confirmation message to the customer, indicating that the payment has been successfully processed.|
+|       10        | Simultaneously, the payment service notifies the Manager of the successful payment.|
+|       11        | The merchant fulfills the customer's order by preparing and shipping the purchased items |
+
+
+
+##### Scenario 19.2
+
+|  Scenario 19.2  |      The Customer PAY, The payment service acts as an intermediary, Maneger Access the money     |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Precondition   | The customer has items in their online shopping cart. |
+|  Post condition  | First customer's payment has not been successfully processed, Second YES  |
+|     Step#      |            Description                   |
+|       1        |  The customer navigates to the checkout page.|
+|       2        |  The customer reviews the items in their cart and verifies the total amount. |
+|       3        | The customer selects a payment method from the available options (e.g., credit card, PayPal, etc.).   |
+|       4        | The customer enters their payment details, including credit card information or PayPal account details. |
+|       5        | The customer reviews the entered payment information for accuracy.  |
+|       6        | The customer confirms the purchase by clicking on the "Place Order" or "Confirm Purchase" button. |
+|       7        | The payment service attempts to validate the transaction by verifying the payment details provided by the customer |
+|       8        |The payment service detects that the payment method provided by the customer is not valid (e.g., insufficient funds, expired card, etc.) |
+|       9       | The payment service notifies the customer that the payment method is not valid and prompts them to review and update their payment information|
+|       10        |The customer reviews the error message and decides to either update their payment method or cancel the purchase|
+|       11        | If the customer chooses to update their payment method, they provide alternative payment details and attempt to confirm the purchase again |
+|       12        | The payment service does not process the payment due to the invalid payment method|
+
+##### Scenario 19.3
+
+|  Scenario 19.3  |      The Customer PAY, The payment service acts as an intermediary, Maneger Access the money     |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Precondition   | The customer has items in their online shopping cart. |
+|  Post condition  | First customer's payment has not been successfully processed, Second YES  |
+|     Step#      |            Description                   |
+|       1        |  The customer navigates to the checkout page.|
+|       2        |  The customer reviews the items in their cart and verifies the total amount. |
+|       3        | The customer selects a payment method from the available options (e.g., credit card, PayPal, etc.).   |
+|       4        | The customer enters their payment details, including credit card information or PayPal account details. |
+|       5        | The customer reviews the entered payment information for accuracy.  |
+|       6        | The customer confirms the purchase by clicking on the "Place Order" or "Confirm Purchase" button. |
+|       7        | The payment service attempts to validate the transaction by verifying the payment details provided by the customer |
+|       8        |The payment service detects that the payment method provided by the customer is not valid (e.g., insufficient funds, expired card, etc.) |
+|       9       | The payment service notifies the customer that the payment method is not valid and prompts them to review and update their payment information|
+|       10        |The customer reviews the error message and decides to either update their payment method or cancel the purchase|
+|       11        |If the customer chooses to cancel the purchase, they abandon the checkout process and return to shopping or exit the website |
 
 # Glossary
 
