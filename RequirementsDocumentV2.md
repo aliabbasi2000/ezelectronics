@@ -274,7 +274,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  Post condition  | User see the details of product including the image and description   |
 | Nominal Scenario |  5.1 User Views the product details (is not sponsored) </br> 5.2 User Views the sponsored product details |
 |     Variants     |          |
-|    Exceptions    |  5.3 404 Error - No Product Found    |
+|    Exceptions    |  5.3 404 Error - The Product Found    |
 
 
 ##### Scenario 5.1
@@ -301,18 +301,51 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ##### Scenario 5.3
 
-|  Scenario 5.3  |       404 Error - No Product Found        |
+|  Scenario 5.3  |       404 Error - The Product Found        |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User has an account and Logged in (Authenticated) |
-| Post condition |  User Encounters an Error - No Product Found |
+| Post condition |  User Encounters an Error - THe Product Found |
 |     Step#      |            Description                   |
 |       1        |  The User Clicks on a product    |
 |       2        |  FR1.3 Retrieve a product  |
 |       3        |  Database Reruens an Error  |
-|       4        |  This error msg pops up: 404 Error - No Product Found  |
+|       4        |  This error msg pops up: 404 Error - The Product Found  |
 
 
 
+### Use case 6, View Cart 
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer (Authenticated) |
+|  Post condition  | Customer view the Details of the cart   |
+| Nominal Scenario |  5.1 Customer can view the details of his cart |
+|     Variants     |                                  |
+|    Exceptions    |  5.2 No Product in the cart.    |
+
+
+##### Scenario 6.1
+
+|  Scenario 5.1  |       Customer view the Details of the cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  Customer view the Details of the cart |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on the View Cart button    |
+|       2        |  FR3.0 Return History of the paid carts of the user |
+|       3        |  The Cart details will be Displayed on the web page |
+
+##### Scenario 6.2
+
+|  Scenario 5.2  |       No Product in the Cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  Customer see No Product has been added to cart Message. |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on the View Cart button    |
+|       2        |  FR3.0 Return History of the paid carts of the user |
+|       3        |  DataBase returns NULL |
+|       3        |  "No Product has been added to the cart. Keep Shopping.." will pops up. |
 
 # Glossary
 
