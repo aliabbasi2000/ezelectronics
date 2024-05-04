@@ -321,9 +321,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User has an account and Logged in as Customer (Authenticated) |
 |  Post condition  | Customer view the Details of the cart   |
-| Nominal Scenario |  5.1 Customer can view the details of his cart |
+| Nominal Scenario |  6.1 Customer can view the details of his cart |
 |     Variants     |                                  |
-|    Exceptions    |  5.2 No Product in the cart.    |
+|    Exceptions    |  6.2 No Product in the cart.    |
 
 
 ##### Scenario 6.1
