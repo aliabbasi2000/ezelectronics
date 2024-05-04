@@ -766,9 +766,9 @@ IT WILL BE INCLUDED IN V2
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User has an account and Logged in (Authenticated) |
 |  Post condition  | User see the details of product    |
-| Nominal Scenario |  5.1 User Views the product details  |
+| Nominal Scenario |  14.1 User Views the product details  |
 |     Variants     |          |
-|    Exceptions    |  5.2 404 Error - The Product Found    |
+|    Exceptions    |  14.2 404 Error - The Product Found    |
 
 
 ##### Scenario 14.1
