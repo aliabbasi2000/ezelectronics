@@ -581,6 +581,60 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       6        |  "There is no such a Product" msg pops up|
 
 
+
+### Use case 12, Registers the arrival of a set of products
+
+| Actors Involved  |             Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Manager (Authenticated) |
+|  Post condition  | All the products are added to the inventory   |
+| Nominal Scenario |  12.1 Manager successfully added All the products to the inventory |
+|     Variants     |    |
+|    Exceptions    |  12.2 The product is already registered in our database </br>  12.3 The ArrivalDate is invalid   |
+
+
+##### Scenario 12.1
+
+|  Scenario 12.1  |       Manager successfully added All the products to the inventory        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  All the products are added to the inventory |
+|     Step#      |            Description                   |
+|       1        |   The Manager selects Register a set of arrivals   |
+|       2        |   The Manager inserts the information of them  |
+|       3        |  FR1.4 Register the arrival of set of products |
+|       4        |  Insert data to the DataBase |
+|       5        |  DataBase Returns successfull result |
+|       6        |  "The products successfully have been Registered" msg pops up|
+
+
+##### Scenario 12.2
+
+|  Scenario 12.2  |       The product is already registered in our database        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product is already in our database - Error |
+|     Step#      |            Description                   |
+|       1        |   The Manager selects Register a set of arrivals   |
+|       2        |   The Manager inserts the information of them  |
+|       3        |  FR1.4 Register the arrival of set of products |
+|       4        |  Insert data to the DataBase |
+|       5        |  DataBase Returns Error - Duplicate Data |
+|       6        |  "Error: The products have not been Registered - Already in our Database " msg pops up|
+
+##### Scenario 12.3
+
+|  Scenario 12.3  |       The ArrivalDate is invalid         |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The ArrivalDate is invalid - Error |
+|     Step#      |            Description                   |
+|       1        |   The Manager selects Register a set of arrivals   |
+|       2        |   The Manager inserts the information of them  |
+|       3        |  FR1.4 Register the arrival of set of products |
+|       4        |  if (The Arrival date is after current date) == True |
+|       5        |  "Error: The products have not been Registered due to the invalid ArrivalDate" msg pops up|
+
 # Glossary
 
 \<use UML class diagram to define important terms, or concepts in the domain of the application, and their relationships>
