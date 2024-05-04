@@ -204,6 +204,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        |  We got an Error from DataBase side |
 |       5        |  An Error message pops up      |
 
+### Use case 3, XXX
 
 
 
@@ -634,6 +635,104 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        |  FR1.4 Register the arrival of set of products |
 |       4        |  if (The Arrival date is after current date) == True |
 |       5        |  "Error: The products have not been Registered due to the invalid ArrivalDate" msg pops up|
+
+
+
+### Use case 13, Sell Product
+
+| Actors Involved  |             Manager, Premium Manager, Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Manager (Authenticated) |
+|  Post condition  | The product marked as sold in the system  |
+| Nominal Scenario |  13.1 Manager successfully sold an Item </br> 13.2 Premium Manager successfully sold an Sponsored Item  |
+|     Variants     |    |
+|    Exceptions    |  13.2 404 Error - The product ID does not represent a product in database </br>  13.3 Error - The product has already been sold  </br>  13.4 Error - SellingDate is after the current date </br>  13.5 Error - SellingDate is before the product's arrivalDate  |
+
+
+##### Scenario 13.1
+
+|  Scenario 13.1  |       Manager successfully sold an Item of his Inventory        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product marked as sold in the system and the  |
+|     Step#      |            Description                   |
+|       1        |   ProductID is recieved from Customer which wants to buy   |
+|       2        |  check the productId exist in database == True  |
+|       3        |  check the product has been sold out == False |
+|       4        |  Check the SellingDate is after the current date == False |
+|       5        |  SellingDate is before the product's arrivalDate == False |
+|       6        |  FR1.2 Mark the product as sold |
+|       7        |  Update the inventory |
+
+##### Scenario 13.2
+
+|  Scenario 13.2  |       Premium Manager successfully sold an Sponsored Item         |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The Sponsored product marked as sold in the system and the  |
+|     Step#      |            Description                   |
+|       1        |   ProductID is recieved from Customer which wants to buy   |
+|       2        |  check the productId exist in database == True  |
+|       3        |  check the product has been sold out == False |
+|       4        |  Check the SellingDate is after the current date == False |
+|       5        |  SellingDate is before the product's arrivalDate == False |
+|       6        |  FR1.2 Mark the product as sold |
+|       7        |  Update the inventory |
+
+
+##### Scenario 13.3
+
+|  Scenario 13.3  |       404 Error - The product ID does not represent a product in database        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition | 404 Error - The product ID does not represent a product in database  |
+|     Step#      |            Description                   |
+|       1        |   ProductID is recieved from Customer which wants to buy   |
+|       2        |  check the productId exist in database == False  |
+|       3        |  404 Error message pops up "The product ID does not represent a product in database" |
+
+##### Scenario 13.4
+
+|  Scenario 13.4  |       Error - The product has already been sold        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  Error - The product has already been sold  |
+|     Step#      |            Description                   |
+|       1        |   ProductID is recieved from Customer which wants to buy   |
+|       2        |  check the product has been sold out == True |
+|        3       |  Error messag pops up: "The product has already been sold out" |
+
+##### Scenario 13.5
+
+|  Scenario 13.5  |       Error - SellingDate is after the current date        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product marked as sold in the system and the  |
+|     Step#      |            Description                   |
+|       1        |   ProductID is recieved from Customer which wants to buy   |
+|       2        |  Check the SellingDate is after the current date == True |
+|       3        |  Error message pops up: "SellingDate is after the current date" |
+
+##### Scenario 13.6
+
+|  Scenario 13.6  |      Error - SellingDate is before the product's arrivalDate        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product marked as sold in the system and the  |
+|     Step#      |            Description                   |
+|       1        |   ProductID is recieved from Customer which wants to buy   |
+|       2        |  SellingDate is before the product's arrivalDate == True |
+|       3        |  error message pops up: "SellingDate is before the product's arrivalDate" |
+
+
+
+
+
+
+
+
+
+
 
 # Glossary
 
