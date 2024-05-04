@@ -287,6 +287,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       1        |  The User Clicks on a normal Product   |
 |       2        |  FR1.3 Retrieve a product  |
 |       3        |  DataBase Retrieves the details of a normal product  |
+|       4        |  The Detail of the normal product are shown to the user   |
 
 ##### Scenario 5.2
 
@@ -298,6 +299,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       1        |  The User Clicks on a Sponsored Product    |
 |       2        |  FR1.3 Retrieve a product  |
 |       3        | DataBase Retrieves the details of an Sponsored product  |
+|       4        |  The Detail of the sposnsored product are shown to the user   |
 
 ##### Scenario 5.3
 
