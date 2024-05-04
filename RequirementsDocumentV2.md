@@ -334,7 +334,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Post condition |  Customer view the Details of the cart |
 |     Step#      |            Description                   |
 |       1        |  The Customer Clicks on the View Cart button    |
-|       2        |  FR3.0 Return History of the paid carts of the user |
+|       2        |  FR3.0 Return the curent cart |
 |       3        |  The Cart details will be Displayed on the web page |
 
 ##### Scenario 6.2
@@ -345,7 +345,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Post condition |  Customer see No Product has been added to cart Message. |
 |     Step#      |            Description                   |
 |       1        |  The Customer Clicks on the View Cart button    |
-|       2        |  FR3.0 Return History of the paid carts of the user |
+|       2        | FR3.0 Return the curent cart |
 |       3        |  DataBase returns NULL |
 |       3        |  "No Product has been added to the cart. Keep Shopping.." will pops up. |
 
