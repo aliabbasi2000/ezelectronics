@@ -1281,9 +1281,31 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 # Glossary
 
-\<use UML class diagram to define important terms, or concepts in the domain of the application, and their relationships>
+\<
+*User: An individual who uses the EZElectronics application. Users can be either Customers , Managers.
 
-\<concepts must be used consistently all over the document, ex in use cases, requirements etc>
+*Manager: A user role in the EZElectronics system. Managers have the ability to manage products, add/remove/edit products, mark products as sold, register product arrivals. Can choose to be a Premium Manager for additional privileges. 
+
+*Customer: A user role in the EZElectronics system. Customers can purchase products. 
+
+*Tech Admin : A special user with full permissions to manage everything including users, products, carts. Can delete/add users, products, carts.
+
+*Products: Items available for purchase in the electronics store. These are managed by the managers and viewed/purchased by the customers.Each product has a code, selling price, model, category, details, and arrival date.
+
+*Database: A set of data of the users and products. 
+
+*Cart: A virtual basket where users can add, remove or delete the products.
+
+*Payment: A process that handles payments of the current cart using supported payment methods.
+
+*Shipping: Delivery of purchased products to customer's address. Has options for delivery company and shows estimated costs. 
+
+*Wishlist: List of products saved by a customer for future reference/purchase. 
+
+*Sponsored Product: A product given additional prominence/exposure on the site by a Premium Manager paying to sponsor it. 
+Premium User: A user (Manager) who pays a subscription to access additional privileges like sponsoring products.
+
+*Account:  an account assigned to an individual user to access the website.>
 
 
 # Deployment Diagram
