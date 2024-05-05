@@ -10,3 +10,10 @@
 ------------Product Page----------
 
 ![Product_v2.png](./diagrams/v2/GUI_V2/Product_V2.png)
+
+
+
+
+------------Product Page----------
+
+![Searched_product_v2.png](./diagrams/v2/GUI_V2/Searched_products_v2.png)
