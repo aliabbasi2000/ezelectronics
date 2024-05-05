@@ -27,3 +27,9 @@
 ------------Cart + Checkout----------
 
 ![c2.png](./diagrams/v2/GUI_V2/c2.png)
+
+------------------------------checkout-----------------------------
+![checkout.png](./diagrams/v2/GUI_V2/checkout.png)
+
+------------------------------order details-----------------------------
+![orderdetails.png](./diagrams/v2/GUI_V2/orderdetails.png)
