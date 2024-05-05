@@ -1492,7 +1492,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 | Actors Involved  |  Customer, Payment Service |
 | :--------------: | :-------------------------------------------------------: |
-|   Precondition   | The user has an Account been authenticated as Customer |
+|   Precondition   | The user has an Account and has been authenticated as Customer |
 |  Post condition  | The customer pays the cart and the payment handled by a third party payment service and the order takes place  |
 | Nominal Scenario | 27.1 Check out done and the order takes place  |
 |     Variants     |          |
@@ -1502,7 +1502,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 | Scenario 27.1  |                Check out done and the order takes place              |
 | :------------: | :-------------------------------------------------------: |
-|  Precondition  |  The user has an Account been authenticated as Customer  |
+|  Precondition  |  The user has an Account and has been authenticated as Customer  |
 | Post condition | The customer pays the cart and the payment handled by a third party payment service and the order takes place    |
 |     Step#      |            Description                   |
 |       1        |      The customer Clicks on check out       |
@@ -1518,7 +1518,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 | Scenario 27.2  |                Error - unsuccessfull Payment              |
 | :------------: | :-------------------------------------------------------: |
-|  Precondition  |  The user has an Account been authenticated as Customer  |
+|  Precondition  |  The user has an Account and has been authenticated as Customer  |
 | Post condition |  unsuccessfull Payment     |
 |     Step#      |            Description                   |
 |       1        |      The customer Clicks on check out       |
@@ -1531,7 +1531,55 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        |      redirect user to the cart page      |
 
 
+### Use Case 28 - Buy the Premium Version
 
+| Actors Involved  |  Manager, Payment Service |
+| :--------------: | :-------------------------------------------------------: |
+|   Precondition   | The user has an Account and has been authenticated as (Normal) Manager |
+|  Post condition  | Thr manager has successfully upgraded his account to Premium  |
+| Nominal Scenario | 28.1 Premium Account has been granted to the Manager |
+|     Variants     |          |
+|    Exceptions    |         28.2 Error - unsuccessfull Payment    </br> 28.3 The manager is already a Premium Manager     |
+
+##### Scenario 28.1
+
+| Scenario 28.1  |                Premium Account has been granted to the Manager              |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  |  The user has an Account and has been authenticated as (Normal) Manager  |
+| Post condition | Thr manager has successfully upgraded his account to Premium    |
+|     Step#      |            Description                   |
+|       1        |      The Manager Clicks on "Become Premium"       |
+|       2        |      Check the manager is not a Premium manager    |
+|       3        |      FR4.1 Pay the Premium Account  |
+|       4        |      The payment system return succesful payment result  |
+|       5        |      mark the manager as premium in our database   |
+|       6        |      This msg pops up: "You are now a Premium Manager!!"   |
+
+
+##### Scenario 28.2
+
+| Scenario 28.2  |                Error - unsuccessfull Payment             |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  |  The user has an Account and has been authenticated as (Normal) Manager  |
+| Post condition |  Error - unsuccessfull Payment    |
+|     Step#      |            Description                   |
+|       1        |      The Manager Clicks on "Become Premium"       |
+|       2        |      Check the manager is not a Premium manager    |
+|       3        |      FR4.1 Pay the Premium Account  |
+|       4        |      The payment system return unsuccesful payment result  |
+|       5        |      This Error msg pops up: "unsuccessfull Payment!"   |
+
+
+##### Scenario 28.3
+
+| Scenario 28.3  |                The manager is already a Premium Manager             |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  |  The user has an Account and has been authenticated as (Normal) Manager  |
+| Post condition |  Error - The manager is already a Premium Manager    |
+|     Step#      |            Description                   |
+|       1        |      The Manager Clicks on "Become Premium"       |
+|       2        |      Check the manager is not a Premium manager = False   |
+|       3        |      This Error msg pops up: "Already a Premium Manager"   |
 
 
 
