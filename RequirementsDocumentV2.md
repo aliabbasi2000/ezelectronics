@@ -1037,6 +1037,40 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       1        |  The Tech Admin  Clicks on Retrive ALL users|
 |       2        |  The Tech Admin can see A list of all users  |
 
+### Use case 21, View Wishlist
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer (Authenticated) |
+|  Post condition  | Customer view the Details of the wishlist   |
+| Nominal Scenario |  6.1 Customer can view the details of their wishlist |
+|     Variants     |                                  |
+|    Exceptions    |  6.2 No Product in the wishlist.    |
+
+
+##### Scenario 21.1
+
+|  Scenario 6.1  |       Customer view the Details of the wishlist      |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  Customer view the Details of the wishlist |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on the View wishlist button    |
+|       2        |  FR3.0 Return the curent wishlist |
+|       3        |  The wishlist details will be Displayed on the web page |
+
+##### Scenario 6.2
+
+|  Scenario 6.2  |       No Product in the wishlist       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  Customer see No Product has been added to wishlist Message. |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on the View wishlist button    |
+|       2        | FR3.0 Return the curent wishlist |
+|       3        |  DataBase returns NULL |
+|       3        |  "No Product has been added to the wishlist. Keep Shopping.." will pops up. |
+
 
 
 
