@@ -10,3 +10,10 @@ Version:
 
 ----------------------------------Login-----------------------------
 ![login.png](./diagrams/v1/gui_v1/login.png)
+
+
+----------------------------------create account -----------------------------
+![user.png](./diagrams/v1/gui_v1/user.png)
+
+----------------------------------user logged in-----------------------------
+![useri.png](./diagrams/v1/gui_v1/useri.png)
