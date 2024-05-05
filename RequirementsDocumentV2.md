@@ -1459,6 +1459,82 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       4        |   The Error "There is no Account with the Email provided" is pops up   |
 
 
+### Use Case 26 - Password Recovery
+
+| Actors Involved  |  Customer, Manager (Premium or Normal) |
+| :--------------: | :-------------------------------------------------------: |
+|   Precondition   | The user has an Account (Customer or Manager) |
+|  Post condition  | The Password of the User has been Reset and User Redirected to the Reset Pass Page    |
+| Nominal Scenario | 26.1 Customer Resets the Password <br> 26.2 Manager Resets the Password  |
+|     Variants     |          |
+|    Exceptions    |         26.3 The new Password is the same with the Old Password   </br> 26.4 There is no Account              |
+
+##### Scenario 26.1
+
+| Scenario 26.1  |                Customer Resets the Password              |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User has an Customer account  |
+| Post condition | The Password of the User has been Reset and User Redirected to the Reset Pass Page    |
+|     Step#      |            Description                   |
+|       1        |      The customer Clicks on Forget password button       |
+|       2        |      The customer Provides his Email as Input       |
+|       3        |      FR5.1 Password Recovery       |
+|       4        |    Password has been reset and a link containing the reset pass page has been sent to the email of the Customer     |
+|       5        |   Customer insert the new password    |
+|       6        |   If the old Pass != new Pass   |
+|       7        |   Customer new password has been changed in the database   |
+|       8        |   The msg "The pasword has successfully been changed" is shown to the customer    |
+|       9        |   Redirect to the Login Page   |
+
+
+
+### Use Case 27 - Check out 
+
+| Actors Involved  |  Customer, Payment Service |
+| :--------------: | :-------------------------------------------------------: |
+|   Precondition   | The user has an Account been authenticated as Customer |
+|  Post condition  | The customer pays the cart and the payment handled by a third party payment service and the order takes place  |
+| Nominal Scenario | 27.1 Check out done and the order takes place  |
+|     Variants     |          |
+|    Exceptions    |         27.2 Error - Payment unsuccessfull        |
+
+##### Scenario 27.1
+
+| Scenario 27.1  |                Check out done and the order takes place              |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  |  The user has an Account been authenticated as Customer  |
+| Post condition | The customer pays the cart and the payment handled by a third party payment service and the order takes place    |
+|     Step#      |            Description                   |
+|       1        |      The customer Clicks on check out       |
+|       2        |      the system Sums up the cost of products    |
+|       3        |      user FR6.2 Insert the Address    |
+|       4        |      FR6.0 Choose a shipping method (Delivery Company DHL, Poste Italiane, ...)   |
+|       5        |      FR6.1 Show the shipping price by API of delivery service    |
+|       6        |      The payment sevice handles the payment and it returns success      |
+|       7        |      place order of the customer       |
+|       8        |      Show the order details      |
+
+##### Scenario 27.2
+
+| Scenario 27.2  |                Error - unsuccessfull Payment              |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  |  The user has an Account been authenticated as Customer  |
+| Post condition |  unsuccessfull Payment     |
+|     Step#      |            Description                   |
+|       1        |      The customer Clicks on check out       |
+|       2        |      the system Sums up the cost of products    |
+|       3        |      user FR6.2 Insert the Address    |
+|       4        |      FR6.0 Choose a shipping method (Delivery Company DHL, Poste Italiane, ...)   |
+|       5        |      FR6.1 Show the shipping price by API of delivery service    |
+|       3        |      Error msg pops up: Payment was unsuccessfull       |
+|       6        |      The payment sevice handles the payment and it returns Failure      |
+|       3        |      redirect user to the cart page      |
+
+
+
+
+
+
 # Glossary
 
 
