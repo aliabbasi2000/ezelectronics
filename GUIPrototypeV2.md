@@ -15,6 +15,9 @@
 ![homev2.png](./diagrams/v2/GUI_V2/homeV2.png)
 
 
+------------Product Page----------
+
+![P2.png](./diagrams/v2/GUI_V2/P2.png)
 
 ------------Cart + Checkout----------
 
