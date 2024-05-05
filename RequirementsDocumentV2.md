@@ -891,7 +891,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 | Actors Involved  |            Tech Admin               |
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   | User has an account and Logged in as Tech Admin (Authenticated) |
+|   Precondition   |The Tech Admin is authenticated and has access to the admin panel|
 |  Post condition  | All Carts are deleted    |
 | Nominal Scenario |  17.1 The Tech Admin successfully deletes all carts  |
 |     Variants     |    |
@@ -901,19 +901,19 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |  Scenario 17.1  |       The Tech Admin successfully deletes all carts       |
 | :------------: | :------------------------------------------------------------------------: |
-|   Precondition   | User has an account and Logged in as Tech Admin (Authenticated) |
-|  Post condition  | All Carts are deleted    |
+|   Precondition   | The Tech Admin is authenticated and has access to the admin panel |
+|  Post condition  | All Carts are deleted  </br> Users are notified of the deletion of their carts  |
 |     Step#      |            Description                   |
 |       1        |  The Tech Admin  Clicks on Delete ALL carts |
 |       2        |  Check if there is at least one cart == True |
 |       3        |  The Tech Admin  Clicks on confirm to delete |
 |       4        |  The Tech Admin can see the success of the operation  |
-
+|       5        |  Users are notified of the deletion of their carts  |
 ##### Scenario 17.2
 
 |  Scenario 17.1  |       The Tech Admin successfully deletes all carts       |
 | :------------: | :------------------------------------------------------------------------: |
-|   Precondition   | User has an account and Logged in as Tech Admin (Authenticated) |
+|   Precondition   | The Tech Admin is authenticated and has access to the admin panel|
 |  Post condition  | All Carts are deleted    |
 |     Step#      |            Description                   |
 |       1        |  The Tech Admin  Clicks on Delete ALL carts |
@@ -924,42 +924,34 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 | Actors Involved  |            Tech Admin               |
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   | User has an account and Logged in as Tech Admin (Authenticated) |
-|  Post condition  | Will be  a list of all users    |
-| Nominal Scenario |  18.1 The Tech Admin successfully see all User |
+|   Precondition   |The Tech Admin is authenticated and has access to the admin panel|
+|  Post condition  | All users are deleted    |
+| Nominal Scenario |  17.1 The Tech Admin successfully deletes all users  |
 |     Variants     |    |
-|    Exceptions    | NONE |
+|    Exceptions    |  17.2 All Users are already deleted (NO user IN DATABASE ) |
 
 ##### Scenario 18.1
 
-|  Scenario 18.1  |       The Tech Admin successfully deletes all carts       |
+|  Scenario 18.1  |       The Tech Admin successfully deletes all users       |
 | :------------: | :------------------------------------------------------------------------: |
-|   Precondition   | User has an account and Logged in as Tech Admin (Authenticated) |
-|  Post condition  | A list of all users will be displayed  |
+|   Precondition   | The Tech Admin is authenticated and has access to the admin panel |
+|  Post condition  | All Carts are deleted  </br> Users are notified of the deletion of their accounts  |
 |     Step#      |            Description                   |
-|       1        |  The Tech Admin  Clicks on Retrive ALL users|
-|       2        |  The Tech Admin can see A list of all users  |
+|       1        |  The Tech Admin  Clicks on Delete ALL carts |
+|       2        |  Check if there is at least one user == True |
+|       3        |  The Tech Admin  Clicks on confirm to delete |
+|       4        |  The Tech Admin can see the success of the operation  |
+|       5        |  Users are notified of the deletion of their account  |
+##### Scenario 18.2
 
-### Use case 18, Retrive all Users
-
-| Actors Involved  |            Tech Admin               |
-| :--------------: | :------------------------------------------------------------------: |
-|   Precondition   | User has an account and Logged in as Tech Admin (Authenticated) |
-|  Post condition  | Will be  a list of all users    |
-| Nominal Scenario |  18.1 The Tech Admin successfully see all User |
-|     Variants     |    |
-|    Exceptions    | NONE |
-
-##### Scenario 18.1
-
-|  Scenario 18.1  |       The Tech Admin successfully Retrives all users       |
+|  Scenario 18.2  |       The Tech Admin successfully deletes all users       |
 | :------------: | :------------------------------------------------------------------------: |
-|   Precondition   | User has an account and Logged in as Tech Admin (Authenticated) |
-|  Post condition  | A list of all users will be displayed  |
+|   Precondition   | The Tech Admin is authenticated and has access to the admin panel|
+|  Post condition  | All USERS are deleted    |
 |     Step#      |            Description                   |
-|       1        |  The Tech Admin  Clicks on Retrive ALL users|
-|       2        |  The Tech Admin can see A list of all users  |
-
+|       1        |  The Tech Admin  Clicks on Delete ALL users |
+|       2        |  Check if there is at least one user == False |
+|       3        |  The Tech Admin see This Error: "ERROR: No USER exist" |
 
 
 ### Use case 19, Manage Payment
@@ -999,7 +991,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  Scenario 19.2  |      The Customer PAY, The payment service acts as an intermediary, Maneger Access the money     |
 | :------------: | :------------------------------------------------------------------------: |
 |   Precondition   |  Precondition   | The customer has items in their online shopping cart. |
-|  Post condition  | First customer's payment has not been successfully processed, Second YES  |
+|  Post condition  | First customer's payment has not been successfully processed, retry |
 |     Step#      |            Description                   |
 |       1        |  The customer navigates to the checkout page.|
 |       2        |  The customer reviews the items in their cart and verifies the total amount. |
@@ -1019,7 +1011,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  Scenario 19.3  |      The Customer PAY, The payment service acts as an intermediary, Maneger Access the money     |
 | :------------: | :------------------------------------------------------------------------: |
 |   Precondition   |  Precondition   | The customer has items in their online shopping cart. |
-|  Post condition  | First customer's payment has not been successfully processed, Second YES  |
+|  Post condition  | First customer's payment has not been successfully processed, cancel the purchase  |
 |     Step#      |            Description                   |
 |       1        |  The customer navigates to the checkout page.|
 |       2        |  The customer reviews the items in their cart and verifies the total amount. |
@@ -1032,6 +1024,29 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       9       | The payment service notifies the customer that the payment method is not valid and prompts them to review and update their payment information|
 |       10        |The customer reviews the error message and decides to either update their payment method or cancel the purchase|
 |       11        |If the customer chooses to cancel the purchase, they abandon the checkout process and return to shopping or exit the website |
+
+### Use case 20, Retrive all Users
+
+| Actors Involved  |            Tech Admin               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |The Tech Admin is authenticated and has access to the admin panel |
+|  Post condition  | Will be  a list of all users    |
+| Nominal Scenario |  20.1 The Tech Admin successfully see all User |
+|     Variants     |    |
+|    Exceptions    | NONE |
+
+##### Scenario 20.1
+
+|  Scenario 20.1  |       The Tech Admin successfully Retrives all users       |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   | The Tech Admin is authenticated and has access to the admin panel|
+|  Post condition  | A list of all users will be displayed  |
+|     Step#      |            Description                   |
+|       1        |  The Tech Admin  Clicks on Retrive ALL users|
+|       2        |  The Tech Admin can see A list of all users  |
+
+
+
 
 # Glossary
 
