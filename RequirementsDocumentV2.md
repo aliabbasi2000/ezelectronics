@@ -1307,7 +1307,7 @@ Premium User: A user (Manager) who pays a subscription to access additional priv
 
 *Account:  an account assigned to an individual user to access the website.
 
-![glossary2.png](./diagrams/v2/glossary2.png)
+![glossary2.jpg](./diagrams/v2/glossary2.jpg)
 
 
 # Deployment Diagram
