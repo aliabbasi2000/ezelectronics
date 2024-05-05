@@ -815,7 +815,7 @@ IT WILL BE INCLUDED IN V2
 
 *Account:  an account assigned to an individual user to access the website>
 
-![uml.png](./diagrams/v1/uml.png)
+![glossaryv1.png](./diagrams/v1/glossaryv1.png)
 
 # Deployment Diagram
 
