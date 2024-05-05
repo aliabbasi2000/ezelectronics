@@ -81,7 +81,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
       1.	Giulia needs a solution to streamline her store's operations and expand its reach online. She discovers EZElectronics and sees its potential to simplify inventory management and reach a wider customer base. 
       2.	She uses the platform to easily add new products, update stock levels, and fulfill online orders, ultimately boosting her store's revenue.
 
-2.	Persona: Marco - Tech Customer
+2.	Persona: Marco - Customer
 
     •	Background: 
     1.	Marco is a college student with a passion for electronics. 
@@ -127,9 +127,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  FR1: Manage Products  |     • FR1.0 Create a new Product(ONLY MANAGER) / Delete a Product(ONLY MANAGER)/ Delete all Products(ONLY TECH ADMIN) <br /> • FR1.1 Registers the arrival of Products of same model (ONLY MANAGER)   <br /> • FR1.2 Mark a product as sold  <br /> • FR1.3 Retrieve a product (All / with the same Category / Model)  <br /> • FR1.4 Registers the arrival of a set of products  <br /> • FR1.5 Mark a Product as sponssored (ONLY BY PREMIUM MANAGER) <br />• FR1.6 Unmark a Sponsored products (ONLY PREMIUM MANAGER) |
 |  FR2: Manage Users  |   • FR2.0 Retrieves logged in user's Info.  <br /> • FR2.1 Retrieve a User (list of all users/ all users with a role (ONLY TECH ADMIN) / specific User with username)  <br /> •FR2.2 Create User / Delete User(USER AND TECH ADMIN) / Delete user with username  / Delete all the users (ONLY TECH ADMIN)  <br /> • FR2.4 Change the Account As Premium (ONLY BY MANAGER)|
 |  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart   <br /> • FR3.2  Returns the history of the paid carts of the User <br /> • FR3.3 Delete the cart of current user (ONLY BY CUSTOMER) /Delete all carts (ONLY TECH ADMIN) |
-|  FR4: Manage Payment  |     • FR4.0 Choose a payment method<br /> • FR4.1 Pay the current cart<br /> • FR4.2 Pay the Premium Account  |
+|  FR4: Manage Payment  |     • FR4.0 Pay the current cart <br /> • FR4.1 Pay the Premium Account  |
 |  FR5: Authorization and Authentication  |       • FR5.0 Log in/Log out  <br /> • FR5.1 Password Recovery   |
-|  FR6: Manage Shipping  |     • FR6.0 Choose a shipping method (Delivery Company) <br /> • FR6.1 Show the shipping price <br /> • FR6.2 Insert Address <br /> • FR6.3 Track delivery |
+|  FR6: Manage Shipping  |     • FR6.0 Choose a shipping method (Delivery Company DHL, Poste Italiane, ...) <br /> • FR6.1 Show the shipping price <br /> • FR6.2 Insert Address <br /> • FR6.3 Track delivery |
 |  FR7: Manage Whishlist  |      • FR7.0 Return the curent whislist <br /> • FR7.1 Add / Remove a product to whislist (ONLY CUSTOMER) |
 
 
@@ -833,7 +833,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Actors Involved  |             Manager               |
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User has an account and Logged in as Manager (Authenticated) |
-|  Post condition  | The product is added to the Inventory   |
+|  Post condition  | The product is added to the Inventory (Sponsored = False)  |
 | Nominal Scenario |  14.1 Manager successfully add product to the Inventory |
 |     Variants     |    |
 |    Exceptions    |  14.2 The product is already exist in the database - 409 Error </br> 14.3 The arrivalDate of the product is after the current date    |
@@ -849,7 +849,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       1        |  The Manager Clicks on Add a new Product  button    |
 |       2        |  The Manager enters the information of the product    |
 |       3        |  FR1.0 Create a new product |
-|       4        |  Insert the Product in DataBase |
+|       4        |  Insert the Product in DataBase (Sponsored = False) |
 |       5        |  DataBase Returns success |
 |       6        |  "The product has been added" msg pops up and manager can see the new product in his product list|
 
