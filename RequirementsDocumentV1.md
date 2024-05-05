@@ -798,20 +798,22 @@ IT WILL BE INCLUDED IN V2
 # Glossary
 
 
-*EZElectronics: The software application designed to help managers of electronics stores manage their products and offer them to customers through a dedicated website.
 
 *User: An individual who uses the EZElectronics application. Users can be either Customers or Managers.
 
 *Manager: A user role in the EZElectronics system. Managers have the ability to manage and sell the products in the store.
 
 *Customer: A user role in the EZElectronics system. Customers can purchase products.
+
 *Products: Items available for purchase in the electronics store. These are managed by the managers and viewed purchased by the customers.Each product has a code, selling price, model, category, details, and arrival date.
 
 *Database: A set of data of the users and products. 
 
 *Cart: A virtual basket where users can add, remove or delete the products.
 
-*Payment: A process that handles payments of the current cart.>
+*Payment: A process that handles payments of the current cart.
+
+*Account:  an account assigned to an individual user to access the website>
 
 ![uml.png](./diagrams/v1/uml.png)
 
