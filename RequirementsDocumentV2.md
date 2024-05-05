@@ -101,19 +101,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
     1.	Tommaso is tasked with leading the development team in enhancing EZElectronics to meet the evolving needs of electronics store managers and customers. He conducts regular meetings to gather feedback from users and identifies areas for improvement. 
     2.	Tommaso works closely with the development team to implement new features and optimize the platform's performance. Through his expertise and dedication, Tommaso ensures that EZElectronics remains a top choice for electronics retailers seeking a reliable and user-friendly management solution.
 
-<!---
-4.	Persona: Sofia - Premium Customer
 
 
-    •	Background: 
-    1.	Sofia is a frequent shopper at EZElectronics and has opted for the premium membership, which offers benefits like free shipping and exclusive deals.
-    
-    •	Story: 
-    1.	Sofia, being a premium member, enjoys the perks of free shipping on all her purchases from EZElectronics. She appreciates the convenience and cost savings this offers, making her more inclined to shop regularly on the platform. 
-    2.	Additionally, Sofia feels valued as a customer due to the exclusive deals and personalized recommendations she receives as part of her premium membership.
--->
-
-5.	Persona: Matteo - Premium Manager
+4.	Persona: Matteo - Premium Manager
 
 
     •	Background: 
@@ -135,11 +125,11 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  ID   | Description |
 | :---: | :---------: |
 |  FR1: Manage Products  |     • FR1.0 Create a new Product(ONLY MANAGER) / Delete a Product(ONLY MANAGER)/ Delete all Products(ONLY TECH ADMIN) <br /> • FR1.1 Registers the arrival of Products of same model (ONLY MANAGER)   <br /> • FR1.2 Mark a product as sold  <br /> • FR1.3 Retrieve a product (All / with the same Category / Model)  <br /> • FR1.4 Registers the arrival of a set of products  <br /> • FR1.5 Mark a Product as sponssored (ONLY BY PREMIUM MANAGER) <br />• FR1.6 Unmark a Sponsored products (ONLY PREMIUM MANAGER) |
-|  FR2: Manage Users  |   • FR2.0 Retrieves logged in user's Info.  <br /> • FR2.1 Retrieve a User (list of all users/ all users with a role (ONLY TECH ADMIN) / specific User with username)  <br /> •FR2.2 Create User / Delete User(USER AND TECH ADMIN) / Delete user with username  / Delete all the users (ONLY TECH ADMIN)   <br /> •FR2.3 Create Premium User<br /> • FR2.4 Choose to be Premium User (Manager or Customer)|
-|  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart   <br /> • FR3.2  Returns the history of the paid carts of the User <br /> • FR3.3 Delete the cart of current user (USER) /Delete all carts (ONLY TECH ADMIN) |
+|  FR2: Manage Users  |   • FR2.0 Retrieves logged in user's Info.  <br /> • FR2.1 Retrieve a User (list of all users/ all users with a role (ONLY TECH ADMIN) / specific User with username)  <br /> •FR2.2 Create User / Delete User(USER AND TECH ADMIN) / Delete user with username  / Delete all the users (ONLY TECH ADMIN)  <br /> • FR2.4 Change the Account As Premium (ONLY BY MANAGER)|
+|  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart   <br /> • FR3.2  Returns the history of the paid carts of the User <br /> • FR3.3 Delete the cart of current user (ONLY BY CUSTOMER) /Delete all carts (ONLY TECH ADMIN) |
 |  FR4: Manage Payment  |     • FR4.0 Choose a payment method<br /> • FR4.1 Pay the current cart<br /> • FR4.2 Pay the Premium Account  |
 |  FR5: Authorization and Authentication  |       • FR5.0 Log in/Log out  <br /> • FR5.1 Password Recovery   |
-|  FR6: Manage Shipping  |     • FR6.0 Choose a shipping method (Delivery Company) <br /> • FR6.1 Show the shipping price <br /> • FR6.2 Insert Address <br /> • FR6.3 Track delivery <br />• FR6.4 Zero out shipping costs (ONLY PREMIUM CUSTOMER)|
+|  FR6: Manage Shipping  |     • FR6.0 Choose a shipping method (Delivery Company) <br /> • FR6.1 Show the shipping price <br /> • FR6.2 Insert Address <br /> • FR6.3 Track delivery |
 |  FR7: Manage Whishlist  |      • FR7.0 Return the curent whislist <br /> • FR7.1 Add / Remove a product to whislist (ONLY CUSTOMER) |
 
 
@@ -793,7 +783,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Actors Involved  |            Premium Manager               |
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User has an account and Logged in as Premium Manager (Authenticated) |
-|  Post condition  | The product is marked as premium product   |
+|  Post condition  | The product is marked as Sponsored product   |
 | Nominal Scenario |  15.1 The Premium Manager successfully marks thr product as sponsored |
 |     Variants     |    |
 |    Exceptions    |  15.2 The product is already is an sponsored product  </br> 15.3 The manager is not a premium manager    |
