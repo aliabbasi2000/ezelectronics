@@ -795,6 +795,94 @@ IT WILL BE INCLUDED IN V2
 |       3        |  Database Reruens an Error  |
 |       4        |  This error msg pops up: 404 Error - The Product Found  |
 
+
+
+### Use case 15 - Login
+
+| Actors Involved  |   Customer, Manager |
+| :--------------: | :-------------------------------------------------------: |
+|   Precondition   | The user has a customer or manager Account |
+|  Post condition  | The user is authenticated as customer or manager        |
+| Nominal Scenario | 15.1 The user inserts his username & pass and is authenticated as customer <br>  The user insert his username & Pass and is authenticated as manager  |
+|     Variants     |             |
+|    Exceptions    |                Error - Username or Password is not valid                  |
+
+##### Scenario 15.1
+
+| Scenario 15.1  |                Customer logs in               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The user has a customer Account    |
+| Post condition |  The User is authenticated as customer   |
+|     Step#      |            Description                   |
+|       1        |      The User navigates to the login page       |
+|       2        |    The user inserts his username, password and clicks on login    |
+|       3        |     FR4.0 Log in    |
+|       4        |      The system authenticates the User as customer      |
+|       5        |      redirect customer to the Home Page      |
+
+##### Scenario 15.2
+
+| Scenario 15.2  |                Manager logs in               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The user has a manager Account    |
+| Post condition |  The User is authenticated as manager  |
+|     Step#      |                     Description                                   |
+|       1        |      The User navigates to the login page       |
+|       2        |    The manager inserts their username, password and clicks on login    |
+|       3        |     FR4.0 Log in    |
+|       4        |      The system authenticates the manager as manager     |
+|       5        |      redirect Manager to the Home Page      |
+
+##### Scenario 15.3
+
+| Scenario 15.3  |                Error - Username or Password is not valid               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The user has a customer or manager Account OR Doesn't have any account   |
+| Post condition |            The User encounters an Error         |
+|     Step#      |                     Description                                   |
+|       1        |      The User navigates to the login page       |
+|       2        |    The User inserts his username, password and Clicks on login   |
+|       3        |      Database returns an Error - Password and Username does not reffer to a User    |
+|       4        |    The Error pops up - Username & Password do not match / Check the Username and Password again OR create an Account   |
+|       5        |    If user clicks on Create an account, will be redirected to Create an Account page  |
+
+
+
+### Use Case 16 - Logout
+
+| Actors Involved  |  Customer, Manager |
+| :--------------: | :-------------------------------------------------------: |
+|   Precondition   | The user is authenticated to the system as customer OR manager |
+|  Post condition  | The user is no more authenticated as customer or manager     |
+| Nominal Scenario | 16.1 Customer Logs our <br> 16.2 Manager Logs out  |
+|     Variants     |          |
+|    Exceptions    |                          |
+
+##### Scenario 16.1
+
+| Scenario 16.1  |                Customer logs out               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User is authenticated to the system as customer   |
+| Post condition | The User is no more authenticated as customer        |
+|     Step#      |            Description                   |
+|       1        |      The customer Clicks on logout button       |
+|       2        |      FR4.0 Log out     |
+|       3        |      The User is no more authenticated       |
+|       4        |      Redirect User to the Homepage       |
+
+##### Scenario 16.2
+
+| Scenario 16.2  |                Manager logs out               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User is authenticated to the system as manager   |
+| Post condition |  The manager is no more authenticated as manager        |
+|     Step#      |            Description                   |
+|       1        |      The Manager Clicks on logout button       |
+|       2        |      FR4.0 Log out   |
+|       3        |      The User is no more authenticated      |
+|       4        |      Redirect User to the Homepage       |
+
+
 # Glossary
 
 
