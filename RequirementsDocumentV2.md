@@ -1278,6 +1278,93 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
+### Use case 24 - Login
+
+| Actors Involved  |   Customer, Manager(Premium or Normal) |
+| :--------------: | :-------------------------------------------------------: |
+|   Precondition   | The user has a customer or manager Account (Premium or Normal) |
+|  Post condition  | The user is authenticated as customer or manager (Premium or Normal)       |
+| Nominal Scenario | 24.1 The user inserts his username & pass and is authenticated as customer <br> 24.2 The user insert his username & Pass and is authenticated as manager (Premium or Normal)  |
+|     Variants     |             |
+|    Exceptions    |              24.3 Error - Username or Password is not valid                  |
+
+##### Scenario 24.1
+
+| Scenario 24.1  |                Customer logs in               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The user has a customer Account    |
+| Post condition |  The User is authenticated as customer   |
+|     Step#      |            Description                   |
+|       1        |      The User navigates to the login page       |
+|       2        |    The user inserts his username, password and clicks on login    |
+|       3        |     FR5.0 Log in    |
+|       4        |      The system authenticates the User as customer      |
+|       5        |      redirect customer to the Home Page      |
+
+##### Scenario 24.2
+
+| Scenario 24.2  |                Manager logs in               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The user has a manager Account    |
+| Post condition |  The User is authenticated as manager (Premium or Normal)  |
+|     Step#      |                     Description                                   |
+|       1        |      The User navigates to the login page       |
+|       2        |    The manager inserts their username, password and clicks on login    |
+|       3        |     FR5.0 Log in    |
+|       4        |      The system authenticates the manager as manager (Premium or Normal)    |
+|       5        |      redirect Manager to the Home Page      |
+
+##### Scenario 24.3
+
+| Scenario 24.3  |                Error - Username or Password is not valid               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The user has a customer or manager Account OR Doesn't have any account   |
+| Post condition |            The User encounters an Error         |
+|     Step#      |                     Description                                   |
+|       1        |      The User navigates to the login page       |
+|       2        |    The User inserts his username, password and Clicks on login   |
+|       3        |      Database returns an Error - Password and Username does not reffer to a User    |
+|       4        |    The Error pops up - Username & Password do not match - Not joined yet? Create an Account |
+|       5        |    If user clicks on Create an account option, will be redirected to Create an Account page  |
+|       6        |    If user clicks on Forget Password: Preform FR5.1 Password Recovery  |
+
+
+
+### Use Case 25 - Logout
+
+| Actors Involved  |  Customer, Manager (Premium or Normal) |
+| :--------------: | :-------------------------------------------------------: |
+|   Precondition   | The user is authenticated to the system as customer OR manager |
+|  Post condition  | The user is no more authenticated as customer or manager     |
+| Nominal Scenario | 25.1 Customer Logs our <br> 25.2 Manager Logs out  |
+|     Variants     |          |
+|    Exceptions    |                          |
+
+##### Scenario 25.1
+
+| Scenario 25.1  |                Customer logs out               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User is authenticated to the system as customer   |
+| Post condition | The User is no more authenticated as customer        |
+|     Step#      |            Description                   |
+|       1        |      The customer Clicks on logout button       |
+|       2        |      FR5.0 Log out     |
+|       3        |      The User is no more authenticated       |
+|       4        |      Redirect User to the Homepage       |
+
+##### Scenario 25.2
+
+| Scenario 25.2  |                Manager logs out               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User is authenticated to the system as manager   |
+| Post condition |  The manager is no more authenticated as manager        |
+|     Step#      |            Description                   |
+|       1        |      The Manager (Premium or Normal) Clicks on logout button       |
+|       2        |      FR5.0 Log out   |
+|       3        |      The User is no more authenticated      |
+|       4        |      Redirect User to the Homepage       |
+
+
 
 # Glossary
 
