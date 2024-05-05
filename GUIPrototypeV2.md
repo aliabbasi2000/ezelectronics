@@ -3,11 +3,16 @@
 ![login.png](./diagrams/v2/GUI_V2/login.png)
 
 ------------create account-----------------
-![user.png](./diagrams/v2/GUI_V2/user.png)
+![signup.png](./diagrams/v2/GUI_V2/signup.png)
 
 ---------------premuim member----------------
-![premium.png](./diagrams/v2/GUI_V2/premium.png)
+![welcome.png](./diagrams/v2/GUI_V2/welcome.png)
 
+---------------forgot password----------------
+![forgotpassword.png](./diagrams/v2/GUI_V2/forgotpassword.png)
+
+---------------reset password----------------
+![resetpassword.png](./diagrams/v2/GUI_V2/resetpassword.png)
 
 
 ------------Home Product Page----------
