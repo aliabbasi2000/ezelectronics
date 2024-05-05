@@ -1281,7 +1281,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 # Glossary
 
-\<
+
 *User: An individual who uses the EZElectronics application. Users can be either Customers , Managers.
 
 *Manager: A user role in the EZElectronics system. Managers have the ability to manage products, add/remove/edit products, mark products as sold, register product arrivals. Can choose to be a Premium Manager for additional privileges. 
@@ -1305,7 +1305,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 *Sponsored Product: A product given additional prominence/exposure on the site by a Premium Manager paying to sponsor it. 
 Premium User: A user (Manager) who pays a subscription to access additional privileges like sponsoring products.
 
-*Account:  an account assigned to an individual user to access the website.>
+*Account:  an account assigned to an individual user to access the website.
+
+![glossary2.png](./diagrams/v2/glossary2.png)
 
 
 # Deployment Diagram
