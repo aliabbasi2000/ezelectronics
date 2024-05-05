@@ -157,18 +157,74 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ![usecase_diagram.png](./diagrams/v2/usecase_diagram.png)
 
-### Use case 1, XXX
+
+
+### Use case 1, View Account Info
+
+| Actors Involved  |            Customer, Manager(Normal, Premium)               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has account and is Logged in (authenticated) |
+|  Post condition  | User See his Account Information  |
+| Nominal Scenario | 1.1 The Page Containting Customer info is shown  </br> 1.2 The Page Containting Normal Manager info is shown  </br> 1.3 The Page Containting Premium Manager info is shown    |
+|     Variants     |                                  |
+|    Exceptions    | 1.4 Error - There is no User with Provided information       |
+
+##### Scenario 1.1
+
+|  Scenario 1.1  |        The Page Containting Customer info is shown        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has account and is Logged in as Customer (authenticated) |
+| Post condition |  Customer See his Account Information |
+|     Step#      |            Description                   |
+|       1        |   The Customer Clicks on the Account Info    |
+|       2        |   FR2.0 Retrieves logged in user's Info. |
+|       3        |    Customer See his Account Information.     |
+
+##### Scenario 1.2
+
+|  Scenario 1.2  |       The Page Containting Normal Manager info is shown        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has account and is Logged in as Normal Manager (authenticated) |
+| Post condition |  Normal Manager See his Account Information |
+|     Step#      |            Description                   |
+|       1        |   The User Clicks on the Account Info    |
+|       2        |   FR2.0 Retrieves logged in user's Info. |
+|       3        |   Manager See his Account Information.   |
+
+
+##### Scenario 1.3
+
+|  Scenario 1.3  |       The Page Containting Premium Manager info is shown        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has account and is Logged in as Premium Manager (authenticated) |
+| Post condition |  Premium Manager See his Account Information |
+|     Step#      |            Description                   |
+|       1        |   The User Clicks on the Account Info    |
+|       2        |   FR2.0 Retrieves logged in user's Info. |
+|       3        |   Premium Manager See his Account Information.   |
+
+##### Scenario 1.4
+
+|  Scenario 1.4  |  Error - There is no User with Provided information  |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has account and is Logged in (authenticated) |
+| Post condition |  User See a 404 Error - No User Found on the Web Page |
+|     Step#      |            Description                   |
+|       1        |   The User Clicks on the Account Info    |
+|       2        |   FR2.0 Retrieves logged in user's Info. |
+|       3        |    The dataBase returns Null             |
+|       4        |    User see  404 Error message - No User Found on the Web Page   |
 
 
 ### Use case 2, Delete Account
 
-| Actors Involved  |             Customer, Manager               |
+| Actors Involved  |             Customer, Manager(Normal, Premium)               |
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User has account and is Logged in (authenticated) |
 |  Post condition  | User has been Deleted his Account  |
-| Nominal Scenario |  2.1 User has been Deleted his Account  |
+| Nominal Scenario |  2.1 User has been Deleted his Account (Normal / Premium)  |
 |     Variants     |                                  |
-|    Exceptions    |  2.2 Connection with database is lost and cannot delete the record    |
+|    Exceptions    |  2.2 Error - No Account has been found    |
 
 ##### Scenario 2.1
 
@@ -186,17 +242,70 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ##### Scenario 2.2
 
-|  Scenario 2.1  |       Connection with database is lost and cannot delete the         |
+|  Scenario 2.1  |       Error - No Account has been found         |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User has account and is Logged in (authenticated) |
 | Post condition |  User has been faced an Error |
 |     Step#      |            Description                   |
 |       1        |  The User Clicks on the Delete Account button    |
 |       2        |  FR2.0 Retrieve the Logged in User Info   |
-|       3        |  We got an Error from DataBase side |
-|       5        |  An Error message pops up      |
+|       3        |  DataBase Error - No account has been found |
+|       5        |  Error is Pops up - No Account has been found   |
 
-### Use case 3, XXX
+
+
+
+### Use case 3, Create Account
+
+| Actors Involved  |             Customer, Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has no account  |
+|  Post condition  | User has been Created an Account  |
+| Nominal Scenario |  3.1 User has been Created a Customer Account </br> 3.2 User has been Created a Manager Account |
+|     Variants     |                                  |
+|    Exceptions    |  3.3 409 Error, user already exist in database    |
+
+
+##### Scenario 3.1
+
+|  Scenario 3.1  |       User has been Created a Customer Account        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has no account |
+| Post condition |  User has been Created a Customer Account |
+|     Step#      |            Description                    |
+|       1        |  The User Clicks on the Create Account button    |
+|       2        |  Enter the information as input and the role is Customer  |
+|       3        |  FR2.1 Create User  |
+|       4        |  A message pops up that your account has been created     |
+|       5        |  Redirect user to the Login page       |
+
+##### Scenario 3.2
+
+|  Scenario 3.2  |       User has been Created a Manager Account        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has no account |
+| Post condition |  User has been Created a Manager Account |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the Create Account button    |
+|       2        |  Enter the information as input and the role is Manager  |
+|       3        |  FR2.1 Create User  |
+|       4        |  A message pops up that your account has been created       |
+|       5        |  Redirect user to the Login page       |
+
+##### Scenario 3.3
+
+|  Scenario 3.3  |       409 Error, user already exist in database        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account |
+| Post condition |  409 Error, user already exist in database |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the Create Account button    |
+|       2        |  Enter the information as input and the role is Manager  |
+|       2        |  FR2.1 Create User  |
+|       3        |  database retrieves an error that the username is already exist  |
+|       5        |  409 Error pops up: user already exist in database       |
+|       6        |  Redirect user to the Login page       |
+
 
 
 
