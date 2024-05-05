@@ -1050,7 +1050,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ##### Scenario 21.1
 
-|  Scenario 6.1  |       Customer view the Details of the wishlist      |
+|  Scenario 21.1  |       Customer view the Details of the wishlist      |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User has an account and Logged in as Customer (Authenticated) |
 | Post condition |  Customer view the Details of the wishlist |
@@ -1059,9 +1059,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       2        |  FR3.0 Return the curent wishlist |
 |       3        |  The wishlist details will be Displayed on the web page |
 
-##### Scenario 6.2
+##### Scenario 21.2
 
-|  Scenario 6.2  |       No Product in the wishlist       |
+|  Scenario 21.2  |         No Product in the wishlist       |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User has an account and Logged in as Customer (Authenticated) |
 | Post condition |  Customer see No Product has been added to wishlist Message. |
@@ -1070,6 +1070,67 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       2        | FR3.0 Return the curent wishlist |
 |       3        |  DataBase returns NULL |
 |       3        |  "No Product has been added to the wishlist. Keep Shopping.." will pops up. |
+
+### Use case 22, Add Product to the Wishlist
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer (Authenticated) |
+|  Post condition  | The wishlist contains the product   |
+| Nominal Scenario |  8.1 Customer successfully add normal product to his wishlist </br> 8.2 Customer successfully add sponsored product to his wishlist|
+|     Variants     |  8.3 Customer add n product to his wishlist   |
+|    Exceptions    |  8.4 The product is sold out or unavailable    |
+
+
+##### Scenario 22.1
+
+|  Scenario 22.1  |       Customer adds a normal product to his wishlist       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  The cart contains the normal product |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Add Product button    |
+|       2        |  FR7.1 Add product to the current wishlist |
+|       3        |  The wishlist contains the product |
+|       4        |  if Customer clicks on "Show wishlist" FR3.0 Return current wishlist|
+
+##### Scenario 22.2
+
+|  Scenario 22.2  |      Customer adds a sponsored product to his wishlist       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  The cart contains the sponsored product |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Add Product button    |
+|       2        |  FR7.1 Add product to the current wishlist |
+|       3        |  The wishlist contains the product |
+|       4        |  if Customer clicks on "Show wishlist" FR3.0 Return current wishlist|
+
+
+##### Scenario 22.3
+
+|  Scenario 22.3  |      Customer add n product to his wishlist       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  The wishlist contains n product |
+|     Step#      |            Description                   |
+|       1        |  The Customer selects n number of products    |
+|       2        |  The Customer Clicks on Add Product button  |
+|       3        |  n * FR7.1 Add product to the current wishlist |
+|       4        |   if Customer clicks on "Show Cart" FR7.0 Return current wishlist  |
+
+
+##### Scenario 22.4
+
+|  Scenario 22.4  |      The product is sold out or unavailable       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition | This msg Pops up: The product is sold out or unavailable |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Add Product button  |
+|       2        |  FR7.1 Add product to the current wishlist |
+|       3        |  DataBase return an Error  |
+|       4        |  This msg Pops up: The product is sold out or unavailable |
 
 
 
