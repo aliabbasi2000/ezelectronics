@@ -61,7 +61,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |   Actor   | Logical Interface | Physical Interface |
 | :-------: | :---------------: | :----------------: |
-| Users: Customer, Manager, Premium Manager, Premium Customer |           PC        |       Web Page              |
+| Users: Customer, Manager, Premium Manager |           PC        |       Web Page              |
 | Tech Admin |         PC          |           Web Page         |
 | Payment Service |       Internet Link           |       https://developer.paypal.com/api/rest/             |
 | Data Base |      SQL           |      sqlite3              |
@@ -101,6 +101,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
     1.	Tommaso is tasked with leading the development team in enhancing EZElectronics to meet the evolving needs of electronics store managers and customers. He conducts regular meetings to gather feedback from users and identifies areas for improvement. 
     2.	Tommaso works closely with the development team to implement new features and optimize the platform's performance. Through his expertise and dedication, Tommaso ensures that EZElectronics remains a top choice for electronics retailers seeking a reliable and user-friendly management solution.
 
+<!---
 4.	Persona: Sofia - Premium Customer
 
 
@@ -110,6 +111,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
     •	Story: 
     1.	Sofia, being a premium member, enjoys the perks of free shipping on all her purchases from EZElectronics. She appreciates the convenience and cost savings this offers, making her more inclined to shop regularly on the platform. 
     2.	Additionally, Sofia feels valued as a customer due to the exclusive deals and personalized recommendations she receives as part of her premium membership.
+-->
 
 5.	Persona: Matteo - Premium Manager
 
