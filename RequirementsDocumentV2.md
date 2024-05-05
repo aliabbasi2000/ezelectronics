@@ -1280,13 +1280,13 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ### Use case 24 - Login
 
-| Actors Involved  |   Customer, Manager(Premium or Normal) |
+| Actors Involved  |   Customer, Manager(Premium or Normal), Tech Admin |
 | :--------------: | :-------------------------------------------------------: |
-|   Precondition   | The user has a customer or manager Account (Premium or Normal) |
+|   Precondition   | The user has a customer or manager Account (Premium or Normal) or Tech Admin |
 |  Post condition  | The user is authenticated as customer or manager (Premium or Normal)       |
-| Nominal Scenario | 24.1 The user inserts his username & pass and is authenticated as customer <br> 24.2 The user insert his username & Pass and is authenticated as manager (Premium or Normal)  |
+| Nominal Scenario | 24.1 The user inserts his username & pass and is authenticated as customer </br> 24.2 The user insert his username & Pass and is authenticated as manager (Premium or Normal) </br> 24.3 The Tech Admin Inserts his username & Pass and is authenticated as Tech Admin |
 |     Variants     |             |
-|    Exceptions    |              24.3 Error - Username or Password is not valid                  |
+|    Exceptions    |              24.4 Error - Username or Password is not valid                  |
 
 ##### Scenario 24.1
 
@@ -1316,27 +1316,37 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ##### Scenario 24.3
 
-| Scenario 24.3  |                Error - Username or Password is not valid               |
+| Scenario 24.23 |                Tech Admin logs in               |
 | :------------: | :-------------------------------------------------------: |
-|  Precondition  | The user has a customer or manager Account OR Doesn't have any account   |
+|  Precondition  | The user has a Tech Admin Account    |
+| Post condition |  The User is authenticated as Tech Admin  |
+|     Step#      |                     Description                                   |
+|       1        |      The User navigates to the login page       |
+|       2        |    The Tech Admin inserts their username, password and clicks on login    |
+|       3        |     FR5.0 Log in    |
+|       4        |      The system authenticates the user as Tech Admin   |
+
+##### Scenario 24.4
+
+| Scenario 24.4  |                Error - Username or Password is not valid               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The user has a customer or manager or Tech Admin Account OR Doesn't have any account   |
 | Post condition |            The User encounters an Error         |
 |     Step#      |                     Description                                   |
 |       1        |      The User navigates to the login page       |
 |       2        |    The User inserts his username, password and Clicks on login   |
 |       3        |      Database returns an Error - Password and Username does not reffer to a User    |
-|       4        |    The Error pops up - Username & Password do not match - Not joined yet? Create an Account |
-|       5        |    If user clicks on Create an account option, will be redirected to Create an Account page  |
-|       6        |    If user clicks on Forget Password: Preform FR5.1 Password Recovery  |
+|       4        |    The Error pops up - Username & Password do not match|
 
 
 
 ### Use Case 25 - Logout
 
-| Actors Involved  |  Customer, Manager (Premium or Normal) |
+| Actors Involved  |  Customer, Manager (Premium or Normal), Tech Admin |
 | :--------------: | :-------------------------------------------------------: |
-|   Precondition   | The user is authenticated to the system as customer OR manager |
-|  Post condition  | The user is no more authenticated as customer or manager     |
-| Nominal Scenario | 25.1 Customer Logs our <br> 25.2 Manager Logs out  |
+|   Precondition   | The user is authenticated to the system as customer OR manager OR Tech Admin |
+|  Post condition  | The user is no more authenticated as customer or manager or Tech Admin    |
+| Nominal Scenario | 25.1 Customer Logs our </br> 25.2 Manager Logs out </br> 25.3 Tech Admin Logs out|
 |     Variants     |          |
 |    Exceptions    |                          |
 
@@ -1364,6 +1374,89 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        |      The User is no more authenticated      |
 |       4        |      Redirect User to the Homepage       |
 
+##### Scenario 25.3
+
+| Scenario 25.3  |                Tech Admin logs out               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User is authenticated to the system as Tech Admin   |
+| Post condition |  The Tech Admin is no more authenticated as Tech Admin        |
+|     Step#      |            Description                   |
+|       1        |      The Tech Admin  Clicks on logout button       |
+|       2        |      FR5.0 Log out   |
+|       3        |      The User is no more authenticated      |
+
+
+### Use Case 26 - Password Recovery
+
+| Actors Involved  |  Customer, Manager (Premium or Normal) |
+| :--------------: | :-------------------------------------------------------: |
+|   Precondition   | The user has an Account (Customer or Manager) |
+|  Post condition  | The Password of the User has been Reset and User Redirected to the Reset Pass Page    |
+| Nominal Scenario | 26.1 Customer Resets the Password <br> 26.2 Manager Resets the Password  |
+|     Variants     |          |
+|    Exceptions    |         26.3 The new Password is the same with the Old Password   </br> 26.4 There is no Account              |
+
+##### Scenario 26.1
+
+| Scenario 26.1  |                Customer Resets the Password              |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User has an Customer account  |
+| Post condition | The Password of the User has been Reset and User Redirected to the Reset Pass Page    |
+|     Step#      |            Description                   |
+|       1        |      The customer Clicks on Forget password button       |
+|       2        |      The customer Provides his Email as Input       |
+|       3        |      FR5.1 Password Recovery       |
+|       4        |    Password has been reset and a link containing the reset pass page has been sent to the email of the Customer     |
+|       5        |   Customer insert the new password    |
+|       6        |   If the old Pass != new Pass   |
+|       7        |   Customer new password has been changed in the database   |
+|       8        |   The msg "The pasword has successfully been changed" is shown to the customer    |
+|       9        |   Redirect to the Login Page   |
+
+##### Scenario 26.2
+
+| Scenario 26.2  |                Manager Resets the Password              |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User has an Manager(Normal OR Premium) account  |
+| Post condition | The Password of the User has been Reset and User Redirected to the Reset Pass Page    |
+|     Step#      |            Description                   |
+|       1        |      The Manager Clicks on Forget password button       |
+|       2        |      The Manager Provides his Email as Input       |
+|       3        |      FR5.1 Password Recovery       |
+|       4        |    Password has been reset and a link containing the reset pass page has been sent to the email of the Manager     |
+|       5        |   Manager insert the new password    |
+|       6        |   If the old Pass != new Pass   |
+|       7        |   Manager new password has been changed in the database   |
+|       8        |   The msg "The pasword has successfully been changed" is shown to the Manager    |
+|       9        |   Redirect to the Login Page   |
+
+##### Scenario 26.3
+
+| Scenario 26.3  |               The new Password is the same with the Old Password               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User has an  account  |
+| Post condition | Error msg pops up : The new Password is the same with the Old Password     |
+|     Step#      |            Description                   |
+|       1        |      The User Clicks on Forget password button       |
+|       2        |      The User Provides his Email as Input       |
+|       3        |      FR5.1 Password Recovery       |
+|       4        |    Password has been reset and a link containing the reset pass page has been sent to the email of the user     |
+|       5        |   user insert the new password    |
+|       6        |   If the old Pass == new Pass   |
+|       7        |   The Error "The new Password is the same with the Old Password" pops up   |
+
+
+##### Scenario 26.4
+
+| Scenario 26.4  |                There is no Account               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User has an account  |
+| Post condition | Error msg pops up : There is no Account with the Email provided     |
+|     Step#      |            Description                   |
+|       1        |      The User Clicks on Forget password button       |
+|       2        |      The User Provides his Email as Input       |
+|       3        |      The Email doesn't match with any Email of the users in our DataBase      |
+|       4        |   The Error "There is no Account with the Email provided" is pops up   |
 
 
 # Glossary
