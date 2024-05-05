@@ -803,9 +803,9 @@ IT WILL BE INCLUDED IN V2
 | :--------------: | :-------------------------------------------------------: |
 |   Precondition   | The user has a customer or manager Account |
 |  Post condition  | The user is authenticated as customer or manager        |
-| Nominal Scenario | 15.1 The user inserts his username & pass and is authenticated as customer <br>  The user insert his username & Pass and is authenticated as manager  |
+| Nominal Scenario | 15.1 The user inserts his username & pass and is authenticated as customer <br> 15.2 The user insert his username & Pass and is authenticated as manager  |
 |     Variants     |             |
-|    Exceptions    |                Error - Username or Password is not valid                  |
+|    Exceptions    |              15.3 Error - Username or Password is not valid                  |
 
 ##### Scenario 15.1
 
@@ -843,8 +843,8 @@ IT WILL BE INCLUDED IN V2
 |       1        |      The User navigates to the login page       |
 |       2        |    The User inserts his username, password and Clicks on login   |
 |       3        |      Database returns an Error - Password and Username does not reffer to a User    |
-|       4        |    The Error pops up - Username & Password do not match / Check the Username and Password again OR create an Account   |
-|       5        |    If user clicks on Create an account, will be redirected to Create an Account page  |
+|       4        |    The Error pops up - Username & Password do not match - Not joined yet? Create an Account |
+|       5        |    If user clicks on Create an account option, will be redirected to Create an Account page  |
 
 
 
