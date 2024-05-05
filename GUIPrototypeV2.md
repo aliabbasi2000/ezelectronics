@@ -1,6 +1,6 @@
 # Graphical User Interface Prototype - FUTURE
 ------------LOGIN------------------
-![GUIV2.png](./diagrams/v2/GUIV2/GUIV2.png)
+![login.png](./diagrams/v2/GUI_V2/login.png)
 
 ------------CART----------
 
