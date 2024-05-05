@@ -17,3 +17,18 @@ Version:
 
 ----------------------------------user logged in-----------------------------
 ![welcome.png](./diagrams/v1/gui_v1/welcome.png)
+
+
+
+------------Product Page----------
+
+![homev1.png](./diagrams/v1/gui_v1/homeV1.png)
+
+------------Product Page----------
+
+![P1.png](./diagrams/v1/gui_v1/P1.png)
+
+
+------------Product Page----------
+
+![c1.png](./diagrams/v1/gui_v1/C1.png)

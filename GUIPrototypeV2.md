@@ -24,3 +24,9 @@
 ------------Product Page----------
 
 ![homev2.png](./diagrams/v2/GUI_V2/homeV2.png)
+
+
+
+------------Product Page----------
+
+![c2.png](./diagrams/v2/GUI_V2/c2.png)
