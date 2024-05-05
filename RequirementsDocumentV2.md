@@ -129,7 +129,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart   <br /> • FR3.2  Returns the history of the paid carts of the User <br /> • FR3.3 Delete the cart of current user (ONLY BY CUSTOMER) /Delete all carts (ONLY TECH ADMIN) |
 |  FR4: Manage Payment  |     • FR4.0 Pay the current cart <br /> • FR4.1 Pay the Premium Account  |
 |  FR5: Authorization and Authentication  |       • FR5.0 Log in/Log out  <br /> • FR5.1 Password Recovery   |
-|  FR6: Manage Shipping  |     • FR6.0 Choose a shipping method (Delivery Company DHL, Poste Italiane, ...) <br /> • FR6.1 Show the shipping price <br /> • FR6.2 Insert Address <br /> • FR6.3 Track delivery |
+|  FR6: Manage Shipping  |     • FR6.0 Choose a shipping method (Delivery Company DHL, Poste Italiane, ...) <br /> • FR6.1 Show the shipping price <br /> • FR6.2 Insert Address  |
 |  FR7: Manage Whishlist  |      • FR7.0 Return the curent whislist <br /> • FR7.1 Add / Remove a product to whislist (ONLY CUSTOMER) |
 
 
