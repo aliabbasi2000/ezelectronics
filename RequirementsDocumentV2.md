@@ -1043,9 +1043,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User has an account and Logged in as Customer (Authenticated) |
 |  Post condition  | Customer view the Details of the wishlist   |
-| Nominal Scenario |  6.1 Customer can view the details of their wishlist |
+| Nominal Scenario |  21.1 Customer can view the details of their wishlist |
 |     Variants     |                                  |
-|    Exceptions    |  6.2 No Product in the wishlist.    |
+|    Exceptions    |  21.2 No Product in the wishlist.    |
 
 
 ##### Scenario 21.1
@@ -1056,7 +1056,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Post condition |  Customer view the Details of the wishlist |
 |     Step#      |            Description                   |
 |       1        |  The Customer Clicks on the View wishlist button    |
-|       2        |  FR3.0 Return the curent wishlist |
+|       2        |  FR7.0 Return the curent wishlist |
 |       3        |  The wishlist details will be Displayed on the web page |
 
 ##### Scenario 21.2
@@ -1067,7 +1067,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Post condition |  Customer see No Product has been added to wishlist Message. |
 |     Step#      |            Description                   |
 |       1        |  The Customer Clicks on the View wishlist button    |
-|       2        | FR3.0 Return the curent wishlist |
+|       2        | FR7.0 Return the curent wishlist |
 |       3        |  DataBase returns NULL |
 |       3        |  "No Product has been added to the wishlist. Keep Shopping.." will pops up. |
 
@@ -1077,9 +1077,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User has an account and Logged in as Customer (Authenticated) |
 |  Post condition  | The wishlist contains the product   |
-| Nominal Scenario |  8.1 Customer successfully add normal product to his wishlist </br> 8.2 Customer successfully add sponsored product to his wishlist|
-|     Variants     |  8.3 Customer add n product to his wishlist   |
-|    Exceptions    |  8.4 The product is sold out or unavailable    |
+| Nominal Scenario |  22.1 Customer successfully add normal product to his wishlist </br> 22.2 Customer successfully add sponsored product to his wishlist|
+|     Variants     |  22.3 Customer add n product to his wishlist   |
+|    Exceptions    |  22.4 The product is sold out or unavailable    |
 
 
 ##### Scenario 22.1
@@ -1131,6 +1131,41 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       2        |  FR7.1 Add product to the current wishlist |
 |       3        |  DataBase return an Error  |
 |       4        |  This msg Pops up: The product is sold out or unavailable |
+
+### Use case 23, Remove Product from the Wishlist
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer and it has at least one product in wishlist |
+|  Post condition  | The product is Removed from the wishlist   |
+| Nominal Scenario |  23.1 The product is Successfully Removed from the wishlist |
+|     Variants     |     |
+|    Exceptions    |  23.2 The product does not exist in cart - 404 Error   |
+
+
+##### Scenario 23.1
+
+|  Scenario 23.1  |       The product is Removed from the wishlst       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer and it has at least one product in wishlist  |
+| Post condition |  The product is Removed from the wishlist |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Remove Product button    |
+|       2        |  FR7.1 Remove the product from the current wishlist |
+|       3        |  if Customer clicks on "Show wishlist" FR7.0 Return current wishlsit|
+
+##### Scenario 23.2
+
+|  Scenario 23.2  |      The product does not exist in wishlist - 404 Error       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer and it has at least one product in wishlist  |
+| Post condition |  The product does not exist in wishlist and nothing changed |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Remove Product button  |
+|       2        |  FR7.1 Remove the product from the current wishlist |
+|       3        |  Database Returns an Error  |
+|       4        |  "The product does not exist in wishlist - 404 Error"  Message Pops up  |
+
 
 
 
