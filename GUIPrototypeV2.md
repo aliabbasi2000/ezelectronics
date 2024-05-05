@@ -23,4 +23,4 @@
 
 ------------Product Page----------
 
-![Searched_product_v2.png](./diagrams/v2/GUI_V2/Searched_products_v2.png)
+![homev2.png](./diagrams/v2/GUI_V2/homeV2.png)
