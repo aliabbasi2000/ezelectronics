@@ -10,7 +10,7 @@
 
 
 
-------------Product Page----------
+------------Home Product Page----------
 
 ![homev2.png](./diagrams/v2/GUI_V2/homeV2.png)
 

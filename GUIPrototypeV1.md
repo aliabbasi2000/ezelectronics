@@ -20,7 +20,7 @@ Version:
 
 
 
-------------Product Page----------
+------------Home Product page----------
 
 ![homev1.png](./diagrams/v1/gui_v1/homeV1.png)
 
