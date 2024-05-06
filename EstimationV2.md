@@ -24,7 +24,7 @@ Consider the EZElectronics  project in FUTURE version (as proposed by your team 
 |requirement document    | 35 |
 | GUI prototype |10|
 |design document |10|
-|code |150|
+|code |100|
 | unit tests |60|
 | api tests |30|
 | management documents  |40|
@@ -35,19 +35,40 @@ Consider the EZElectronics  project in FUTURE version (as proposed by your team 
 ### 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| | |
+| **requirement document** | |
+| Stakeholders |1 |
+| Context Diagram |1 |
+| Stories and personas  |1 |
+| Functional and non functional requirements|5 |
+| Use case diagram| 4|
+|Use cases and senarios|10|
+|Glossary |2 |
+| Deployment Diagram| 2|
+|**GUI ** | |
+| GUI prototype| 5|
+| GUI design on Balsamiq| 15|
+|**design document** | |
+|design document | 10|
+|**code** | |
+|code | 70 |
+|**Testing** | |
+|Unit Test | 30|
+|API Test |30 |
 ###
-Insert here Gantt chart with above activities
+![ganttv1.png](./diagrams/v2/ganttv2.png)
 
 # Summary
 
-Report here the results of the three estimation approaches. The  estimates may differ. Discuss here the possible reasons for the difference
+The results are different due to the unique perspectives and criteria used in each method: activity-focused effort, product feature complexity, and project size metrics.
+For example weekends / Holidays /  working hours (8 to 12 / 14 to 18) / overlabs of jobs may not be counted in some estimates. 
+
 
 |             | Estimated effort                        |   Estimated duration |          
 | ----------- | ------------------------------- | ---------------|
-| estimate by size ||
-| estimate by product decomposition ||
-| estimate by activity decomposition ||
+| estimate by size |150 person hour|  about 1 week |
+| estimate by product decomposition |285  person hour|about 2 week|
+| estimate by activity decomposition |186  person hour|about 1 and half week|
+
 
 
 
