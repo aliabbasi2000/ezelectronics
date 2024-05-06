@@ -21,7 +21,7 @@ Consider the EZElectronics  project in CURRENT version (as given by the teachers
 ### 
 |         component name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-|requirement document    | 35 |
+|requirement document    | 45 |
 | GUI prototype |25|
 |design document |20|
 |code |80|
