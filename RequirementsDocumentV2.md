@@ -62,7 +62,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |   Actor   | Logical Interface | Physical Interface |
 | :-------: | :---------------: | :----------------: |
 | Users: Customer, Manager, Premium Manager |           PC        |       Web Page              |
-| Tech Admin |         PC          |           Web Page         |
+| Tech Admin |         PC          |           By Command Line Interface & Code         |
 | Payment Service |       Internet Link           |       https://developer.paypal.com/api/rest/             |
 | Data Base |      SQL           |      sqlite3              |
 | Delivery Service |      Internet Link           |      https://developer.dhl.com/api-catalog              |
