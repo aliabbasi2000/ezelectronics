@@ -21,13 +21,13 @@ Consider the EZElectronics  project in CURRENT version (as given by the teachers
 ### 
 |         component name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-|requirement document    | |
-| GUI prototype ||
-|design document ||
-|code ||
-| unit tests ||
-| api tests ||
-| management documents  ||
+|requirement document    | 35 |
+| GUI prototype |25|
+|design document |20|
+|code |80|
+| unit tests |50|
+| api tests |30|
+| management documents  |40|
 
 
 
