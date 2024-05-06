@@ -59,7 +59,9 @@ Consider the EZElectronics  project in CURRENT version (as given by the teachers
 
 # Summary
 
-The results are different because weekends / working hours (8 to 12 / 14 to 18) / overlabs of jobs may not be counted in some estimates. For example the Estimate by size supposes that the work is sequential and it it is not accurate enough. 
+The results are different due to the unique perspectives and criteria used in each method: activity-focused effort, product feature complexity, and project size metrics.
+For example weekends / Holidays /  working hours (8 to 12 / 14 to 18) / overlabs of jobs may not be counted in some estimates. 
+
 
 |             | Estimated effort                        |   Estimated duration |          
 | ----------- | ------------------------------- | ---------------|
