@@ -48,28 +48,35 @@
 
 
 ------------------------------CHECKOUT-----------------------------
+
 ![checkV2.png](./diagrams/v2/V2/checkV2.png)
 
 
 ------------------------------ORDER DETAILS-----------------------------
+
 ![orDetV2.png](./diagrams/v2/V2/orDetV2.png)
 
 
 ------------------------------WISHLIST-----------------------------
+
 ![userWishV2.png](./diagrams/v2/V2/userWishV2.png)
 
 
 ------------------------------SOLD PRODUCT-----------------------------
+
 ![soldV2.png](./diagrams/v2/V2/soldV2.png)
 
 
 ------------------------------PAID CATRS-----------------------------
+
 ![paidCartV2.png](./diagrams/v2/V2/paidCartV2.png)
 
 
 ------------------------------ADD PRODUCTS/SET-----------------------------
+
 ![AddProV2.png](./diagrams/v2/V2/AddProV2.png)
 
 
 ------------------------------SHOW MANAGER PRODUCTS-----------------------------
+
 ![allProV2.png](./diagrams/v2/V2/allProV2.png)
