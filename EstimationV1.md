@@ -55,17 +55,17 @@ Consider the EZElectronics  project in CURRENT version (as given by the teachers
 |Unit Test | 20|
 |API Test |20 |
 ###
-Insert here Gantt chart with above activities
+![ganttv1.png](./diagrams/v1/ganttv1.png)
 
 # Summary
 
-Report here the results of the three estimation approaches. The  estimates may differ. Discuss here the possible reasons for the difference
+The results are different because weekends / working hours (8 to 12 / 14 to 18) / overlabs of jobs may not be counted in some estimates. For example the Estimate by size supposes that the work is sequential and it it is not accurate enough. 
 
 |             | Estimated effort                        |   Estimated duration |          
 | ----------- | ------------------------------- | ---------------|
-| estimate by size |80|
-| estimate by product decomposition |230|
-| estimate by activity decomposition |144|
+| estimate by size |80 person hour| | about half a week |
+| estimate by product decomposition |230  person hour||about 1 week|
+| estimate by activity decomposition |144  person hour||about 1 week|
 
 
 
