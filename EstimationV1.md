@@ -25,9 +25,9 @@ Consider the EZElectronics  project in CURRENT version (as given by the teachers
 | GUI prototype |15|
 |design document |20|
 |code |80|
-| unit tests |50|
-| api tests |30|
-| management documents  |40|
+| unit tests |20|
+| api tests |20|
+| management documents  |30|
 
 
 
@@ -35,7 +35,25 @@ Consider the EZElectronics  project in CURRENT version (as given by the teachers
 ### 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| | |
+| **requirement document** | |
+| Stakeholders |2 |
+| Context Diagram |1 |
+| Stories and personas  |1 |
+| Functional and non functional requirements|10 |
+| Use case diagram| 5|
+|Use cases and senarios|15|
+|Glossary |2 |
+| Deployment Diagram| 2|
+|**GUI ** | |
+| GUI prototype| 3|
+| GUI design on Balsamiq| 10|
+|**design document** | |
+|design document | 10|
+|**code** | |
+|code | 40 |
+|**Testing** | |
+|Unit Test | 20|
+|API Test |20 |
 ###
 Insert here Gantt chart with above activities
 
@@ -45,9 +63,9 @@ Report here the results of the three estimation approaches. The  estimates may d
 
 |             | Estimated effort                        |   Estimated duration |          
 | ----------- | ------------------------------- | ---------------|
-| estimate by size ||
-| estimate by product decomposition ||
-| estimate by activity decomposition ||
+| estimate by size |80|
+| estimate by product decomposition |230|
+| estimate by activity decomposition |144|
 
 
 
