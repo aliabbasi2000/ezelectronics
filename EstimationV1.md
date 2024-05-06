@@ -15,7 +15,7 @@ Consider the EZElectronics  project in CURRENT version (as given by the teachers
 | S = Estimated size of project, in LOC (= NC * A) |            800           |
 | E = Estimated effort, in person hours (here use productivity 10 LOC per person hour)  |                 80                     |   
 | C = Estimated cost, in euro (here use 1 person hour cost = 30 euro) |  1200  | 
-| Estimated calendar time, in calendar weeks (Assume team of 4 people, 8 hours per day, 5 days per week ) |                    |               
+| Estimated calendar time, in calendar weeks (Assume team of 4 people, 8 hours per day, 5 days per week ) | 80/4 =  20 hours per person  20/8 = 2.5 Days   --> Almost half a Week|               
 
 # Estimate by product decomposition
 ### 
