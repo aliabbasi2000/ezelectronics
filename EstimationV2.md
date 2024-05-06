@@ -21,13 +21,13 @@ Consider the EZElectronics  project in FUTURE version (as proposed by your team 
 ### 
 |         component name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-|requirement document    | |
-| GUI prototype ||
-|design document ||
-|code ||
-| unit tests ||
-| api tests ||
-| management documents  ||
+|requirement document    | 35 |
+| GUI prototype |10|
+|design document |10|
+|code |150|
+| unit tests |60|
+| api tests |30|
+| management documents  |40|
 
 
 
