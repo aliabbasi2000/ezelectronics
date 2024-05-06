@@ -1,6 +1,5 @@
 # Requirements Document - current EZElectronics
 
-
 Version: V1 - description of EZElectronics in CURRENT form (as received by teachers)
 test test
 | Version number | Change |
