@@ -63,9 +63,9 @@ The results are different because weekends / working hours (8 to 12 / 14 to 18) 
 
 |             | Estimated effort                        |   Estimated duration |          
 | ----------- | ------------------------------- | ---------------|
-| estimate by size |80 person hour| | about half a week |
-| estimate by product decomposition |230  person hour||about 1 week|
-| estimate by activity decomposition |144  person hour||about 1 week|
+| estimate by size |80 person hour|  about half a week |
+| estimate by product decomposition |230  person hour|about 1 week|
+| estimate by activity decomposition |144  person hour|about 1 week|
 
 
 
