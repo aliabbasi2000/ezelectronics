@@ -2,11 +2,11 @@
 
 Date:
 
-Version: V1 - description of EZElectronics in FUTURE form (as proposed by the team)
+Version: V2 - description of EZElectronics in FUTURE form (as proposed by the team)
 
 | Version number | Change |
 | :------------: | :----: |
-|                |        |
+|      V2.0.1          |    Delete user usecase changes (should need authentication)    |
 
 # Contents
 
@@ -41,33 +41,78 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 | Stakeholder name | Description |
 | :--------------: | :---------: |
-| Stakeholder x..  |             |
+| Customer  |       Users of Application who purchase product      |
+| Manager, Premium Manager  |      Users of Application who sell product       |
+| Start up Company  |    Developer of Software and Admins and CEO         |
+| Product Company  |      The Company producing the Product       |
+| Competitors  |       Competitor companies E.g. Ebay, Amazon retail, ...      |
+| Payment Sevice   |       Online Payment service E.g. paypal      |
+| Pick up points   |    Physical location for shipping and pickup with the help of delivery services.    |
+| Delivery Services   |       The Service provieds delivery E.G. DHL    |
+
 
 # Context Diagram and interfaces
 
 ## Context Diagram
 
-\<Define here Context diagram using UML use case diagram>
-
-\<actors are a subset of stakeholders>
+![context_diagram.png](./diagrams/v2/context_diagram.png)
 
 ## Interfaces
 
-\<describe here each interface in the context diagram>
-
-\<GUIs will be described graphically in a separate document>
-
 |   Actor   | Logical Interface | Physical Interface |
 | :-------: | :---------------: | :----------------: |
-| Actor x.. |                   |                    |
+| Users: Customer, Manager, Premium Manager |           PC        |       Web Page              |
+| Tech Admin |         PC          |           By Command Line Interface & Code         |
+| Payment Service |       Internet Link           |       https://developer.paypal.com/api/rest/             |
+| Data Base |      SQL           |      sqlite3              |
+| Delivery Service |      Internet Link           |      https://developer.dhl.com/api-catalog              |
+
+
+
 
 # Stories and personas
+1.	Persona: Giulia - Electronics Store Manager
+      
+      •	Background: 
+      1.	Giulia is the manager of a small electronics store. 
+      2.	She's tech-savvy but lacks experience in managing online platforms.
+      
+      •	Story: 
+      1.	Giulia needs a solution to streamline her store's operations and expand its reach online. She discovers EZElectronics and sees its potential to simplify inventory management and reach a wider customer base. 
+      2.	She uses the platform to easily add new products, update stock levels, and fulfill online orders, ultimately boosting her store's revenue.
 
-\<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
+2.	Persona: Marco - Customer
 
-\<Persona is-an-instance-of actor>
+    •	Background: 
+    1.	Marco is a college student with a passion for electronics. 
+    2.	He frequently shops online for the latest gadgets and components.
 
-\<stories will be formalized later as scenarios in use cases>
+    •	Story: 
+    1.	Marco comes across EZElectronics while searching for a specific electronic component. Impressed by the website's user-friendly interface and diverse product range, he creates an account and starts browsing. He finds the component he needs, adds it to his cart, and completes the purchase hassle-free. 
+    2.	Satisfied with his experience, Marco becomes a loyal customer, regularly checking EZElectronics for new arrivals.
+
+3.	Persona: Tommaso - Tech Admin
+
+    •	Background: 
+    1.	Tommaso is the tech admin at EZElectronics, responsible for overseeing the development and maintenance of the software application. 
+    2.	He has a strong passion for technology and innovation.
+    
+    •	Story: 
+    1.	Tommaso is tasked with leading the development team in enhancing EZElectronics to meet the evolving needs of electronics store managers and customers. He conducts regular meetings to gather feedback from users and identifies areas for improvement. 
+    2.	Tommaso works closely with the development team to implement new features and optimize the platform's performance. Through his expertise and dedication, Tommaso ensures that EZElectronics remains a top choice for electronics retailers seeking a reliable and user-friendly management solution.
+
+
+
+4.	Persona: Matteo - Premium Manager
+
+
+    •	Background: 
+    1.	Matteo is the manager of a top-performing electronics store that partners with EZElectronics. 
+    2.	He has opted for the premium manager package, which includes premium placement of his products on the website's top pages.
+    
+    •	Story: 
+    1.	Matteo leverages his premium manager status on EZElectronics to ensure that his products receive maximum visibility on the platform. With his products featured prominently on the top pages of the website, Matteo attracts more customers and drives higher sales for his store.
+    2.	He appreciates the additional exposure and marketing support provided by EZElectronics, which helps him stay ahead of the competition and grow his business.
 
 # Functional and non functional requirements
 
@@ -79,9 +124,16 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |  ID   | Description |
 | :---: | :---------: |
-|  FR1  |             |
-|  FR2  |             |
-| FRx.. |             |
+|  FR1: Manage Products  |     • FR1.0 Create a new Product(ONLY MANAGER) / Delete a Product(ONLY MANAGER)/ Delete all Products(ONLY TECH ADMIN) <br /> • FR1.1 Registers the arrival of Products of same model (ONLY MANAGER)   <br /> • FR1.2 Mark a product as sold  <br /> • FR1.3 Retrieve a product (All / with the same Category / Model)  <br /> • FR1.4 Registers the arrival of a set of products  <br /> • FR1.5 Mark a Product as sponssored (ONLY BY PREMIUM MANAGER) <br />• FR1.6 Unmark a Sponsored products (ONLY PREMIUM MANAGER) |
+|  FR2: Manage Users  |   • FR2.0 Retrieves logged in user's Info.  <br /> • FR2.1 Retrieve a User (list of all users/ all users with a role (ONLY TECH ADMIN) / specific User with username)  <br /> •FR2.2 Create User / Delete User(USER AND TECH ADMIN) / Delete user with username  / Delete all the users (ONLY TECH ADMIN)  <br /> • FR2.4 Change the Account As Premium (ONLY BY MANAGER)|
+|  FR3: Manage Cart  |      • FR3.0 Return the curent cart <br /> • FR3.1 Add / Remove a product to cart   <br /> • FR3.2  Returns the history of the paid carts of the User <br /> • FR3.3 Delete the cart of current user (ONLY BY CUSTOMER) /Delete all carts (ONLY TECH ADMIN) |
+|  FR4: Manage Payment  |     • FR4.0 Pay the current cart <br /> • FR4.1 Pay the Premium Account  |
+|  FR5: Authorization and Authentication  |       • FR5.0 Log in/Log out  <br /> • FR5.1 Password Recovery   |
+|  FR6: Manage Shipping  |     • FR6.0 Choose a shipping method (Delivery Company DHL, Poste Italiane, ...) <br /> • FR6.1 Show the shipping price <br /> • FR6.2 Insert Address  |
+|  FR7: Manage Whishlist  |      • FR7.0 Return the curent whislist <br /> • FR7.1 Add / Remove a product to whislist (ONLY CUSTOMER) |
+
+
+
 
 ## Non Functional Requirements
 
@@ -89,72 +141,1479 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |   ID    | Type (efficiency, reliability, ..) | Description | Refers to |
 | :-----: | :--------------------------------: | :---------: | :-------: |
-|  NFR1   |                                    |             |           |
-|  NFR2   |                                    |             |           |
-|  NFR3   |                                    |             |           |
-| NFRx .. |                                    |             |           |
+|  NFR1   |              Reliability                      |      • No more than one defect per user      |      All Functions     |
+|  NFR2   |                 Usability                   |      •  Customer should be able to use Web app with no training less than 2 min.       |     FR3, FR4, FR5      |
+|  NFR3   |                 Usability                   |      • Manager  should be able to use Web app with no training less than 5 min.       |     FR1, FR5      |
+|  NFR4   |                 Efficiency                   |    • Website should be loaded in less than 2 sec <br /> • execution of functions take less than 0.1 sec      |      All Functions     |
+| NFR5 |               Portability                     |     • Web App  should be compatible with different browsers (Chrome, Edge, Safari, Mozila)    |     All Functions      |
+| NFR6 |               Portability                     |     • Web App  should have different versrions for Devices (Desktop Version, Smartphone Version)     |     All Functions      |
+| NFR7 |               Privacy                     |     • Customer data should not be used for commercial purposes in other companies and the purchase history should be available just for the Customer and the Company.     |     FR2, FR3      |
+| NFR8 |               Security                     |     • The user information should be saved in data base in encrypted format and the payment portal shouold be safe   |     FR2, FR4, FR5      |
 
 # Use case diagram and use cases
 
 ## Use case diagram
 
-\<define here UML Use case diagram UCD summarizing all use cases, and their relationships>
 
-\<next describe here each use case in the UCD>
+![usecase_diagram.png](./diagrams/v2/usecase_diagram.png)
 
-### Use case 1, UC1
 
-| Actors Involved  |                                                                      |
+
+### Use case 1, View Account Info
+
+| Actors Involved  |            Customer, Manager(Normal, Premium)               |
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   | \<Boolean expression, must evaluate to true before the UC can start> |
-|  Post condition  |  \<Boolean expression, must evaluate to true after UC is finished>   |
-| Nominal Scenario |         \<Textual description of actions executed by the UC>         |
-|     Variants     |                      \<other normal executions>                      |
-|    Exceptions    |                        \<exceptions, errors >                        |
+|   Precondition   | User has account and is Logged in (authenticated) |
+|  Post condition  | User See his Account Information  |
+| Nominal Scenario | 1.1 The Page Containting Customer info is shown  </br> 1.2 The Page Containting Normal Manager info is shown  </br> 1.3 The Page Containting Premium Manager info is shown    |
+|     Variants     |                                  |
+|    Exceptions    | 1.4 Error - There is no User with Provided information       |
 
 ##### Scenario 1.1
 
-\<describe here scenarios instances of UC1>
-
-\<a scenario is a sequence of steps that corresponds to a particular execution of one use case>
-
-\<a scenario is a more formal description of a story>
-
-\<only relevant scenarios should be described>
-
-|  Scenario 1.1  |                                                                            |
+|  Scenario 1.1  |        The Page Containting Customer info is shown        |
 | :------------: | :------------------------------------------------------------------------: |
-|  Precondition  | \<Boolean expression, must evaluate to true before the scenario can start> |
-| Post condition |  \<Boolean expression, must evaluate to true after scenario is finished>   |
-|     Step#      |                                Description                                 |
-|       1        |                                                                            |
-|       2        |                                                                            |
-|      ...       |                                                                            |
+|  Precondition  | User has account and is Logged in as Customer (authenticated) |
+| Post condition |  Customer See his Account Information |
+|     Step#      |            Description                   |
+|       1        |   The Customer Clicks on the Account Info    |
+|       2        |   FR2.0 Retrieves logged in user's Info. |
+|       3        |    Customer See his Account Information.     |
 
 ##### Scenario 1.2
 
-##### Scenario 1.x
+|  Scenario 1.2  |       The Page Containting Normal Manager info is shown        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has account and is Logged in as Normal Manager (authenticated) |
+| Post condition |  Normal Manager See his Account Information |
+|     Step#      |            Description                   |
+|       1        |   The User Clicks on the Account Info    |
+|       2        |   FR2.0 Retrieves logged in user's Info. |
+|       3        |   Manager See his Account Information.   |
 
-### Use case 2, UC2
 
-..
+##### Scenario 1.3
 
-### Use case x, UCx
+|  Scenario 1.3  |       The Page Containting Premium Manager info is shown        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has account and is Logged in as Premium Manager (authenticated) |
+| Post condition |  Premium Manager See his Account Information |
+|     Step#      |            Description                   |
+|       1        |   The User Clicks on the Account Info    |
+|       2        |   FR2.0 Retrieves logged in user's Info. |
+|       3        |   Premium Manager See his Account Information.   |
 
-..
+##### Scenario 1.4
+
+|  Scenario 1.4  |  Error - There is no User with Provided information  |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has account and is Logged in (authenticated) |
+| Post condition |  User See a 404 Error - No User Found on the Web Page |
+|     Step#      |            Description                   |
+|       1        |   The User Clicks on the Account Info    |
+|       2        |   FR2.0 Retrieves logged in user's Info. |
+|       3        |    The dataBase returns Null             |
+|       4        |    User see  404 Error message - No User Found on the Web Page   |
+
+
+### Use case 2, Delete Account
+
+| Actors Involved  |             Customer, Manager(Normal, Premium)               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has account and is Logged in (authenticated) |
+|  Post condition  | User has been Deleted his Account  |
+| Nominal Scenario |  2.1 User has been Deleted his Account (Normal / Premium)  |
+|     Variants     |                                  |
+|    Exceptions    |  2.2 Error - No Account has been found    |
+
+##### Scenario 2.1
+
+|  Scenario 2.1  |       User has been Deleted his Account        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has account and is Logged in (authenticated) |
+| Post condition |  User has been Deleted his Account |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the Delete Account button    |
+|       2        |  FR2.0 Retrieve the Logged in User Info   |
+|       3        |  FR4.0 Perform Log out   |
+|       4        |  FR.2.1 Delete User     |
+|       5        |  A message pops up that your account has been deleted       |
+|       6        |  Redirect user to the home page       |
+
+##### Scenario 2.2
+
+|  Scenario 2.1  |       Error - No Account has been found         |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has account and is Logged in (authenticated) |
+| Post condition |  User has been faced an Error |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the Delete Account button    |
+|       2        |  FR2.0 Retrieve the Logged in User Info   |
+|       3        |  DataBase Error - No account has been found |
+|       5        |  Error is Pops up - No Account has been found   |
+
+
+
+
+### Use case 3, Create Account
+
+| Actors Involved  |             Customer, Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has no account  |
+|  Post condition  | User has been Created an Account  |
+| Nominal Scenario |  3.1 User has been Created a Customer Account </br> 3.2 User has been Created a Manager Account |
+|     Variants     |                                  |
+|    Exceptions    |  3.3 409 Error, user already exist in database    |
+
+
+##### Scenario 3.1
+
+|  Scenario 3.1  |       User has been Created a Customer Account        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has no account |
+| Post condition |  User has been Created a Customer Account |
+|     Step#      |            Description                    |
+|       1        |  The User Clicks on the Create Account button    |
+|       2        |  Enter the information as input and the role is Customer  |
+|       3        |  FR2.1 Create User  |
+|       4        |  A message pops up that your account has been created     |
+|       5        |  Redirect user to the Login page       |
+
+##### Scenario 3.2
+
+|  Scenario 3.2  |       User has been Created a Manager Account        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has no account |
+| Post condition |  User has been Created a Manager Account |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the Create Account button    |
+|       2        |  Enter the information as input and the role is Manager  |
+|       3        |  FR2.1 Create User  |
+|       4        |  A message pops up that your account has been created       |
+|       5        |  Redirect user to the Login page       |
+
+##### Scenario 3.3
+
+|  Scenario 3.3  |       409 Error, user already exist in database        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account |
+| Post condition |  409 Error, user already exist in database |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the Create Account button    |
+|       2        |  Enter the information as input and the role is Manager  |
+|       2        |  FR2.1 Create User  |
+|       3        |  database retrieves an error that the username is already exist  |
+|       5        |  409 Error pops up: user already exist in database       |
+|       6        |  Redirect user to the Login page       |
+
+
+
+
+### Use case 4, View Product List
+
+| Actors Involved  |             Customer, Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in (Authenticated) |
+|  Post condition  | User see the result as list of products   |
+| Nominal Scenario |  4.1 User Views the product list based on Model  - Sponsored product on Top </br> 4.2 User Views the product list based on Category - Sponsored product on Top  |
+|     Variants     |  4.3 User Views the product list without Sponsored product on Top        |
+|    Exceptions    |  4.4 No Product Found based on the criteria    |
+
+
+##### Scenario 4.1
+
+|  Scenario 4.1  |       User Views the product list based on Model - Sponsored product on Top      |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User Views the product list based on Model |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the View by Model button    |
+|       2        |  FR1.3 Retrieve product list with same model  |
+|       3        |  the list of products with same model show up in the web page  |
+
+##### Scenario 4.2
+
+|  Scenario 4.2  |       User Views the product list based on Category - Sponsored product on Top     |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User Views the product list based on Category |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the View by Category button    |
+|       2        |  FR1.3 Retrieve product list with same Category  |
+|       3        |  the list of products with same Category show up in the web page  |
+
+##### Scenario 4.3
+
+|  Scenario 4.3  |       User Views the product list without Sponsored product on Top       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User Views the product list based on Catagory/Model without Sponsored product on Top |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the View by Category/Model button    |
+|       2        |  FR1.3 Retrieve product list with same Category/Model  |
+|       3        |  Database Retrieves the list  |
+|       4        |  The list of products with same Category/Model show up in the web page  |
+
+##### Scenario 4.4
+
+|  Scenario 4.4  |       No Product Found based on the criteria       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  No Product Found based on the criteria |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on the View by Category button    |
+|       2        |  FR1.3 Retrieve product list with same Category  |
+|       3        |  Database Retrieves: Null  |
+|       4        |  This message pops up: No Product Found based on the criteria  |
+
+
+
+### Use case 5, View Product details
+
+| Actors Involved  |             Customer, Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in (Authenticated) |
+|  Post condition  | User see the details of product including the image and description   |
+| Nominal Scenario |  5.1 User Views the product details (is not sponsored) </br> 5.2 User Views the sponsored product details |
+|     Variants     |          |
+|    Exceptions    |  5.3 404 Error - The Product Found    |
+
+
+##### Scenario 5.1
+
+|  Scenario 5.1  |       User Views the product details (is not sponsored)      |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User see the details of product (is not sponsored) including the image and description |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on a normal Product   |
+|       2        |  FR1.3 Retrieve a product  |
+|       3        |  DataBase Retrieves the details of a normal product  |
+|       4        |  The Detail of the normal product are shown to the user   |
+
+##### Scenario 5.2
+
+|  Scenario 5.2  |       User Views the sponsored product details     |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User see the details of Sponsored product including the image and description |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on a Sponsored Product    |
+|       2        |  FR1.3 Retrieve a product  |
+|       3        | DataBase Retrieves the details of an Sponsored product  |
+|       4        |  The Detail of the sposnsored product are shown to the user   |
+
+##### Scenario 5.3
+
+|  Scenario 5.3  |       404 Error - The Product Found        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in (Authenticated) |
+| Post condition |  User Encounters an Error - THe Product Found |
+|     Step#      |            Description                   |
+|       1        |  The User Clicks on a product    |
+|       2        |  FR1.3 Retrieve a product  |
+|       3        |  Database Reruens an Error  |
+|       4        |  This error msg pops up: 404 Error - The Product Found  |
+
+
+
+### Use case 6, View Cart 
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer (Authenticated) |
+|  Post condition  | Customer view the Details of the cart   |
+| Nominal Scenario |  6.1 Customer can view the details of his cart |
+|     Variants     |                                  |
+|    Exceptions    |  6.2 No Product in the cart.    |
+
+
+##### Scenario 6.1
+
+|  Scenario 6.1  |       Customer view the Details of the cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  Customer view the Details of the cart |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on the View Cart button    |
+|       2        |  FR3.0 Return the curent cart |
+|       3        |  The Cart details will be Displayed on the web page |
+
+##### Scenario 6.2
+
+|  Scenario 6.2  |       No Product in the Cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  Customer see No Product has been added to cart Message. |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on the View Cart button    |
+|       2        | FR3.0 Return the curent cart |
+|       3        |  DataBase returns NULL |
+|       3        |  "No Product has been added to the cart. Keep Shopping.." will pops up. |
+
+
+
+### Use case 7, View Cart History
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer (Authenticated) |
+|  Post condition  | Customer view the history of cart   |
+| Nominal Scenario |  7.1 Customer can view the history of his cart |
+|     Variants     |                                  |
+|    Exceptions    |  7.2 No history for cart is available    |
+
+
+##### Scenario 7.1
+
+|  Scenario 7.1  |       Customer can view the history of his cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  Customer can view the history of his cart |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on the View Cart History button    |
+|       2        |  FR3.2 Return History of the paid carts of the user |
+|       3        |  The list will be Displayed on the web page |
+
+##### Scenario 7.2
+
+|  Scenario 7.2  |       No history for cart is available       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  Error Message: No Cart History Available |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on the View Cart History button    |
+|       2        |  FR3.2 Return History of the paid carts of the user |
+|       3        |  DataBase returns NULL |
+|       3        |  No Cart History Message will be desplayed to the Customer |
+
+
+
+
+### Use case 8, Add Product to the Cart
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer (Authenticated) |
+|  Post condition  | The cart contains the product   |
+| Nominal Scenario |  8.1 Customer successfully add normal product to his cart </br> 8.2 Customer successfully add sponsored product to his cart|
+|     Variants     |  8.3 Customer add n product to his cart   |
+|    Exceptions    |  8.4 The product is sold out or unavailable    |
+
+
+##### Scenario 8.1
+
+|  Scenario 8.1  |       Customer adds a normal product to his cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  The cart contains the normal product |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Add Product button    |
+|       2        |  FR3.1 Add product to the current cart |
+|       3        |  The cart contains the product |
+|       4        |  if Customer clicks on "Show Cart" FR3.0 Return current cart|
+
+##### Scenario 8.2
+
+|  Scenario 8.2  |      Customer adds a sponsored product to his cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  The cart contains the sponsored product |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Add Product button    |
+|       2        |  FR3.1 Add product to the current cart |
+|       3        |  The cart contains the product |
+|       4        |  if Customer clicks on "Show Cart" FR3.0 Return current cart|
+
+
+##### Scenario 8.3
+
+|  Scenario 8.3  |      Customer add n product to his cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  The cart contains n product |
+|     Step#      |            Description                   |
+|       1        |  The Customer selects n number of products    |
+|       2        |  The Customer Clicks on Add Product button  |
+|       3        |  n * FR3.1 Add product to the current cart |
+|       4        |   if Customer clicks on "Show Cart" FR3.0 Return current cart  |
+
+
+##### Scenario 8.4
+
+|  Scenario 8.4  |      The product is sold out or unavailable       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition | This msg Pops up: The product is sold out or unavailable |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Add Product button  |
+|       2        |  FR3.1 Add product to the current cart |
+|       3        |  DataBase return an Error  |
+|       4        |  This msg Pops up: The product is sold out or unavailable |
+
+
+
+### Use case 9, Delete Cart
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer and it has at least one product in Cart  |
+|  Post condition  | The cart has been deleted   |
+| Nominal Scenario |  9.1 Customer successfully deleted his cart |
+|     Variants     |    |
+|    Exceptions    |  9.2 There is no product in the cart    |
+
+
+##### Scenario 9.1
+
+|  Scenario 9.1  |       Customer successfully deleted his cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer and it has at least one product in Cart  |
+| Post condition |  The cart has been deleted |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Delete Cart button    |
+|       2        |  FR3.3 Delete current cart of the current cart |
+|       3        |  Database successfully deletes the records related to the Cart |
+|       4        |  "you Deleted your cart successfully" msg pops up |
+|       5        |  Navigate customer to Home Page |
+
+##### Scenario 9.2
+
+|  Scenario 9.2  |      There is no product in the cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  There is no product in the cart and nothing changed |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Delete Cart button    |
+|       2        |  FR3.3 Delete current cart of the current cart |
+|       3        |  Database Returns an error |
+|       4        |  "You do not have any cart" msg pops up |
+|       5        |  Navigate customer to Home Page |
+
+
+
+### Use case 10, Remove Product from the Cart
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer and it has at least one product in Cart |
+|  Post condition  | The product is Removed from the cart   |
+| Nominal Scenario |  10.1 The product is Successfully Removed from the cart |
+|     Variants     |     |
+|    Exceptions    |  10.2 The product does not exist in cart - 404 Error   |
+
+
+##### Scenario 10.1
+
+|  Scenario 10.1  |       The product is Removed from the cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer and it has at least one product in Cart  |
+| Post condition |  The product is Removed from the cart |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Remove Product button    |
+|       2        |  FR3.1 Remove the product from the current cart |
+|       3        |  if Customer clicks on "Show Cart" FR3.0 Return current cart|
+
+##### Scenario 10.2
+
+|  Scenario 10.2  |      The product does not exist in cart - 404 Error       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer and it has at least one product in Cart  |
+| Post condition |  The product does not exist in cart and nothing changed |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Remove Product button  |
+|       2        |  FR3.1 Remove the product from the current cart |
+|       3        |  Database Returns an Error  |
+|       4        |  "The product does not exist in cart - 404 Error"  Message Pops up  |
+
+
+
+### Use case 11, Delete a Product
+
+| Actors Involved  |             Manager, Premium Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Manager (Authenticated) |
+|  Post condition  | The product is Deleted from the Inventory   |
+| Nominal Scenario |  11.1 Manager successfully Deletes the product from the Inventory </br> 11.2 Premium Manager successfully Deletes the Sponsored product from the Inventory |
+|     Variants     |    |
+|    Exceptions    |  11.3 The product does not represent a product in our database - 404 Error    |
+
+
+##### Scenario 11.1
+
+|  Scenario 11.1  |       Manager successfully Deletes the product from the Inventory       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product is Deleted from the Inventory |
+|     Step#      |            Description                   |
+|       1        |   The Manager Selects the product to be deleted   |
+|       2        |   The Manager Clicks on Delete the Product  button  |
+|       3        |  FR1.0 Delete a product |
+|       4        |  Delete the Product from the DataBase |
+|       5        |  DataBase Returns successfull result |
+|       6        |  "The product has been Deleted" msg pops up|
+
+
+##### Scenario 11.2
+
+|  Scenario 11.2  |       Premium Manager successfully Deletes the product from the Inventory       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The Sponsored product is Deleted from the Inventory |
+|     Step#      |            Description                   |
+|       1        |   The Manager Selects the Sponsored product to be deleted   |
+|       2        |   The Manager Clicks on Delete the Product  button  |
+|       3        |  FR1.0 Delete a product |
+|       4        |  Delete the Product from the DataBase |
+|       5        |  DataBase Returns successfull result |
+|       6        |  "The Sponsored product has been Deleted" msg pops up|
+
+
+##### Scenario 11.3
+|  Scenario 11.3  |      The product does not represent a product in our database       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product does not represent a product in our database - 404 Error |
+|     Step#      |            Description                   |
+|       1        |   The Manager Selects the product to be deleted   |
+|       2        |   The Manager enters the product ID  |
+|       3        |  FR1.0 Delete a product |
+|       4        |  Delete the Product from the DataBase |
+|       5        |  DataBase Returns Error - Does not represent a record in Database |
+|       6        |  "There is no such a Product" msg pops up|
+
+
+
+### Use case 12, Registers the arrival of a set of products
+
+| Actors Involved  |             Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Manager (Authenticated) |
+|  Post condition  | All the products are added to the inventory   |
+| Nominal Scenario |  12.1 Manager successfully added All the products to the inventory |
+|     Variants     |    |
+|    Exceptions    |  12.2 The product is already registered in our database </br>  12.3 The ArrivalDate is invalid   |
+
+
+##### Scenario 12.1
+
+|  Scenario 12.1  |       Manager successfully added All the products to the inventory        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  All the products are added to the inventory |
+|     Step#      |            Description                   |
+|       1        |   The Manager selects Register a set of arrivals   |
+|       2        |   The Manager inserts the information of them  |
+|       3        |  FR1.4 Register the arrival of set of products |
+|       4        |  Insert data to the DataBase |
+|       5        |  DataBase Returns successfull result |
+|       6        |  "The products successfully have been Registered" msg pops up|
+
+
+##### Scenario 12.2
+
+|  Scenario 12.2  |       The product is already registered in our database        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product is already in our database - Error |
+|     Step#      |            Description                   |
+|       1        |   The Manager selects Register a set of arrivals   |
+|       2        |   The Manager inserts the information of them  |
+|       3        |  FR1.4 Register the arrival of set of products |
+|       4        |  Insert data to the DataBase |
+|       5        |  DataBase Returns Error - Duplicate Data |
+|       6        |  "Error: The products have not been Registered - Already in our Database " msg pops up|
+
+##### Scenario 12.3
+
+|  Scenario 12.3  |       The ArrivalDate is invalid         |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The ArrivalDate is invalid - Error |
+|     Step#      |            Description                   |
+|       1        |   The Manager selects Register a set of arrivals   |
+|       2        |   The Manager inserts the information of them  |
+|       3        |  FR1.4 Register the arrival of set of products |
+|       4        |  if (The Arrival date is after current date) == True |
+|       5        |  "Error: The products have not been Registered due to the invalid ArrivalDate" msg pops up|
+
+
+
+### Use case 13, Sell Product
+
+| Actors Involved  |             Manager, Premium Manager, Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Manager (Authenticated) |
+|  Post condition  | The product marked as sold in the system  |
+| Nominal Scenario |  13.1 Manager successfully sold an Item </br> 13.2 Premium Manager successfully sold an Sponsored Item  |
+|     Variants     |    |
+|    Exceptions    |  13.2 404 Error - The product ID does not represent a product in database </br>  13.3 Error - The product has already been sold  </br>  13.4 Error - SellingDate is after the current date </br>  13.5 Error - SellingDate is before the product's arrivalDate  |
+
+
+##### Scenario 13.1
+
+|  Scenario 13.1  |       Manager successfully sold an Item of his Inventory        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product marked as sold in the system and the  |
+|     Step#      |            Description                   |
+|       1        |   ProductID is recieved from Customer which wants to buy   |
+|       2        |  check the productId exist in database == True  |
+|       3        |  check the product has been sold out == False |
+|       4        |  Check the SellingDate is after the current date == False |
+|       5        |  SellingDate is before the product's arrivalDate == False |
+|       6        |  FR1.2 Mark the product as sold |
+|       7        |  Update the inventory |
+
+##### Scenario 13.2
+
+|  Scenario 13.2  |       Premium Manager successfully sold an Sponsored Item         |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The Sponsored product marked as sold in the system and the  |
+|     Step#      |            Description                   |
+|       1        |   ProductID is recieved from Customer which wants to buy   |
+|       2        |  check the productId exist in database == True  |
+|       3        |  check the product has been sold out == False |
+|       4        |  Check the SellingDate is after the current date == False |
+|       5        |  SellingDate is before the product's arrivalDate == False |
+|       6        |  FR1.2 Mark the product as sold |
+|       7        |  Update the inventory |
+
+
+##### Scenario 13.3
+
+|  Scenario 13.3  |       404 Error - The product ID does not represent a product in database        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition | 404 Error - The product ID does not represent a product in database  |
+|     Step#      |            Description                   |
+|       1        |   ProductID is recieved from Customer which wants to buy   |
+|       2        |  check the productId exist in database == False  |
+|       3        |  404 Error message pops up "The product ID does not represent a product in database" |
+
+##### Scenario 13.4
+
+|  Scenario 13.4  |       Error - The product has already been sold        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  Error - The product has already been sold  |
+|     Step#      |            Description                   |
+|       1        |   ProductID is recieved from Customer which wants to buy   |
+|       2        |  check the product has been sold out == True |
+|        3       |  Error messag pops up: "The product has already been sold out" |
+
+##### Scenario 13.5
+
+|  Scenario 13.5  |       Error - SellingDate is after the current date        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product marked as sold in the system and the  |
+|     Step#      |            Description                   |
+|       1        |   ProductID is recieved from Customer which wants to buy   |
+|       2        |  Check the SellingDate is after the current date == True |
+|       3        |  Error message pops up: "SellingDate is after the current date" |
+
+##### Scenario 13.6
+
+|  Scenario 13.6  |      Error - SellingDate is before the product's arrivalDate        |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product marked as sold in the system and the  |
+|     Step#      |            Description                   |
+|       1        |   ProductID is recieved from Customer which wants to buy   |
+|       2        |  SellingDate is before the product's arrivalDate == True |
+|       3        |  error message pops up: "SellingDate is before the product's arrivalDate" |
+
+
+
+
+### Use case 14, Create a new Product
+
+| Actors Involved  |             Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Manager (Authenticated) |
+|  Post condition  | The product is added to the Inventory (Sponsored = False)  |
+| Nominal Scenario |  14.1 Manager successfully add product to the Inventory |
+|     Variants     |    |
+|    Exceptions    |  14.2 The product is already exist in the database - 409 Error </br> 14.3 The arrivalDate of the product is after the current date    |
+
+
+##### Scenario 14.1
+
+|  Scenario 14.1  |       Manager add a product to his cart       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product is added to the Inventory |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on Add a new Product  button    |
+|       2        |  The Manager enters the information of the product    |
+|       3        |  FR1.0 Create a new product |
+|       4        |  Insert the Product in DataBase (Sponsored = False) |
+|       5        |  DataBase Returns success |
+|       6        |  "The product has been added" msg pops up and manager can see the new product in his product list|
+
+
+##### Scenario 14.2
+|  Scenario 14.2  |      The product is already exist in the database - 409 Error       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |  The product is already exist in the database - 409 Error |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on Add a new Product  button    |
+|       2        |  The Manager enters the information of the product    |
+|       3        |  FR1.0 Create a new product |
+|       4        |  Insert the Product in DataBase |
+|       5        |  DataBase Returns error - "Duplicated product ID" |
+|       6        |  "The product is already exist in our DataBase" msg pops up|
+
+
+##### Scenario 14.3
+
+|  Scenario 14.2  |      Manager Inserts an invalid arrival Date - 409 Error       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Manager (Authenticated) |
+| Post condition |   The arrivalDate of the product is after the current date - 409 Error |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on Add a new Product  button    |
+|       2        |  The Manager enters the information of the product    |
+|       3        |  The Manager inserts the arrival date manually    |
+|       4        |  FR1.4 Register the Arrival of a set of product |
+|       3        |  FR1.0 Create a new product |
+|       4        |  Insert the Product in DataBase |
+|       5        |  we check Arrival date which manager entered is after the current date = True  |
+|       6        |  "The arrivalDate of the product is after the current date - 409 Error" msg pops up|
+
+
+
+
+### Use case 15, Mark a Product as Sponsored
+
+| Actors Involved  |            Premium Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Premium Manager (Authenticated) |
+|  Post condition  | The product is marked as Sponsored product   |
+| Nominal Scenario |  15.1 The Premium Manager successfully marks thr product as sponsored |
+|     Variants     |    |
+|    Exceptions    |  15.2 The product is already is an sponsored product  </br> 15.3 The manager is not a premium manager    |
+
+
+##### Scenario 15.1
+
+|  Scenario 15.1  |       The Premium Manager marks the product as sponsored       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The Premium Manager successfully marks the product as sponsored |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on mark the Product as sponsored button    |
+|       2        |  Check if the Manager is Premium == True |
+|       3        |  Check if the product is sponsored == False |
+|       4        |  Mark the Sponsored feature in DB as True |
+|       5        |  The premium manager can see the product marked as sponsored |
+
+##### Scenario 15.2
+
+|  Scenario 15.2  |        The product is already is an sponsored product       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The Premium Manager see an Error: Already Sponsored product |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on mark the Product as sponsored button    |
+|       2        |  Check if the Manager is Premium == True |
+|       3        |  Check if the product is sponsored == Ture |
+|       4        |  The premium manager see This Error: "Product is already sponsored" |
+
+
+##### Scenario 15.3
+
+|  Scenario 15.3  |       The manager is not a premium manager       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The Premium Manager encounters with this erro: You are not a Premium Manager!!! |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on mark the Product as sponsored button    |
+|       2        |  Check if the Manager is Premium == False |
+|       3        |  Error: You are not a Premium Manager!!! |
+
+
+
+
+### Use case 16, Unmark a Product as Sponsored
+
+| Actors Involved  |            Premium Manager               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Premium Manager (Authenticated) |
+|  Post condition  | The sponsored product is unmarked    |
+| Nominal Scenario |  16.1 The Premium Manager successfully unmarks the sponsored product  |
+|     Variants     |    |
+|    Exceptions    |  16.2 The product is already is not a sponsored product  </br> 16.3 The manager is not a premium manager    |
+
+
+##### Scenario 16.1
+
+|  Scenario 16.1  |       The Premium Manager successfully unmarks the sponsored product      |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The sponsored product is unmarked |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on Unmark the Product    |
+|       2        |  Check if the Manager is Premium == True |
+|       3        |  Check if the product is sponsored == True |
+|       4        |  UnMark the Sponsored feature in DB as True |
+|       5        |  The premium manager can see the sponsored product Unmarked  |
+
+##### Scenario 16.2
+
+|  Scenario 16.2  |        The product is already is not a sponsored product       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The Premium Manager see an Error: Not Sponsored product |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on mark the Product     |
+|       2        |  Check if the Manager is Premium == True |
+|       3        |  Check if the product is sponsored == False |
+|       4        |  The premium manager see This Error: "Product is not a sponsored Product" |
+
+
+##### Scenario 16.3
+
+|  Scenario 16.3  |       The manager is not a premium manager       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Premium Manager (Authenticated) |
+| Post condition |  The Premium Manager encounters with this erro: You are not a Premium Manager!!! |
+|     Step#      |            Description                   |
+|       1        |  The Manager Clicks on mark the Product     |
+|       2        |  Check if the Manager is Premium == False |
+|       3        |  Error: You are not a Premium Manager!!! |
+
+
+
+### Use case 17, Delete All The Carts
+
+| Actors Involved  |            Tech Admin               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |The Tech Admin is authenticated and has access to the admin panel|
+|  Post condition  | All Carts are deleted    |
+| Nominal Scenario |  17.1 The Tech Admin successfully deletes all carts  |
+|     Variants     |    |
+|    Exceptions    |  17.2 All Carts are already deleted (NO CART IN DATABASE ) |
+
+##### Scenario 17.1
+
+|  Scenario 17.1  |       The Tech Admin successfully deletes all carts       |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   | The Tech Admin is authenticated and has access to the admin panel |
+|  Post condition  | All Carts are deleted  </br> Users are notified of the deletion of their carts  |
+|     Step#      |            Description                   |
+|       1        |  The Tech Admin  Clicks on Delete ALL carts |
+|       2        |  Check if there is at least one cart == True |
+|       3        |  The Tech Admin  Clicks on confirm to delete |
+|       4        |  The Tech Admin can see the success of the operation  |
+|       5        |  Users are notified of the deletion of their carts  |
+##### Scenario 17.2
+
+|  Scenario 17.1  |       The Tech Admin successfully deletes all carts       |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   | The Tech Admin is authenticated and has access to the admin panel|
+|  Post condition  | All Carts are deleted    |
+|     Step#      |            Description                   |
+|       1        |  The Tech Admin  Clicks on Delete ALL carts |
+|       2        |  Check if there is at least one cart == False |
+|       3        |  The Tech Admin see This Error: "ERROR: No Cart exist" |
+
+### Use case 18, Delete All The Carts
+
+| Actors Involved  |            Tech Admin               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |The Tech Admin is authenticated and has access to the admin panel|
+|  Post condition  | All users are deleted    |
+| Nominal Scenario |  17.1 The Tech Admin successfully deletes all users  |
+|     Variants     |    |
+|    Exceptions    |  17.2 All Users are already deleted (NO user IN DATABASE ) |
+
+##### Scenario 18.1
+
+|  Scenario 18.1  |       The Tech Admin successfully deletes all users       |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   | The Tech Admin is authenticated and has access to the admin panel |
+|  Post condition  | All Carts are deleted  </br> Users are notified of the deletion of their accounts  |
+|     Step#      |            Description                   |
+|       1        |  The Tech Admin  Clicks on Delete ALL carts |
+|       2        |  Check if there is at least one user == True |
+|       3        |  The Tech Admin  Clicks on confirm to delete |
+|       4        |  The Tech Admin can see the success of the operation  |
+|       5        |  Users are notified of the deletion of their account  |
+##### Scenario 18.2
+
+|  Scenario 18.2  |       The Tech Admin successfully deletes all users       |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   | The Tech Admin is authenticated and has access to the admin panel|
+|  Post condition  | All USERS are deleted    |
+|     Step#      |            Description                   |
+|       1        |  The Tech Admin  Clicks on Delete ALL users |
+|       2        |  Check if there is at least one user == False |
+|       3        |  The Tech Admin see This Error: "ERROR: No USER exist" |
+
+
+### Use case 19, Manage Payment
+
+| Actors Involved  |            Payment Services, Customers, Managers              |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | The customer has items in their online shopping cart. |
+|  Post condition  | The customer's payment has been successfully processed.  |
+| Nominal Scenario |  19.1 The Customer PAY, The payment service acts as an intermediary, Maneger Access the money   |
+|     Variants     |    |
+|    Exceptions    | 19.2 The Customer PAY, The payment service acts as an intermediary, The manager does not access the money |
+
+
+##### Scenario 19.1
+
+|  Scenario 19.1  |      The Customer PAY, The payment service acts as an intermediary, Maneger Access the money     |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Precondition   | The customer has items in their online shopping cart. |
+|  Post condition  | The customer's payment has been successfully processed.  |
+|     Step#      |            Description                   |
+|       1        |  The customer navigates to the checkout page.|
+|       2        |  The customer reviews the items in their cart and verifies the total amount. |
+|       3        | The customer selects a payment method from the available options (e.g., credit card, PayPal, etc.).   |
+|       4        | The customer enters their payment details, including credit card information or PayPal account details. |
+|       5        | The customer reviews the entered payment information for accuracy.  |
+|       6        | The customer confirms the purchase by clicking on the "Place Order" or "Confirm Purchase" button. |
+|       7        | The payment service validates the transaction by verifying the payment details provided by the customer. |
+|       8        | If the transaction is valid, the payment service processes the payment by charging the customer's selected payment method. |
+|       9       | The payment service sends a confirmation message to the customer, indicating that the payment has been successfully processed.|
+|       10        | Simultaneously, the payment service notifies the Manager of the successful payment.|
+|       11        | The merchant fulfills the customer's order by preparing and shipping the purchased items |
+
+
+
+##### Scenario 19.2
+
+|  Scenario 19.2  |      The Customer PAY, The payment service acts as an intermediary, Maneger Access the money     |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Precondition   | The customer has items in their online shopping cart. |
+|  Post condition  | First customer's payment has not been successfully processed, retry |
+|     Step#      |            Description                   |
+|       1        |  The customer navigates to the checkout page.|
+|       2        |  The customer reviews the items in their cart and verifies the total amount. |
+|       3        | The customer selects a payment method from the available options (e.g., credit card, PayPal, etc.).   |
+|       4        | The customer enters their payment details, including credit card information or PayPal account details. |
+|       5        | The customer reviews the entered payment information for accuracy.  |
+|       6        | The customer confirms the purchase by clicking on the "Place Order" or "Confirm Purchase" button. |
+|       7        | The payment service attempts to validate the transaction by verifying the payment details provided by the customer |
+|       8        |The payment service detects that the payment method provided by the customer is not valid (e.g., insufficient funds, expired card, etc.) |
+|       9       | The payment service notifies the customer that the payment method is not valid and prompts them to review and update their payment information|
+|       10        |The customer reviews the error message and decides to either update their payment method or cancel the purchase|
+|       11        | If the customer chooses to update their payment method, they provide alternative payment details and attempt to confirm the purchase again |
+|       12        | The payment service does not process the payment due to the invalid payment method|
+
+##### Scenario 19.3
+
+|  Scenario 19.3  |      The Customer PAY, The payment service acts as an intermediary, Maneger Access the money     |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Precondition   | The customer has items in their online shopping cart. |
+|  Post condition  | First customer's payment has not been successfully processed, cancel the purchase  |
+|     Step#      |            Description                   |
+|       1        |  The customer navigates to the checkout page.|
+|       2        |  The customer reviews the items in their cart and verifies the total amount. |
+|       3        | The customer selects a payment method from the available options (e.g., credit card, PayPal, etc.).   |
+|       4        | The customer enters their payment details, including credit card information or PayPal account details. |
+|       5        | The customer reviews the entered payment information for accuracy.  |
+|       6        | The customer confirms the purchase by clicking on the "Place Order" or "Confirm Purchase" button. |
+|       7        | The payment service attempts to validate the transaction by verifying the payment details provided by the customer |
+|       8        |The payment service detects that the payment method provided by the customer is not valid (e.g., insufficient funds, expired card, etc.) |
+|       9       | The payment service notifies the customer that the payment method is not valid and prompts them to review and update their payment information|
+|       10        |The customer reviews the error message and decides to either update their payment method or cancel the purchase|
+|       11        |If the customer chooses to cancel the purchase, they abandon the checkout process and return to shopping or exit the website |
+
+### Use case 20, Retrive all Users
+
+| Actors Involved  |            Tech Admin               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |The Tech Admin is authenticated and has access to the admin panel |
+|  Post condition  | Will be  a list of all users    |
+| Nominal Scenario |  20.1 The Tech Admin successfully see all User |
+|     Variants     |    |
+|    Exceptions    | NONE |
+
+##### Scenario 20.1
+
+|  Scenario 20.1  |       The Tech Admin successfully Retrives all users       |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   | The Tech Admin is authenticated and has access to the admin panel|
+|  Post condition  | A list of all users will be displayed  |
+|     Step#      |            Description                   |
+|       1        |  The Tech Admin  Clicks on Retrive ALL users|
+|       2        |  The Tech Admin can see A list of all users  |
+
+### Use case 21, View Wishlist
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer (Authenticated) |
+|  Post condition  | Customer view the Details of the wishlist   |
+| Nominal Scenario |  21.1 Customer can view the details of their wishlist |
+|     Variants     |                                  |
+|    Exceptions    |  21.2 No Product in the wishlist.    |
+
+
+##### Scenario 21.1
+
+|  Scenario 21.1  |       Customer view the Details of the wishlist      |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  Customer view the Details of the wishlist |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on the View wishlist button    |
+|       2        |  FR7.0 Return the curent wishlist |
+|       3        |  The wishlist details will be Displayed on the web page |
+
+##### Scenario 21.2
+
+|  Scenario 21.2  |         No Product in the wishlist       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  Customer see No Product has been added to wishlist Message. |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on the View wishlist button    |
+|       2        | FR7.0 Return the curent wishlist |
+|       3        |  DataBase returns NULL |
+|       3        |  "No Product has been added to the wishlist. Keep Shopping.." will pops up. |
+
+### Use case 22, Add Product to the Wishlist
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer (Authenticated) |
+|  Post condition  | The wishlist contains the product   |
+| Nominal Scenario |  22.1 Customer successfully add normal product to his wishlist </br> 22.2 Customer successfully add sponsored product to his wishlist|
+|     Variants     |  22.3 Customer add n product to his wishlist   |
+|    Exceptions    |  22.4 The product is sold out or unavailable    |
+
+
+##### Scenario 22.1
+
+|  Scenario 22.1  |       Customer adds a normal product to his wishlist       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  The cart contains the normal product |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Add Product button    |
+|       2        |  FR7.1 Add product to the current wishlist |
+|       3        |  The wishlist contains the product |
+|       4        |  if Customer clicks on "Show wishlist" FR3.0 Return current wishlist|
+
+##### Scenario 22.2
+
+|  Scenario 22.2  |      Customer adds a sponsored product to his wishlist       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  The cart contains the sponsored product |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Add Product button    |
+|       2        |  FR7.1 Add product to the current wishlist |
+|       3        |  The wishlist contains the product |
+|       4        |  if Customer clicks on "Show wishlist" FR3.0 Return current wishlist|
+
+
+##### Scenario 22.3
+
+|  Scenario 22.3  |      Customer add n product to his wishlist       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition |  The wishlist contains n product |
+|     Step#      |            Description                   |
+|       1        |  The Customer selects n number of products    |
+|       2        |  The Customer Clicks on Add Product button  |
+|       3        |  n * FR7.1 Add product to the current wishlist |
+|       4        |   if Customer clicks on "Show Cart" FR7.0 Return current wishlist  |
+
+
+##### Scenario 22.4
+
+|  Scenario 22.4  |      The product is sold out or unavailable       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer (Authenticated) |
+| Post condition | This msg Pops up: The product is sold out or unavailable |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Add Product button  |
+|       2        |  FR7.1 Add product to the current wishlist |
+|       3        |  DataBase return an Error  |
+|       4        |  This msg Pops up: The product is sold out or unavailable |
+
+### Use case 23, Remove Product from the Wishlist
+
+| Actors Involved  |             Customer               |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User has an account and Logged in as Customer and it has at least one product in wishlist |
+|  Post condition  | The product is Removed from the wishlist   |
+| Nominal Scenario |  23.1 The product is Successfully Removed from the wishlist |
+|     Variants     |     |
+|    Exceptions    |  23.2 The product does not exist in cart - 404 Error   |
+
+
+##### Scenario 23.1
+
+|  Scenario 23.1  |       The product is Removed from the wishlst       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer and it has at least one product in wishlist  |
+| Post condition |  The product is Removed from the wishlist |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Remove Product button    |
+|       2        |  FR7.1 Remove the product from the current wishlist |
+|       3        |  if Customer clicks on "Show wishlist" FR7.0 Return current wishlsit|
+
+##### Scenario 23.2
+
+|  Scenario 23.2  |      The product does not exist in wishlist - 404 Error       |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has an account and Logged in as Customer and it has at least one product in wishlist  |
+| Post condition |  The product does not exist in wishlist and nothing changed |
+|     Step#      |            Description                   |
+|       1        |  The Customer Clicks on Remove Product button  |
+|       2        |  FR7.1 Remove the product from the current wishlist |
+|       3        |  Database Returns an Error  |
+|       4        |  "The product does not exist in wishlist - 404 Error"  Message Pops up  |
+
+
+
+
+### Use case 24 - Login
+
+| Actors Involved  |   Customer, Manager(Premium or Normal), Tech Admin |
+| :--------------: | :-------------------------------------------------------: |
+|   Precondition   | The user has a customer or manager Account (Premium or Normal) or Tech Admin |
+|  Post condition  | The user is authenticated as customer or manager (Premium or Normal)       |
+| Nominal Scenario | 24.1 The user inserts his username & pass and is authenticated as customer </br> 24.2 The user insert his username & Pass and is authenticated as manager (Premium or Normal) </br> 24.3 The Tech Admin Inserts his username & Pass and is authenticated as Tech Admin |
+|     Variants     |             |
+|    Exceptions    |              24.4 Error - Username or Password is not valid                  |
+
+##### Scenario 24.1
+
+| Scenario 24.1  |                Customer logs in               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The user has a customer Account    |
+| Post condition |  The User is authenticated as customer   |
+|     Step#      |            Description                   |
+|       1        |      The User navigates to the login page       |
+|       2        |    The user inserts his username, password and clicks on login    |
+|       3        |     FR5.0 Log in    |
+|       4        |      The system authenticates the User as customer      |
+|       5        |      redirect customer to the Home Page      |
+
+##### Scenario 24.2
+
+| Scenario 24.2  |                Manager logs in               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The user has a manager Account    |
+| Post condition |  The User is authenticated as manager (Premium or Normal)  |
+|     Step#      |                     Description                                   |
+|       1        |      The User navigates to the login page       |
+|       2        |    The manager inserts their username, password and clicks on login    |
+|       3        |     FR5.0 Log in    |
+|       4        |      The system authenticates the manager as manager (Premium or Normal)    |
+|       5        |      redirect Manager to the Home Page      |
+
+##### Scenario 24.3
+
+| Scenario 24.23 |                Tech Admin logs in               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The user has a Tech Admin Account    |
+| Post condition |  The User is authenticated as Tech Admin  |
+|     Step#      |                     Description                                   |
+|       1        |      The User navigates to the login page       |
+|       2        |    The Tech Admin inserts their username, password and clicks on login    |
+|       3        |     FR5.0 Log in    |
+|       4        |      The system authenticates the user as Tech Admin   |
+
+##### Scenario 24.4
+
+| Scenario 24.4  |                Error - Username or Password is not valid               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The user has a customer or manager or Tech Admin Account OR Doesn't have any account   |
+| Post condition |            The User encounters an Error         |
+|     Step#      |                     Description                                   |
+|       1        |      The User navigates to the login page       |
+|       2        |    The User inserts his username, password and Clicks on login   |
+|       3        |      Database returns an Error - Password and Username does not reffer to a User    |
+|       4        |    The Error pops up - Username & Password do not match|
+
+
+
+### Use Case 25 - Logout
+
+| Actors Involved  |  Customer, Manager (Premium or Normal), Tech Admin |
+| :--------------: | :-------------------------------------------------------: |
+|   Precondition   | The user is authenticated to the system as customer OR manager OR Tech Admin |
+|  Post condition  | The user is no more authenticated as customer or manager or Tech Admin    |
+| Nominal Scenario | 25.1 Customer Logs our </br> 25.2 Manager Logs out </br> 25.3 Tech Admin Logs out|
+|     Variants     |          |
+|    Exceptions    |                          |
+
+##### Scenario 25.1
+
+| Scenario 25.1  |                Customer logs out               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User is authenticated to the system as customer   |
+| Post condition | The User is no more authenticated as customer        |
+|     Step#      |            Description                   |
+|       1        |      The customer Clicks on logout button       |
+|       2        |      FR5.0 Log out     |
+|       3        |      The User is no more authenticated       |
+|       4        |      Redirect User to the Homepage       |
+
+##### Scenario 25.2
+
+| Scenario 25.2  |                Manager logs out               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User is authenticated to the system as manager   |
+| Post condition |  The manager is no more authenticated as manager        |
+|     Step#      |            Description                   |
+|       1        |      The Manager (Premium or Normal) Clicks on logout button       |
+|       2        |      FR5.0 Log out   |
+|       3        |      The User is no more authenticated      |
+|       4        |      Redirect User to the Homepage       |
+
+##### Scenario 25.3
+
+| Scenario 25.3  |                Tech Admin logs out               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User is authenticated to the system as Tech Admin   |
+| Post condition |  The Tech Admin is no more authenticated as Tech Admin        |
+|     Step#      |            Description                   |
+|       1        |      The Tech Admin  Clicks on logout button       |
+|       2        |      FR5.0 Log out   |
+|       3        |      The User is no more authenticated      |
+
+
+### Use Case 26 - Password Recovery
+
+| Actors Involved  |  Customer, Manager (Premium or Normal) |
+| :--------------: | :-------------------------------------------------------: |
+|   Precondition   | The user has an Account (Customer or Manager) |
+|  Post condition  | The Password of the User has been Reset and User Redirected to the Reset Pass Page    |
+| Nominal Scenario | 26.1 Customer Resets the Password <br> 26.2 Manager Resets the Password  |
+|     Variants     |          |
+|    Exceptions    |         26.3 The new Password is the same with the Old Password   </br> 26.4 There is no Account              |
+
+##### Scenario 26.1
+
+| Scenario 26.1  |                Customer Resets the Password              |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User has an Customer account  |
+| Post condition | The Password of the User has been Reset and User Redirected to the Reset Pass Page    |
+|     Step#      |            Description                   |
+|       1        |      The customer Clicks on Forget password button       |
+|       2        |      The customer Provides his Email as Input       |
+|       3        |      FR5.1 Password Recovery       |
+|       4        |    Password has been reset and a link containing the reset pass page has been sent to the email of the Customer     |
+|       5        |   Customer insert the new password    |
+|       6        |   If the old Pass != new Pass   |
+|       7        |   Customer new password has been changed in the database   |
+|       8        |   The msg "The pasword has successfully been changed" is shown to the customer    |
+|       9        |   Redirect to the Login Page   |
+
+##### Scenario 26.2
+
+| Scenario 26.2  |                Manager Resets the Password              |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User has an Manager(Normal OR Premium) account  |
+| Post condition | The Password of the User has been Reset and User Redirected to the Reset Pass Page    |
+|     Step#      |            Description                   |
+|       1        |      The Manager Clicks on Forget password button       |
+|       2        |      The Manager Provides his Email as Input       |
+|       3        |      FR5.1 Password Recovery       |
+|       4        |    Password has been reset and a link containing the reset pass page has been sent to the email of the Manager     |
+|       5        |   Manager insert the new password    |
+|       6        |   If the old Pass != new Pass   |
+|       7        |   Manager new password has been changed in the database   |
+|       8        |   The msg "The pasword has successfully been changed" is shown to the Manager    |
+|       9        |   Redirect to the Login Page   |
+
+##### Scenario 26.3
+
+| Scenario 26.3  |               The new Password is the same with the Old Password               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User has an  account  |
+| Post condition | Error msg pops up : The new Password is the same with the Old Password     |
+|     Step#      |            Description                   |
+|       1        |      The User Clicks on Forget password button       |
+|       2        |      The User Provides his Email as Input       |
+|       3        |      FR5.1 Password Recovery       |
+|       4        |    Password has been reset and a link containing the reset pass page has been sent to the email of the user     |
+|       5        |   user insert the new password    |
+|       6        |   If the old Pass == new Pass   |
+|       7        |   The Error "The new Password is the same with the Old Password" pops up   |
+
+
+##### Scenario 26.4
+
+| Scenario 26.4  |                There is no Account               |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User has an account  |
+| Post condition | Error msg pops up : There is no Account with the Email provided     |
+|     Step#      |            Description                   |
+|       1        |      The User Clicks on Forget password button       |
+|       2        |      The User Provides his Email as Input       |
+|       3        |      The Email doesn't match with any Email of the users in our DataBase      |
+|       4        |   The Error "There is no Account with the Email provided" is pops up   |
+
+
+### Use Case 26 - Password Recovery
+
+| Actors Involved  |  Customer, Manager (Premium or Normal) |
+| :--------------: | :-------------------------------------------------------: |
+|   Precondition   | The user has an Account (Customer or Manager) |
+|  Post condition  | The Password of the User has been Reset and User Redirected to the Reset Pass Page    |
+| Nominal Scenario | 26.1 Customer Resets the Password <br> 26.2 Manager Resets the Password  |
+|     Variants     |          |
+|    Exceptions    |         26.3 The new Password is the same with the Old Password   </br> 26.4 There is no Account              |
+
+##### Scenario 26.1
+
+| Scenario 26.1  |                Customer Resets the Password              |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  | The User has an Customer account  |
+| Post condition | The Password of the User has been Reset and User Redirected to the Reset Pass Page    |
+|     Step#      |            Description                   |
+|       1        |      The customer Clicks on Forget password button       |
+|       2        |      The customer Provides his Email as Input       |
+|       3        |      FR5.1 Password Recovery       |
+|       4        |    Password has been reset and a link containing the reset pass page has been sent to the email of the Customer     |
+|       5        |   Customer insert the new password    |
+|       6        |   If the old Pass != new Pass   |
+|       7        |   Customer new password has been changed in the database   |
+|       8        |   The msg "The pasword has successfully been changed" is shown to the customer    |
+|       9        |   Redirect to the Login Page   |
+
+
+
+### Use Case 27 - Check out 
+
+| Actors Involved  |  Customer, Payment Service |
+| :--------------: | :-------------------------------------------------------: |
+|   Precondition   | The user has an Account and has been authenticated as Customer |
+|  Post condition  | The customer pays the cart and the payment handled by a third party payment service and the order takes place  |
+| Nominal Scenario | 27.1 Check out done and the order takes place  |
+|     Variants     |          |
+|    Exceptions    |         27.2 Error - Payment unsuccessfull        |
+
+##### Scenario 27.1
+
+| Scenario 27.1  |                Check out done and the order takes place              |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  |  The user has an Account and has been authenticated as Customer  |
+| Post condition | The customer pays the cart and the payment handled by a third party payment service and the order takes place    |
+|     Step#      |            Description                   |
+|       1        |      The customer Clicks on check out       |
+|       2        |      the system Sums up the cost of products    |
+|       3        |      user FR6.2 Insert the Address    |
+|       4        |      FR6.0 Choose a shipping method (Delivery Company DHL, Poste Italiane, ...)   |
+|       5        |      FR6.1 Show the shipping price by API of delivery service    |
+|       6        |      The payment sevice handles the payment and it returns success      |
+|       7        |      place order of the customer       |
+|       8        |      Show the order details      |
+
+##### Scenario 27.2
+
+| Scenario 27.2  |                Error - unsuccessfull Payment              |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  |  The user has an Account and has been authenticated as Customer  |
+| Post condition |  unsuccessfull Payment     |
+|     Step#      |            Description                   |
+|       1        |      The customer Clicks on check out       |
+|       2        |      the system Sums up the cost of products    |
+|       3        |      user FR6.2 Insert the Address    |
+|       4        |      FR6.0 Choose a shipping method (Delivery Company DHL, Poste Italiane, ...)   |
+|       5        |      FR6.1 Show the shipping price by API of delivery service    |
+|       3        |      Error msg pops up: Payment was unsuccessfull       |
+|       6        |      The payment sevice handles the payment and it returns Failure      |
+|       3        |      redirect user to the cart page      |
+
+
+### Use Case 28 - Buy the Premium Version
+
+| Actors Involved  |  Manager, Payment Service |
+| :--------------: | :-------------------------------------------------------: |
+|   Precondition   | The user has an Account and has been authenticated as (Normal) Manager |
+|  Post condition  | Thr manager has successfully upgraded his account to Premium  |
+| Nominal Scenario | 28.1 Premium Account has been granted to the Manager |
+|     Variants     |          |
+|    Exceptions    |         28.2 Error - unsuccessfull Payment    </br> 28.3 The manager is already a Premium Manager     |
+
+##### Scenario 28.1
+
+| Scenario 28.1  |                Premium Account has been granted to the Manager              |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  |  The user has an Account and has been authenticated as (Normal) Manager  |
+| Post condition | Thr manager has successfully upgraded his account to Premium    |
+|     Step#      |            Description                   |
+|       1        |      The Manager Clicks on "Become Premium"       |
+|       2        |      Check the manager is not a Premium manager    |
+|       3        |      FR4.1 Pay the Premium Account  |
+|       4        |      The payment system return succesful payment result  |
+|       5        |      mark the manager as premium in our database   |
+|       6        |      This msg pops up: "You are now a Premium Manager!!"   |
+
+
+##### Scenario 28.2
+
+| Scenario 28.2  |                Error - unsuccessfull Payment             |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  |  The user has an Account and has been authenticated as (Normal) Manager  |
+| Post condition |  Error - unsuccessfull Payment    |
+|     Step#      |            Description                   |
+|       1        |      The Manager Clicks on "Become Premium"       |
+|       2        |      Check the manager is not a Premium manager    |
+|       3        |      FR4.1 Pay the Premium Account  |
+|       4        |      The payment system return unsuccesful payment result  |
+|       5        |      This Error msg pops up: "unsuccessfull Payment!"   |
+
+
+##### Scenario 28.3
+
+| Scenario 28.3  |                The manager is already a Premium Manager             |
+| :------------: | :-------------------------------------------------------: |
+|  Precondition  |  The user has an Account and has been authenticated as (Normal) Manager  |
+| Post condition |  Error - The manager is already a Premium Manager    |
+|     Step#      |            Description                   |
+|       1        |      The Manager Clicks on "Become Premium"       |
+|       2        |      Check the manager is not a Premium manager = False   |
+|       3        |      This Error msg pops up: "Already a Premium Manager"   |
+
+
 
 # Glossary
 
-\<use UML class diagram to define important terms, or concepts in the domain of the application, and their relationships>
 
-\<concepts must be used consistently all over the document, ex in use cases, requirements etc>
+*User: An individual who uses the EZElectronics application. Users can be either Customers , Managers.
 
-# System Design
+*Manager: A user role in the EZElectronics system. Managers have the ability to manage products, add/remove/edit products, mark products as sold, register product arrivals. Can choose to be a Premium Manager for additional privileges. 
 
-\<describe here system design>
+*Customer: A user role in the EZElectronics system. Customers can purchase products. 
 
-\<must be consistent with Context diagram>
+*Tech Admin : A special user with full permissions to manage everything including users, products, carts. Can delete/add users, products, carts.
+
+*Products: Items available for purchase in the electronics store. These are managed by the managers and viewed/purchased by the customers.Each product has a code, selling price, model, category, details, and arrival date.
+
+*Database: A set of data of the users and products. 
+
+*Cart: A virtual basket where users can add, remove or delete the products.
+
+*Payment: A process that handles payments of the current cart using supported payment methods.
+
+*Shipping: Delivery of purchased products to customer's address. Has options for delivery company and shows estimated costs. 
+
+*Wishlist: List of products saved by a customer for future reference/purchase. 
+
+*Sponsored Product: A product given additional prominence/exposure on the site by a Premium Manager paying to sponsor it. 
+Premium User: A user (Manager) who pays a subscription to access additional privileges like sponsoring products.
+
+*Account:  an account assigned to an individual user to access the website.
+
+![glossary2.jpg](./diagrams/v2/glossary2.jpg)
+
 
 # Deployment Diagram
 
-\<describe here deployment diagram >
+![Deployment_Diagram_V2.png](./diagrams/v2/Deployment_Diagram_V2.png)
