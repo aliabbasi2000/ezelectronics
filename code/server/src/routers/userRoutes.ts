@@ -54,14 +54,22 @@ class UserRoutes {
          * - role: string (one of "Manager", "Customer", "Admin")
          * It returns a 200 status code.
          */
+
         this.router.post(
             "/",
+            body("username").isString().isLength({ min: 1 }), //the request body must contain an attribute named "username", the attribute must be a non-empty string
+            body("surname").isString().isLength({ min: 1 }), //the request body must contain an attribute named "surname", the attribute must be a non-empty string
+            body("name").isString().isLength({ min: 1 }), //the request body must contain an attribute named "name", the attribute must be a non-empty string
+            body("password").isString().isLength({ min: 1 }), //the request body must contain an attribute named "password", the attribute must be a non-empty string
+            body("role").isString().isIn(["Manager", "Customer"]), //the request body must contain an attribute named "role", the attribute must be a string and its value must be one of the two allowed options
+            this.errorHandler.validateRequest, //middleware defined in `helper.ts`, checks the result of all the evaluations performed above and returns a 422 error if at least one fails or continues if there are no issues
             (req: any, res: any, next: any) => this.controller.createUser(req.body.username, req.body.name, req.body.surname, req.body.password, req.body.role)
                 .then(() => res.status(200).end())
                 .catch((err) => {
-                    next(err)
+                  next(err);
                 })
-        )
+          );
+          
 
         /**
          * Route for retrieving all users.
