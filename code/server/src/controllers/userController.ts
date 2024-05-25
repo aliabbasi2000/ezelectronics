@@ -23,13 +23,10 @@ class UserController {
      */
 
 
-    async createUser(username: string, name: string, surname: string, password: string, role: string): Promise<boolean> {
-        if(!username || !name || !surname || !password || !role) throw new WrongParametersError() //example error with the correct error code
-        if(username.length === 0 || name.length === 0 || surname.length === 0 || password.length === 0 || role.length === 0) throw new WrongParametersError()
-        if(role !== "Manager" || role !== "Customer") thow new WrongParametersError()
-        const ret: any = await this.dao.createUser(username, name, surname, password, role)
-        return ret
+    async createUser(username: string, name: string, surname: string, password: string, role: string) /**:Promise<Boolean> */ {
+        return this.dao.createUser(username, name, surname, password, role)
     }
+
   
 
     /**
