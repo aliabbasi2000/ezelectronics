@@ -83,7 +83,13 @@ class UserDAO {
                 const sql = "SELECT username, name, surname, role, address, birthdate FROM users";
                 db.all(sql, [], (err, rows) => {
                     if (err) {
-                        return reject(err);
+                        if (err.message.includes("Unauthorized access")) {
+                            return reject(new UnauthorizedUserError());
+                        } else if (err.message.includes("User is not admin")) {
+                            return reject(new UserNotAdminError());
+                        } else {
+                            return reject(err);
+                        }
                     }
                     resolve(rows);
                 });
@@ -93,6 +99,9 @@ class UserDAO {
             
         });
     }
+
+    db.all(sql, [], (err, rows) => {
+        
 
 
     /**
