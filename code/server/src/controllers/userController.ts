@@ -36,7 +36,7 @@ class UserController {
      */
 
     async getUsers(): Promise<any[]> {
-        const users = await this.dao.getAllUsers();
+        const users = await this.dao.getUsers();
         return users;
     }
 

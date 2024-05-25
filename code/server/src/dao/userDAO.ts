@@ -74,6 +74,28 @@ class UserDAO {
     }
 
     /**
+     * Retrieves the list of all users from the database
+     * @returns A Promise that resolves to an array of User objects where each one represents a user present in the database
+     */
+    getUsers(): Promise<any[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            try {
+                const sql = "SELECT username, name, surname, role, address, birthdate FROM users";
+                db.all(sql, [], (err, rows) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(rows);
+                });
+            } catch (error) {
+                reject(error)
+            }
+            
+        });
+    }
+
+
+    /**
      * Returns a user object from the database based on the username.
      * @param username The username of the user to retrieve
      * @returns A Promise that resolves the information of the requested user
