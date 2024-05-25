@@ -102,6 +102,33 @@ class UserDAO {
 
 
     /**
+     * Retrieves the list of users with a specific role from the database
+     * @param role - The role of the users to retrieve
+     * @returns A Promise that resolves to an array of User objects with the specified role
+     */
+    getUsersByRole(role: string): Promise<any[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            try {
+                const sql = "SELECT username, name, surname, role, address, birthdate FROM users WHERE role = ?";
+                db.all(sql, [role], (err, rows) => {
+                    if (err) {
+                        if (err.message.includes("Unauthorized access")) {
+                            return reject(new UnauthorizedUserError());
+                        } else if (err.message.includes("User is not admin")) {
+                            return reject(new UserNotAdminError());
+                        }
+                        return reject(err);
+                    }
+                    resolve(rows);
+                });
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+
+    /**
      * Returns a user object from the database based on the username.
      * @param username The username of the user to retrieve
      * @returns A Promise that resolves the information of the requested user
