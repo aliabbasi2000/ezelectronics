@@ -23,17 +23,22 @@ class UserController {
      */
 
 
-    async createUser(username: string, name: string, surname: string, password: string, role: string) /**:Promise<Boolean> */ {
-        return this.dao.createUser(username, name, surname, password, role)
+    async createUser(username: string, name: string, surname: string, password: string, role: string) :Promise<Boolean> {
+        const ret: any = await this.dao.createUser(username, name, surname, password, role)
+        return ret
+
     }
 
   
-
     /**
      * Returns all users.
      * @returns A Promise that resolves to an array of users.
      */
-    async getUsers() /**:Promise<User[]> */ { }
+
+    async getUsers(): Promise<any[]> {
+        const users = await this.dao.getAllUsers();
+        return users;
+    }
 
     /**
      * Returns all users with a specific role.
