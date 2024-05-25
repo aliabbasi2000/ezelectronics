@@ -100,9 +100,6 @@ class UserDAO {
         });
     }
 
-    db.all(sql, [], (err, rows) => {
-        
-
 
     /**
      * Returns a user object from the database based on the username.
