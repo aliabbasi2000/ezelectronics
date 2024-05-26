@@ -1,5 +1,6 @@
 import { User } from "../components/user"
 import UserDAO from "../dao/userDAO"
+import { UserNotFoundError, UserNotManagerError, UserNotCustomerError, UserAlreadyExistsError, UserNotAdminError, UserIsAdminError, UnauthorizedUserError } from "../errors/userError";
 
 /**
  * Represents a controller for managing users.
@@ -69,6 +70,8 @@ class UserController {
         return user;
      }
 
+
+
     /**
      * Deletes a specific user
      * The function has different behavior depending on the role of the user calling it:
@@ -77,7 +80,34 @@ class UserController {
      * @param username - The username of the user to delete. The user must exist.
      * @returns A Promise that resolves to true if the user has been deleted.
      */
-    async deleteUser(user: User, username: string) /**:Promise<Boolean> */ { }
+    async deleteUser(user: User, username: string): Promise<boolean> {
+
+        const userToDelete = await this.dao.getUserByUsername(username);
+
+        // Check if the user exists
+        if (!userToDelete) {
+            throw new UserNotFoundError();
+        }
+
+        // Admins can delete any non-Admin user and themselves, but not other Admins
+        if (user.role === 'Admin') {
+            if (userToDelete.role === 'Admin' && user.username !== username) {
+                throw new UserNotAdminError();
+            }
+        } else {
+            // Other roles can only delete their own account
+            if (user.username !== username) {
+                throw new UnauthorizedUserError();
+            }
+        }
+
+        // Delete the user
+        const result = await this.dao.deleteUser(username);
+        return result;
+    }
+
+
+
 
     /**
      * Deletes all non-Admin users
