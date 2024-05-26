@@ -106,14 +106,35 @@ class UserRoutes {
          * It expects the username of the user in the request parameters: the username must represent an existing user.
          * It returns the user.
          */
-        this.router.get(
-            "/:username",
-            body("role").isString().isIn(["Admin"]), 
+        this.router.get( "/:username",
             this.errorHandler.validateRequest,
-            (req: any, res: any, next: any) => this.controller.getUserByUsername(req.user, req.params.username)
-                .then(user => res.status(200).json(user))
-                .catch((err) => next(err))
-        )
+            (req: any, res: any, next: any) => {
+
+                try{           
+                    const user = await this.controller.getUserByUsername(req.user, req.params.username)
+
+                    if (req.user.role !== 'Admin') {
+                        // Other user types can only see their own information
+                        // Modify the user object to remove address and birthday information before sending the response
+                        delete user.address;
+                        delete user.birthdate;
+                    }
+        
+                    // Send the user information in the response
+                    res.status(200).json(user)
+
+            } catch (error) {
+                if (error instanceof UserNotFoundError) {
+                    res.status(404).json({ error: 'User not found' });
+                } else if (error instanceof UnauthorizedUserError) {
+                    res.status(401).json({ error: 'Unauthorized access' });
+                } else {
+                    res.status(500).json({ error: 'Internal server error' });
+                }
+            }
+    });
+
+
 
         /**
          * Route for deleting a user.
