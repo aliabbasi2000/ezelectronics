@@ -79,7 +79,6 @@ class UserRoutes {
         this.router.get(
             "/",
             body("role").isString().isIn(["Admin"]), 
-            this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.getUsers()
                 .then(users => res.status(200).json(users))
                 .catch((err) => next(err))
@@ -123,14 +122,8 @@ class UserRoutes {
                     // Send the user information in the response
                     res.status(200).json(user)
 
-            } catch (error) {
-                if (error instanceof UserNotFoundError) {
-                    res.status(404).json({ error: 'User not found' });
-                } else if (error instanceof UnauthorizedUserError) {
-                    res.status(401).json({ error: 'Unauthorized access' });
-                } else {
-                    res.status(500).json({ error: 'Internal server error' });
-                }
+            } catch(err) { 
+                next(err)
             }
     });
 
