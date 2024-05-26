@@ -127,7 +127,7 @@ class UserController {
     }
 
 
-    
+
 
     /**
      * Updates the personal information of one user. The user can only update their own information.
@@ -139,7 +139,32 @@ class UserController {
      * @param username The username of the user to update. It must be equal to the username of the user parameter.
      * @returns A Promise that resolves to the updated user
      */
-    async updateUserInfo(user: User, name: string, surname: string, address: string, birthdate: string, username: string) /**:Promise<User> */ { }
+    async updateUserInfo(user: User, name: string, surname: string, address: string, birthdate: string, username: string): Promise<User> {
+        // Check if the username corresponds to the logged-in user or the user is an Admin
+        if (user.role !== 'Admin' && user.username !== username) {
+            throw new UnauthorizedUserError();
+        }
+
+        // Validate birthdate (it should not be in the future)
+        const birthdateObj = new Date(birthdate);
+        if (birthdateObj > new Date()) {
+            throw new Error("Birthdate cannot be in the future"); // Consider creating a custom error for this
+        }
+
+        // Admins can update any non-Admin user; other roles can only update their own information
+        if (user.role === 'Admin') {
+            const targetUser = await this.dao.getUserByUsername(username);
+            if (targetUser.role === 'Admin' && user.username !== username) {
+                throw new UnauthorizedUserError(); // Admins cannot update other Admins
+            }
+        }
+
+        // Perform the update
+        const updatedUser = await this.dao.updateUserInfo(username, name, surname, address, birthdate);
+        return updatedUser;
+    }
+
+
 }
 
 export default UserController

@@ -167,10 +167,22 @@ class UserRoutes {
          */
         this.router.patch(
             "/:username",
-            (req: any, res: any, next: any) => this.controller.updateUserInfo(req.user, req.body.name, req.body.surname, req.body.address, req.body.birthdate, req.params.username)
-                .then((user: any /**User */) => res.status(200).json(user))
-                .catch((err: any) => next(err))
-        )
+            body("name").isString().notEmpty(),
+            body("surname").isString().notEmpty(),
+            body("address").isString().notEmpty(),
+            body("birthdate").isDate().notEmpty(),
+            this.errorHandler.validateRequest, 
+            async (req: any, res: any, next: any) => {
+                try {
+                    const { name, surname, address, birthdate } = req.body;
+                    const { username } = req.params;
+                    const updatedUser = await this.controller.updateUserInfo(req.user, name, surname, address, birthdate, username);
+                    res.status(200).json(updatedUser);
+                } catch (err) {
+                    next(err);
+                }
+            }
+        );
 
     }
 }

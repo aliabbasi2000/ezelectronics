@@ -203,6 +203,46 @@ class UserDAO {
 
 
 
+     /**
+     * Updates the personal information of a specific user.
+     * @param username The username of the user to update
+     * @param name The new name of the user
+     * @param surname The new surname of the user
+     * @param address The new address of the user
+     * @param birthdate The new birthdate of the user
+     * @returns A Promise that resolves to the updated user
+     */
+    updateUserInfo(username: string, name: string, surname: string, address: string, birthdate: string): Promise<User> {
+        return new Promise<User>((resolve, reject) => {
+            try {
+                const sql = `
+                    UPDATE users
+                    SET name = ?, surname = ?, address = ?, birthdate = ?
+                    WHERE username = ?
+                `;
+                db.run(sql, [name, surname, address, birthdate, username], (err: Error | null) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    // Check if the update affected any rows by querying the updated user
+                    const getUserSql = "SELECT * FROM users WHERE username = ?";
+                    db.get(getUserSql, [username], (err: Error | null, row: any) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        if (!row) {
+                            return reject(new UserNotFoundError());
+                        }
+                        const user: User = new User(row.username, row.name, row.surname, row.role, row.address, row.birthdate);
+                        resolve(user);
+                    });
+                });
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
 
 }
 export default UserDAO
