@@ -157,26 +157,51 @@ class UserDAO {
     }
 
 
-        /**
+    /**
      * Deletes a user from the database based on the username.
      * @param username The username of the user to delete
      * @returns A Promise that resolves to true if the user has been deleted.
      */
-        deleteUser(username: string): Promise<boolean> {
-            return new Promise<boolean>((resolve, reject) => {
-                try {
-                    const sql = "DELETE FROM users WHERE username = ?";
-                    db.run(sql, [username], (err: Error | null) => {
-                        if (err) {
-                            return reject(err);
-                        }
-                        resolve(true);
-                    });
-                } catch (error) {
-                    reject(error);
-                }
-            });
-        }
+    deleteUser(username: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            try {
+                const sql = "DELETE FROM users WHERE username = ?";
+                db.run(sql, [username], (err: Error | null) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(true);
+                });
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+
+
+
+    /**
+     * Deletes all non-Admin users from the database.
+     * @returns A Promise that resolves to true if the operation was successful.
+     */
+    deleteAll(): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            try {
+                const sql = "DELETE FROM users WHERE role != 'Admin'";
+                db.run(sql, (err: Error | null) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(true);
+                });
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+
 
 
 }

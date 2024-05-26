@@ -110,10 +110,24 @@ class UserController {
 
 
     /**
-     * Deletes all non-Admin users
-     * @returns A Promise that resolves to true if all non-Admin users have been deleted.
+     * Deletes all non-Admin users from the database.
+     * Can only be called by a logged in user whose role is Admin.
+     * @param user - The user making the request.
+     * @returns A Promise that resolves to true if the operation was successful.
      */
-    async deleteAll() { }
+    async deleteAll(user: User): Promise<boolean> {
+        // Check if the user is an Admin
+        if (user.role !== 'Admin') {
+            throw new UserNotAdminError();
+        }
+
+        // Delete all non-Admin users
+        const result = await this.dao.deleteAll();
+        return result;
+    }
+
+
+    
 
     /**
      * Updates the personal information of one user. The user can only update their own information.
