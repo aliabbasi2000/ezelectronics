@@ -64,7 +64,10 @@ class UserController {
      * @param username - The username of the user to retrieve. The user must exist.
      * @returns A Promise that resolves to the user with the specified username.
      */
-    async getUserByUsername(user: User, username: string) /**:Promise<User> */ { }
+    async getUserByUsername(user: User, username: string) :Promise<User> {
+        const user = await this.dao.getUserByUsername(username);
+        return user;
+     }
 
     /**
      * Deletes a specific user

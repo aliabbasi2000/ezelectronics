@@ -78,8 +78,10 @@ class UserRoutes {
          */
         this.router.get(
             "/",
+            body("role").isString().isIn(["Admin"]), 
+            this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.getUsers()
-                .then((users: any /**User[] */) => res.status(200).json(users))
+                .then(users => res.status(200).json(users))
                 .catch((err) => next(err))
         )
 
@@ -91,8 +93,10 @@ class UserRoutes {
          */
         this.router.get(
             "/roles/:role",
+            body("role").isString().isIn(["Admin"]), 
+            this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.getUsersByRole(req.params.role)
-                .then((users: any /**User[] */) => res.status(200).json(users))
+                .then(users => res.status(200).json(users))
                 .catch((err) => next(err))
         )
 
@@ -104,8 +108,10 @@ class UserRoutes {
          */
         this.router.get(
             "/:username",
+            body("role").isString().isIn(["Admin"]), 
+            this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.getUserByUsername(req.user, req.params.username)
-                .then((user: any /**User */) => res.status(200).json(user))
+                .then(user => res.status(200).json(user))
                 .catch((err) => next(err))
         )
 
