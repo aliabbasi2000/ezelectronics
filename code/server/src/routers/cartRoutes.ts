@@ -125,12 +125,27 @@ class CartRoutes {
          */
         this.router.patch(
             "/",
-            (req: any, res: any, next: any) => this.controller.checkoutCart(req.user)
-                .then(() => res.status(200).end())
-                .catch((err) => {
-                    next(err)
-                })
-        )
+            this.errorHandler.validateRequest,
+            async (req: any, res: any, next: any) => {
+                try {
+                    if (!req.user || req.user.role !== 'Customer') {
+                        return res.status(403).json({ message: 'Unauthorized or Forbidden' });
+                    }
+                    await this.controller.checkoutCart(req.user);
+                    res.status(200).end();
+                } catch (err) {
+                    if (err instanceof CartNotFoundError || err instanceof EmptyCartError || err instanceof ProductNotFoundError || err instanceof EmptyProductStockError || err instanceof LowProductStockError) {
+                        res.status(err.customCode).json({ message: err.customMessage });
+                    } else {
+                        next(err);
+                    }
+                }
+            }
+        );
+
+
+
+
 
         /**
          * Route for getting the history of the logged in customer's carts.

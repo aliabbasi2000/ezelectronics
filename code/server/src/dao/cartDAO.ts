@@ -78,6 +78,7 @@ class CartDAO {
         });
     }
 
+
     async createCart(customer: string): Promise<Cart> {
         const sql = "INSERT INTO carts (customer, paid) VALUES (?, 0)";
         return new Promise((resolve, reject) => {
@@ -141,7 +142,36 @@ class CartDAO {
         });
     }
 
-    
+
+    async checkoutCart(customer: string, products: ProductInCart[]): Promise<void> {
+        const updateCartSql = "UPDATE carts SET paid = 1, paymentDate = ? WHERE customer = ? AND paid = 0";
+        const updateProductSql = "UPDATE products SET availableQuantity = availableQuantity - ? WHERE model = ?";
+        const paymentDate = new Date().toISOString().split('T')[0];
+
+        return new Promise((resolve, reject) => {
+            db.run(updateCartSql, [paymentDate, customer], (err) => {
+                if (err) {
+                    return reject(err);
+                }
+
+                const updateProductPromises = products.map(product => {
+                    return new Promise((resolve, reject) => {
+                        db.run(updateProductSql, [product.quantity, product.model], (err) => {
+                            if (err) {
+                                return reject(err);
+                            }
+                            resolve();
+                        });
+                    });
+                });
+
+                Promise.all(updateProductPromises)
+                    .then(() => resolve())
+                    .catch(err => reject(err));
+            });
+        });
+    }
+
 
 
 }
