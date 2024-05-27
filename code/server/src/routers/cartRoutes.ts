@@ -95,7 +95,7 @@ class CartRoutes {
          */
         this.router.post(
             "/",
-            body("model").isString().notEmpty(),
+            body("model").isString().isLength({ min: 1 }),
             this.errorHandler.validateRequest,
             async (req: any, res: any, next: any) => {
                 try {
