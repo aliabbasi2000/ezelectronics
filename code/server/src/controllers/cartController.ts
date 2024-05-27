@@ -12,15 +12,40 @@ class CartController {
         this.dao = new CartDAO
     }
 
+
+    
     /**
      * Adds a product to the user's cart. If the product is already in the cart, the quantity should be increased by 1.
      * If the product is not in the cart, it should be added with a quantity of 1.
      * If there is no current unpaid cart in the database, then a new cart should be created.
      * @param user - The user to whom the product should be added.
-     * @param productId - The model of the product to add.
+     * @param model - The model of the product to add.
      * @returns A Promise that resolves to `true` if the product was successfully added.
      */
-    async addToCart(user: User, product: string)/*: Promise<Boolean>*/ { }
+    async addToCart(user: User, model: string): Promise<boolean> {
+        const product = await this.productDAO.getProductByModel(model);
+        if (!product) {
+            throw new ProductNotFoundError();
+        }
+        if (product.availableQuantity === 0) {
+            throw new ProductOutOfStockError();
+        }
+
+        let cart = await this.cartDAO.getUnpaidCartByUser(user.username);
+        if (!cart) {
+            cart = await this.cartDAO.createCart(user.username);
+        }
+
+        const cartProduct = await this.cartDAO.getProductInCart(cart.customer, model);
+        if (!cartProduct) {
+            await this.cartDAO.addProductToCart(cart.customer, model, product.price);
+        } else {
+            await this.cartDAO.updateProductQuantity(cart.customer, model, cartProduct.quantity + 1);
+        }
+
+        await this.cartDAO.updateCartTotal(cart.customer, product.price);
+        return true;
+}
 
 
 
@@ -32,8 +57,6 @@ class CartController {
         async getCart(user: User): Promise<Cart> {
             return this.cartDAO.getCart(user.username);
         }
-
-
 
 
 

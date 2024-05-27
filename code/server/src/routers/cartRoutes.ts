@@ -5,7 +5,7 @@ import CartController from "../controllers/cartController"
 import Authenticator from "./auth"
 import { Cart } from "../components/cart"
 import { CartNotFoundError, ProductInCartError, ProductNotInCartError, WrongUserCartError, EmptyCartError } from "../errors/cartError";
-
+import { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, EmptyProductStockError, LowProductStockError } from "../errors/productError";
 
 /**
  * Represents a class that defines the routes for handling carts.
@@ -55,17 +55,6 @@ class CartRoutes {
          */
         this.router.get(
             "/",
-            (req: any, res: any, next: any) => this.controller.getCart(req.user)
-                .then((cart: any /**Cart */) => {
-                    res.status(200).json(cart)
-                })
-                .catch((err) => {
-                    next(err)
-                })
-        )
-
-        this.router.get(
-            "/",
             (req: any, res: any, next: any) => {
                 // Check if the user is authenticated and has the role of "Customer"
                 if (!req.user) {
@@ -97,8 +86,6 @@ class CartRoutes {
 
 
 
-
-
         /**
          * Route for adding a product unit to the cart of the logged in customer.
          * It requires the user to be logged in and to be a customer.
@@ -108,12 +95,27 @@ class CartRoutes {
          */
         this.router.post(
             "/",
-            (req: any, res: any, next: any) => this.controller.addToCart(req.user, req.body.model)
-                .then(() => res.status(200).end())
-                .catch((err) => {
-                    next(err)
-                })
-        )
+            body("model").isString().notEmpty(),
+            this.errorHandler.validateRequest,
+            async (req: any, res: any, next: any) => {
+                try {
+                    if (!req.user || req.user.role !== 'Customer') {
+                        return next(new Error('Unauthorized or Forbidden'));
+                    }
+                    await this.controller.addToCart(req.user, req.body.model);
+                    res.status(200).end();
+                } catch (err) {
+                    if (err instanceof ProductNotFoundError || err instanceof EmptyProductStockError) {
+                        res.status(err.customCode).json({ message: err.customMessage });
+                    } else {
+                        next(err);
+                    }
+                }
+            }
+        );
+
+
+
 
         /**
          * Route for checking out the cart of the logged in customer.

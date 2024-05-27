@@ -61,6 +61,89 @@ class CartDAO {
         });
     }
 
+
+
+    async getUnpaidCartByUser(customer: string): Promise<Cart | null> {
+        const sql = "SELECT * FROM carts WHERE customer = ? AND paid = 0";
+        return new Promise((resolve, reject) => {
+            db.get(sql, [customer], (err, row) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (!row) {
+                    return resolve(null);
+                }
+                resolve(new Cart(row.customer, row.paid, row.paymentDate, row.total, []));
+            });
+        });
+    }
+
+    async createCart(customer: string): Promise<Cart> {
+        const sql = "INSERT INTO carts (customer, paid) VALUES (?, 0)";
+        return new Promise((resolve, reject) => {
+            db.run(sql, [customer], function(err) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(new Cart(customer, false, null, 0, []));
+            });
+        });
+    }
+
+    async addProductToCart(customer: string, model: string, price: number): Promise<void> {
+        const sql = "INSERT INTO cart_products (customer, model, quantity, price) VALUES (?, ?, 1, ?)";
+        return new Promise((resolve, reject) => {
+            db.run(sql, [customer, model, price], (err) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve();
+            });
+        });
+    }
+
+    async getProductInCart(customer: string, model: string): Promise<ProductInCart | null> {
+        const sql = "SELECT * FROM cart_products WHERE customer = ? AND model = ?";
+        return new Promise((resolve, reject) => {
+            db.get(sql, [customer, model], (err, row) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (!row) {
+                    return resolve(null);
+                }
+                resolve(new ProductInCart(row.model, row.quantity, row.category, row.price));
+            });
+        });
+    }
+
+    async updateProductQuantity(customer: string, model: string, quantity: number): Promise<void> {
+        const sql = "UPDATE cart_products SET quantity = ? WHERE customer = ? AND model = ?";
+        return new Promise((resolve, reject) => {
+            db.run(sql, [quantity, customer, model], (err) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve();
+            });
+        });
+    }
+
+    async updateCartTotal(customer: string, price: number): Promise<void> {
+        const sql = "UPDATE carts SET total = total + ? WHERE customer = ? AND paid = 0";
+        return new Promise((resolve, reject) => {
+            db.run(sql, [price, customer], (err) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve();
+            });
+        });
+    }
+
+    
+
+
 }
 
 export default CartDAO

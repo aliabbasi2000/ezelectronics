@@ -23,6 +23,25 @@ class ProductDAO {
         `;
         await dbClient.query(query, [model, category, quantity, details, sellingPrice, arrivalDate]);
     }
+
+
+    
+    async getProductByModel(model: string): Promise<Product | null> {
+        const sql = "SELECT * FROM products WHERE model = ?";
+        return new Promise((resolve, reject) => {
+            db.get(sql, [model], (err, row) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (!row) {
+                    return resolve(null);
+                }
+                resolve(new Product(row.model, row.category, row.price, row.availableQuantity));
+            });
+        });
+    }
+
+
 }
 
 export default ProductDAO
