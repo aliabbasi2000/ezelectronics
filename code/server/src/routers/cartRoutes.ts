@@ -4,6 +4,8 @@ import { body, param } from "express-validator"
 import CartController from "../controllers/cartController"
 import Authenticator from "./auth"
 import { Cart } from "../components/cart"
+import { CartNotFoundError, ProductInCartError, ProductNotInCartError, WrongUserCartError, EmptyCartError } from "../errors/cartError";
+
 
 /**
  * Represents a class that defines the routes for handling carts.

@@ -30,7 +30,7 @@ class CartController {
      * @returns A Promise that resolves to the user's cart or an empty one if there is no current cart.
      */
         async getCart(user: User): Promise<Cart> {
-            return this.cartDAO.getCartByUserId(user.username);
+            return this.cartDAO.getCart(user.username);
         }
 
 

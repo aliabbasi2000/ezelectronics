@@ -17,7 +17,7 @@ class CartDAO {
      * @param userId - The ID of the user for whom to retrieve the cart.
      * @returns A Promise that resolves to the user's cart or an empty one if there is no current cart.
      */
-    getCartByUserId(userId: string): Promise<Cart> {
+    getCart(userId: string): Promise<Cart> {
         return new Promise<Cart>((resolve, reject) => {
             try {
                 const sql = `
