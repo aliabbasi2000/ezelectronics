@@ -23,12 +23,20 @@ class CartController {
     async addToCart(user: User, product: string)/*: Promise<Boolean>*/ { }
 
 
+
     /**
      * Retrieves the current cart for a specific user.
      * @param user - The user for whom to retrieve the cart.
      * @returns A Promise that resolves to the user's cart or an empty one if there is no current cart.
      */
-    async getCart(user: User)/*: Cart*/ { }
+        async getCart(user: User): Promise<Cart> {
+            return this.cartDAO.getCartByUserId(user.username);
+        }
+
+
+
+
+
 
     /**
      * Checks out the user's cart. We assume that payment is always successful, there is no need to implement anything related to payment.

@@ -43,6 +43,9 @@ class CartRoutes {
      */
     initRoutes() {
 
+
+
+
         /**
          * Route for getting the cart of the logged in customer.
          * It requires the user to be logged in and to be a customer.
@@ -58,6 +61,41 @@ class CartRoutes {
                     next(err)
                 })
         )
+
+        this.router.get(
+            "/",
+            (req: any, res: any, next: any) => {
+                // Check if the user is authenticated and has the role of "Customer"
+                if (!req.user) {
+                    return next(new Error('Unauthorized')); // You may have a specific error class for this
+                }
+                if (req.user.role !== 'Customer') {
+                    return next(new Error('Forbidden')); // You may have a specific error class for this
+                }
+                next();
+            },
+            (req: any, res: any, next: any) => this.controller.getCart(req.user)
+                .then((cart: any /**Cart */) => {
+                    // Handle empty cart case
+                    if (!cart.products || cart.products.length === 0) {
+                        return next(new EmptyCartError());
+                    }
+                    res.status(200).json(cart);
+                })
+                .catch((err) => {
+                    if (err instanceof CartNotFoundError) {
+                        next(new CartNotFoundError());
+                    } else if (err instanceof WrongUserCartError) {
+                        next(new WrongUserCartError());
+                    } else {
+                        next(err);
+                    }
+                })
+        );
+
+
+
+
 
         /**
          * Route for adding a product unit to the cart of the logged in customer.
