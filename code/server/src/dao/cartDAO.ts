@@ -1,3 +1,8 @@
+import db from "../db/db"
+import { Cart, ProductInCart } from "../components/user"
+import crypto from "crypto"
+import { CartNotFoundError, ProductInCartError, ProductNotInCartError, WrongUserCartError, EmptyCartError } from "../errors/cartError";
+
 
 /**
  * A class that implements the interaction with the database for all cart-related operations.
@@ -5,7 +10,7 @@
  */
 class CartDAO {
 
-    
+
 
     /**
      * Retrieves the current cart for a specific user.
