@@ -161,8 +161,6 @@ class CartController {
 
 
 
-
-
     /**
      * Deletes all carts of all users.
      * @returns A Promise that resolves to `true` if all carts were successfully deleted.
@@ -174,12 +172,14 @@ class CartController {
 
 
 
-
     /**
      * Retrieves all carts in the database.
      * @returns A Promise that resolves to an array of carts.
      */
-    async getAllCarts() /*:Promise<Cart[]> */ { }
+    async getAllCarts(): Promise<Cart[]> {
+        return this.cartDAO.getAllCarts();
+    }
+
 }
 
 export default CartController

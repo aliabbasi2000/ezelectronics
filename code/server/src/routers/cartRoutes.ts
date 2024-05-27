@@ -254,7 +254,7 @@ class CartRoutes {
             async (req: any, res: any, next: any) => {
                 try {
                     if (!req.user || (req.user.role !== 'Admin' && req.user.role !== 'Manager')) {
-                        throw new WrongUserCartError(); // Custom error for unauthorized access
+                        throw new WrongUserCartError(); 
                     }
                     await this.controller.deleteAllCarts();
                     res.status(200).end();
@@ -278,10 +278,25 @@ class CartRoutes {
          */
         this.router.get(
             "/all",
-            (req: any, res: any, next: any) => this.controller.getAllCarts()
-                .then((carts: any/**Cart[] */) => res.status(200).json(carts))
-                .catch((err: any) => next(err))
-        )
+            this.errorHandler.validateRequest,
+            async (req: any, res: any, next: any) => {
+                try {
+                    if (!req.user || (req.user.role !== 'Admin' && req.user.role !== 'Manager')) {
+                        throw new WrongUserCartError(); 
+                    }
+                    const carts = await this.controller.getAllCarts();
+                    res.status(200).json(carts);
+                } catch (err) {
+                    if (err instanceof WrongUserCartError) {
+                        res.status(err.customCode).json({ message: err.customMessage });
+                    } else {
+                        next(err);
+                    }
+                }
+            }
+        );
+
+
     }
 }
 

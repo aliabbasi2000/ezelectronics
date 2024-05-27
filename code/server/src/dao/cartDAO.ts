@@ -266,6 +266,49 @@ class CartDAO {
         });
     }
 
+    
+
+    async getAllCarts(): Promise<Cart[]> {
+        const getAllCartsSql = `
+            SELECT carts.*, products.model, products.category, products.price, cart_products.quantity
+            FROM carts
+            LEFT JOIN cart_products ON carts.id = cart_products.cart_id
+            LEFT JOIN products ON cart_products.product_id = products.id
+        `;
+
+        return new Promise((resolve, reject) => {
+            db.all(getAllCartsSql, (err, rows) => {
+                if (err) {
+                    return reject(err);
+                }
+                const cartsMap: { [key: string]: Cart } = {};
+
+                rows.forEach(row => {
+                    if (!cartsMap[row.id]) {
+                        cartsMap[row.id] = {
+                            customer: row.customer,
+                            paid: row.paid,
+                            paymentDate: row.paymentDate,
+                            total: row.total,
+                            products: []
+                        };
+                    }
+
+                    if (row.model) {
+                        cartsMap[row.id].products.push({
+                            model: row.model,
+                            category: row.category,
+                            price: row.price,
+                            quantity: row.quantity
+                        });
+                    }
+                });
+
+                resolve(Object.values(cartsMap));
+            });
+        });
+    }
+
 }
 
 export default CartDAO
