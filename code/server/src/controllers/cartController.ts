@@ -1,6 +1,7 @@
 import { User } from "../components/user";
 import CartDAO from "../dao/cartDAO";
-
+import { CartNotFoundError, ProductInCartError, ProductNotInCartError, WrongUserCartError, EmptyCartError } from "../errors/cartError";
+import { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, EmptyProductStockError, LowProductStockError } from "../errors/productError";
 /**
  * Represents a controller for managing shopping carts.
  * All methods of this class must interact with the corresponding DAO class to retrieve or store data.
@@ -60,14 +61,38 @@ class CartController {
 
 
 
-
     /**
      * Checks out the user's cart. We assume that payment is always successful, there is no need to implement anything related to payment.
      * @param user - The user whose cart should be checked out.
      * @returns A Promise that resolves to `true` if the cart was successfully checked out.
-     * 
      */
-    async checkoutCart(user: User) /**Promise<Boolean> */ { }
+    async checkoutCart(user: User): Promise<boolean> {
+        const cart = await this.cartDAO.getUnpaidCartByUser(user.username);
+        if (!cart) {
+            throw new CartNotFoundError();
+        }
+        if (cart.products.length === 0) {
+            throw new EmptyCartError();
+        }
+
+        for (const product of cart.products) {
+            const dbProduct = await this.productDAO.getProductByModel(product.model);
+            if (!dbProduct) {
+                throw new ProductNotFoundError();
+            }
+            if (dbProduct.availableQuantity === 0) {
+                throw new EmptyProductStockError();
+            }
+            if (product.quantity > dbProduct.availableQuantity) {
+                throw new LowProductStockError();
+            }
+        }
+
+        await this.cartDAO.checkoutCart(cart.customer, cart.products);
+        return true;
+    }
+
+
 
     /**
      * Retrieves all paid carts for a specific customer.
