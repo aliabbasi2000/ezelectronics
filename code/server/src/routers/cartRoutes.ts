@@ -195,11 +195,11 @@ class CartRoutes {
             async (req: any, res: any, next: any) => {
                 try {
                     if (!req.user || req.user.role !== 'Customer') {
-                        throw new WrongUserCartError(); // Use custom error for unauthorized access
+                        throw new WrongUserCartError(); 
                     }
                     const model = req.params.model;
                     if (!model) {
-                        throw new ProductNotFoundError(); // Use custom error for missing product model
+                        throw new ProductNotFoundError();
                     }
                     await this.controller.removeProductFromCart(req.user, model);
                     res.status(200).end();
@@ -223,10 +223,25 @@ class CartRoutes {
          */
         this.router.delete(
             "/current",
-            (req: any, res: any, next: any) => this.controller.clearCart(req.user)
-                .then(() => res.status(200).end())
-                .catch((err) => next(err))
-        )
+            this.errorHandler.validateRequest,
+            async (req: any, res: any, next: any) => {
+                try {
+                    if (!req.user || req.user.role !== 'Customer') {
+                        throw new WrongUserCartError(); 
+                    }
+                    await this.controller.clearCart(req.user);
+                    res.status(200).end();
+                } catch (err) {
+                    if (err instanceof CartNotFoundError) {
+                        res.status(err.customCode).json({ message: err.customMessage });
+                    } else {
+                        next(err);
+                    }
+                }
+            }
+        );
+
+
 
         /**
          * Route for deleting all carts.

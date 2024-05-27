@@ -146,7 +146,22 @@ class CartController {
      * @param user - The user who owns the cart.
      * @returns A Promise that resolves to `true` if the cart was successfully cleared.
      */
-    async clearCart(user: User)/*:Promise<Boolean> */ { }
+    async clearCart(user: User): Promise<boolean> {
+        const cart = await this.cartDAO.getCart(user.username);
+
+        if (!cart) {
+            throw new CartNotFoundError();
+        }
+
+        await this.cartDAO.clearCartProducts(user.username);
+        await this.cartDAO.updateCartTotal(user.username, 0);
+
+        return true;
+    }
+
+
+
+
 
     /**
      * Deletes all carts of all users.

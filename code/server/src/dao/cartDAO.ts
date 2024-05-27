@@ -230,6 +230,19 @@ class CartDAO {
         });
     }
 
+
+    async clearCartProducts(username: string): Promise<void> {
+        const sql = "DELETE FROM cart_products WHERE customer = ?";
+        return new Promise((resolve, reject) => {
+            db.run(sql, [username], function (err) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve();
+            });
+        });
+    }
+
 }
 
 export default CartDAO
