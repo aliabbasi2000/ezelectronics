@@ -173,6 +173,39 @@ class CartDAO {
     }
 
 
+    async getPaidCartsByUser(customer: string): Promise<Cart[]> {
+        const cartSql = "SELECT * FROM carts WHERE customer = ? AND paid = 1";
+        const productSql = "SELECT * FROM cart_products WHERE customer = ? AND cart_id = ?";
+
+        return new Promise((resolve, reject) => {
+            db.all(cartSql, [customer], (err, cartRows) => {
+                if (err) {
+                    return reject(err);
+                }
+
+                const carts: Cart[] = [];
+                const productPromises = cartRows.map(cartRow => {
+                    return new Promise<void>((resolve, reject) => {
+                        db.all(productSql, [customer, cartRow.id], (err, productRows) => {
+                            if (err) {
+                                return reject(err);
+                            }
+                            const products = productRows.map(row => new ProductInCart(row.model, row.quantity, row.category, row.price));
+                            carts.push(new Cart(cartRow.customer, cartRow.paid, cartRow.paymentDate, cartRow.total, products));
+                            resolve();
+                        });
+                    });
+                });
+
+                Promise.all(productPromises)
+                    .then(() => resolve(carts))
+                    .catch(err => reject(err));
+            });
+        });
+    }
+
+
+
 
 }
 

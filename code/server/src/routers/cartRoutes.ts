@@ -58,10 +58,10 @@ class CartRoutes {
             (req: any, res: any, next: any) => {
                 // Check if the user is authenticated and has the role of "Customer"
                 if (!req.user) {
-                    return next(new Error('Unauthorized')); // You may have a specific error class for this
+                    return next(new Error('Unauthorized')); 
                 }
                 if (req.user.role !== 'Customer') {
-                    return next(new Error('Forbidden')); // You may have a specific error class for this
+                    return next(new Error('Forbidden'));
                 }
                 next();
             },
@@ -129,7 +129,7 @@ class CartRoutes {
             async (req: any, res: any, next: any) => {
                 try {
                     if (!req.user || req.user.role !== 'Customer') {
-                        return res.status(403).json({ message: 'Unauthorized or Forbidden' });
+                        throw new WrongUserCartError();
                     }
                     await this.controller.checkoutCart(req.user);
                     res.status(200).end();
@@ -152,12 +152,35 @@ class CartRoutes {
          * It requires the user to be logged in and to be a customer.
          * It returns the history of the logged in customer's carts (only carts that have been paid for are returned - the current cart is not included in the list).
          */
+        
         this.router.get(
             "/history",
-            (req: any, res: any, next: any) => this.controller.getCustomerCarts(req.user)
-                .then((carts: any /**Cart[] */) => res.status(200).json(carts))
-                .catch((err) => next(err))
-        )
+            this.errorHandler.validateRequest,
+            async (req: any, res: any, next: any) => {
+                try {
+                    if (!req.user || req.user.role !== 'Customer') {
+                        throw new WrongUserCartError(); 
+                    }
+
+                    const carts = await this.controller.getCustomerCarts(req.user);
+                    if (!carts.length) {
+                        throw new CartNotFoundError(); 
+                    }
+
+                    res.status(200).json(carts);
+                } catch (err) {
+                    if (err instanceof CartNotFoundError || err instanceof EmptyCartError || err instanceof WrongUserCartError) {
+                        res.status(err.customCode).json({ message: err.customMessage });
+                    } else {
+                        next(err);
+                    }
+                }
+            }
+        );
+
+
+
+        
 
         /**
          * Route for removing a product unit from a cart.
