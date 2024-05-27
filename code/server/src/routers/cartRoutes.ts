@@ -7,6 +7,7 @@ import { Cart } from "../components/cart"
 import { CartNotFoundError, ProductInCartError, ProductNotInCartError, WrongUserCartError, EmptyCartError } from "../errors/cartError";
 import { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, EmptyProductStockError, LowProductStockError } from "../errors/productError";
 
+
 /**
  * Represents a class that defines the routes for handling carts.
  */

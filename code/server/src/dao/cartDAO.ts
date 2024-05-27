@@ -2,6 +2,7 @@ import db from "../db/db"
 import { Cart, ProductInCart } from "../components/user"
 import crypto from "crypto"
 import { CartNotFoundError, ProductInCartError, ProductNotInCartError, WrongUserCartError, EmptyCartError } from "../errors/cartError";
+import { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, EmptyProductStockError, LowProductStockError } from "../errors/productError";
 
 
 /**
