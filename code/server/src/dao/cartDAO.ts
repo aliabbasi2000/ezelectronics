@@ -243,6 +243,29 @@ class CartDAO {
         });
     }
 
+
+    async deleteAllCarts(): Promise<void> {
+        const deleteCartsSql = "DELETE FROM carts";
+        const deleteCartProductsSql = "DELETE FROM cart_products";
+
+        return new Promise((resolve, reject) => {
+            db.serialize(() => {
+                db.run(deleteCartProductsSql, function(err) {
+                    if (err) {
+                        return reject(err);
+                    }
+                });
+
+                db.run(deleteCartsSql, function(err) {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve();
+                });
+            });
+        });
+    }
+
 }
 
 export default CartDAO

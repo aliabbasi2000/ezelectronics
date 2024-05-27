@@ -250,10 +250,26 @@ class CartRoutes {
          */
         this.router.delete(
             "/",
-            (req: any, res: any, next: any) => this.controller.deleteAllCarts()
-                .then(() => res.status(200).end())
-                .catch((err: any) => next(err))
-        )
+            this.errorHandler.validateRequest,
+            async (req: any, res: any, next: any) => {
+                try {
+                    if (!req.user || (req.user.role !== 'Admin' && req.user.role !== 'Manager')) {
+                        throw new WrongUserCartError(); // Custom error for unauthorized access
+                    }
+                    await this.controller.deleteAllCarts();
+                    res.status(200).end();
+                } catch (err) {
+                    if (err instanceof WrongUserCartError) {
+                        res.status(err.customCode).json({ message: err.customMessage });
+                    } else {
+                        next(err);
+                    }
+                }
+            }
+        );
+
+
+
 
         /**
          * Route for retrieving all carts of all users

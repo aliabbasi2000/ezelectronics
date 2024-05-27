@@ -167,7 +167,13 @@ class CartController {
      * Deletes all carts of all users.
      * @returns A Promise that resolves to `true` if all carts were successfully deleted.
      */
-    async deleteAllCarts() /**Promise<Boolean> */ { }
+    async deleteAllCarts(): Promise<boolean> {
+        await this.cartDAO.deleteAllCarts();
+        return true;
+    }
+
+
+
 
     /**
      * Retrieves all carts in the database.
