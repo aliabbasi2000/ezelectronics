@@ -206,7 +206,29 @@ class CartDAO {
     }
 
 
+    async removeProductFromCart(username: string, model: string): Promise<void> {
+        const sql = "DELETE FROM cart_products WHERE customer = ? AND model = ?";
+        return new Promise((resolve, reject) => {
+            db.run(sql, [username, model], function (err) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve();
+            });
+        });
+    }
 
+    async decreaseProductQuantity(username: string, model: string): Promise<void> {
+        const sql = "UPDATE cart_products SET quantity = quantity - 1 WHERE customer = ? AND model = ?";
+        return new Promise((resolve, reject) => {
+            db.run(sql, [username, model], function (err) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve();
+            });
+        });
+    }
 
 }
 

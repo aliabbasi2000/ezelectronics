@@ -191,12 +191,29 @@ class CartRoutes {
          */
         this.router.delete(
             "/products/:model",
-            (req: any, res: any, next: any) => this.controller.removeProductFromCart(req.user, req.params.model)
-                .then(() => res.status(200).end())
-                .catch((err) => {
-                    next(err)
-                })
-        )
+            this.errorHandler.validateRequest,
+            async (req: any, res: any, next: any) => {
+                try {
+                    if (!req.user || req.user.role !== 'Customer') {
+                        throw new WrongUserCartError(); // Use custom error for unauthorized access
+                    }
+                    const model = req.params.model;
+                    if (!model) {
+                        throw new ProductNotFoundError(); // Use custom error for missing product model
+                    }
+                    await this.controller.removeProductFromCart(req.user, model);
+                    res.status(200).end();
+                } catch (err) {
+                    if (err instanceof CartNotFoundError || err instanceof ProductNotInCartError || err instanceof ProductNotFoundError) {
+                        res.status(err.customCode).json({ message: err.customMessage });
+                    } else {
+                        next(err);
+                    }
+                }
+            }
+        );
+
+
 
         /**
          * Route for removing all products from the current cart.

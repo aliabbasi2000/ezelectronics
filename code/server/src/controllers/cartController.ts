@@ -114,7 +114,31 @@ class CartController {
      * @param product The model of the product to remove.
      * @returns A Promise that resolves to `true` if the product was successfully removed.
      */
-    async removeProductFromCart(user: User, product: string) /**Promise<Boolean> */ { }
+    async removeProductFromCart(user: User, product: string): Promise<boolean> {
+        const cart = await this.cartDAO.getCart(user.username);
+
+        if (!cart) {
+            throw new CartNotFoundError();
+        }
+
+        const productInCart = cart.products.find(p => p.model === product);
+        if (!productInCart) {
+            throw new ProductNotInCartError();
+        }
+
+        if (productInCart.quantity === 1) {
+
+            await this.cartDAO.removeProductFromCart(user.username, product);
+        } else {
+  
+            await this.cartDAO.decreaseProductQuantity(user.username, product);
+        }
+
+
+        await this.cartDAO.updateCartTotal(user.username, -productInCart.price);
+
+        return true;
+    }
 
 
     /**
