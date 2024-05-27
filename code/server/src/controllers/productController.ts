@@ -21,7 +21,25 @@ class ProductController {
      * @param arrivalDate The optional date in which the product arrived.
      * @returns A Promise that resolves to nothing.
      */
-    async registerProducts(model: string, category: string, quantity: number, details: string | null, sellingPrice: number, arrivalDate: string | null) /**:Promise<void> */ { }
+    
+    async registerProducts(model: string, category: string, quantity: number, details: string | null, sellingPrice: number, arrivalDate: string | null): Promise<void> {
+        if (!model || !category || quantity <= 0 || sellingPrice <= 0 || (arrivalDate && new Date(arrivalDate) > new Date())) {
+            throw new Error('Invalid input parameters');
+        }
+    
+        // Check if the product model already exists
+        const productExists = await ProductDAO.checkProductExists(model);
+        if (productExists) {
+            throw new ProductAlreadyExistsError();
+        }
+    
+        // Set the current date if arrivalDate is not provided
+        const dateToUse = arrivalDate || new Date().toISOString().split('T')[0];
+    
+        // Register the product
+        await ProductDAO.registerProducts(model, category, quantity, details, sellingPrice, dateToUse);
+    }
+
 
     /**
      * Increases the available quantity of a product through the addition of new units.

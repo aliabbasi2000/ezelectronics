@@ -63,6 +63,53 @@ class ProductRoutes {
                 .catch((err) => next(err))
         )
 
+
+
+
+        this.router.post(
+            "/",
+            async (req: any, res: any, next: any) => {
+                try {
+                    const { model, category, quantity, details, sellingPrice, arrivalDate } = req.body;
+        
+                    // Validate input parameters
+                    if (!model || typeof model !== 'string') {
+                        throw new ProductNotFoundError('Invalid or missing model');
+                    }
+        
+                    if (!category || !["Smartphone", "Laptop", "Appliance"].includes(category)) {
+                        throw new ProductNotFoundError('Invalid or missing category');
+                    }
+        
+                    if (typeof quantity !== 'number' || quantity <= 0) {
+                        throw new LowProductStockError('Invalid or missing quantity');
+                    }
+        
+                    if (typeof sellingPrice !== 'number' || sellingPrice <= 0) {
+                        throw new EmptyProductStockError('Invalid or missing sellingPrice');
+                    }
+        
+                    if (arrivalDate) {
+                        const parsedDate = new Date(arrivalDate);
+                        const currentDate = new Date();
+                        if (isNaN(parsedDate.getTime()) || parsedDate > currentDate) {
+                            throw new ProductSoldError('Invalid or future arrivalDate');
+                        }
+                    }
+        
+                    // Proceed with controller method if validation passes
+                    await this.controller.registerProducts(req.body.model, req.body.category, req.body.quantity, req.body.details, req.body.sellingPrice, req.body.arrivalDate);
+                    res.status(200).end();
+                } catch (error) {
+                    if (error instanceof ProductNotFoundError || error instanceof ProductAlreadyExistsError || error instanceof ProductSoldError || error instanceof EmptyProductStockError || error instanceof LowProductStockError) {
+                        res.status(error.customCode).json({ error: error.customMessage });
+                    } else {
+                        next(error);
+                    }
+                }
+            }
+        );
+
         /**
          * Route for registering the increase in quantity of a product.
          * It requires the user to be logged in and to be a manager.
