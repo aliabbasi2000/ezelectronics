@@ -16,15 +16,50 @@ class ReviewController {
      * @param comment The comment made by the user
      * @returns A Promise that resolves to nothing
      */
-    async addReview(model: string, user: User, score: number, comment: string) /**:Promise<void> */ { }
+    async addReview(model: string, user: User, score: number, comment: string) :Promise<void>  { 
 
     /**
      * Returns all reviews for a product
      * @param model The model of the product to get reviews from
      * @returns A Promise that resolves to an array of ProductReview objects
      */
-    async getProductReviews(model: string) /**:Promise<ProductReview[]> */ { }
+    if (user.role !== 'Customer') {
+        throw new Error('Access denied: Only customers can add reviews.');
+    }
 
+    // Check if the product exists
+    const product = await ProductDAO.findByModel(model);
+    if (!product) {
+        throw new Error('Product not found');
+    }
+
+    // Check if the user has already reviewed the product
+    const existingReview = await ReviewDAO.findByUserAndModel(user.id, model);
+    if (existingReview) {
+        throw new Error('Review already exists');
+    }
+
+    // Add the new review
+    const review: ProductReview = {
+        model,
+        userId: user.id,
+        score,
+        comment,
+        date: new Date().toISOString().split('T')[0]
+    };
+
+    await ReviewDAO.addReview(review);
+}
+
+
+async getProductReviews(model: string): Promise<ProductReview[]> {
+    const product = await ProductDAO.findByModel(model);
+    if (!product) {
+        throw new Error('Product not found');
+    }
+    const reviews = await ReviewDAO.findByModel(model);
+    return reviews;
+}
     /**
      * Deletes the review made by a user for a product
      * @param model The model of the product to delete the review from

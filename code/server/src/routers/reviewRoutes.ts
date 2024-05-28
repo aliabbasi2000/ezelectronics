@@ -36,13 +36,42 @@ class ReviewRoutes {
          */
         this.router.post(
             "/:model",
-            (req: any, res: any, next: any) => this.controller.addReview(req.params.model, req.user, req.body.score, req.body.comment)
-                .then(() => res.status(200).send())
-                .catch((err: Error) => {
-                    console.log(err)
-                    next(err)
-                })
-        )
+    async (req: any, res: any, next: any) => {
+        try {
+            const model = req.params.model;
+            const { score, comment } = req.body;
+            const user = req.user;
+
+            if (!model || typeof model !== 'string') {
+                return res.status(400).json({ error: 'Model parameter must be a non-empty string' });
+            }
+
+            if (!score || !Number.isInteger(score) || score < 1 || score > 5) {
+                return res.status(400).json({ error: 'Score must be an integer between 1 and 5' });
+            }
+
+            if (!comment || typeof comment !== 'string' || comment.trim() === '') {
+                return res.status(400).json({ error: 'Comment cannot be null or empty' });
+            }
+
+            await this.controller.addReview(model, user, score, comment);
+            res.status(200).send();
+        } catch (err) {
+            console.error(err);
+
+            if (err.message === 'Access denied: Only customers can add reviews.') {
+                res.status(403).json({ error: err.message });
+            } else if (err.message === 'Product not found') {
+                res.status(404).json({ error: err.message });
+            } else if (err.message === 'Review already exists') {
+                res.status(409).json({ error: err.message });
+            } else {
+                res.status(500).json({ error: 'Internal server error' });
+            }
+        }
+    }
+);
+
 
         /**
          * Route for retrieving all reviews of a product.
@@ -52,9 +81,25 @@ class ReviewRoutes {
          */
         this.router.get(
             "/:model",
-            (req: any, res: any, next: any) => this.controller.getProductReviews(req.params.model)
-                .then((reviews: any/*ProductReview[]*/) => res.status(200).json(reviews))
-                .catch((err: Error) => next(err))
+            async (req: any, res: any, next: any) => {
+                try {
+                    const model = req.params.model;
+                    if (!model || typeof model !== 'string') {
+                        return res.status(400).json({ error: 'Model parameter must be a non-empty string' });
+                    }
+        
+                    const reviews = await this.controller.getProductReviews(model);
+                    res.status(200).json(reviews);
+                } catch (err) {
+                    console.error(err);
+        
+                    if (err.message === 'Product not found') {
+                        res.status(404).json({ error: err.message });
+                    } else {
+                        res.status(500).json({ error: 'Internal server error' });
+                    }
+                }
+            }
         )
 
         /**
