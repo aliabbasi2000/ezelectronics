@@ -20,11 +20,22 @@ class ReviewDAO {
         return await database.query('SELECT * FROM reviews WHERE model = ?', [model]);
     }
     static async findByUserAndModel(userId: number, model: string): Promise<ProductReview | null> {
-        return await database.query('SELECT * FROM reviews WHERE userId = ? AND model = ?', [userId, model]);
+        // Database query to find the review by user and product model
+        // Example using a hypothetical database method:
+        const result = await database.query('SELECT * FROM reviews WHERE userId = ? AND model = ?', [userId, model]);
+        return result[0] || null;
     }
 
     static async deleteReview(userId: number, model: string): Promise<void> {
+        // Database query to delete the review
+        // Example using a hypothetical database method:
         await database.query('DELETE FROM reviews WHERE userId = ? AND model = ?', [userId, model]);
+    }
+    static async deleteAllReviews(model: string): Promise<void> {
+        await database.query('DELETE FROM reviews WHERE model = ?', [model]);
+    }
+    static async deleteAll(): Promise<void> {
+        await database.query('DELETE FROM reviews');
     }
 }
 export default ReviewDAO;

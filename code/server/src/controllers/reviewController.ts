@@ -66,20 +66,47 @@ async getProductReviews(model: string): Promise<ProductReview[]> {
      * @param user The user who made the review to delete
      * @returns A Promise that resolves to nothing
      */
-    async deleteReview(model: string, user: User) /**:Promise<void> */ { }
+    async deleteReview(model: string, user: User): Promise<void> {
+        if (user.role !== 'Customer') {
+            throw new Error('Access denied: Only customers can delete reviews.');
+        }
 
+        // Check if the product exists
+        const product = await ProductDAO.findByModel(model);
+        if (!product) {
+            throw new Error('Product not found');
+        }
+
+        // Check if the user has a review for the product
+        const existingReview = await ReviewDAO.findByUserAndModel(user.id, model);
+        if (!existingReview) {
+            throw new Error('Review not found');
+        }
+
+        // Delete the review
+        await ReviewDAO.deleteReview(user.id, model);
+    }
     /**
      * Deletes all reviews for a product
      * @param model The model of the product to delete the reviews from
      * @returns A Promise that resolves to nothing
      */
-    async deleteReviewsOfProduct(model: string) /**:Promise<void> */ { }
+    async deleteReviewsOfProduct(model: string): Promise<void> {
+        const product = await ProductDAO.findByModel(model);
+        if (!product) {
+            throw new Error('Product not found');
+        }
+
+        await ReviewDAO.deleteAllReviews(model);
+    }
 
     /**
      * Deletes all reviews of all products
      * @returns A Promise that resolves to nothing
      */
-    async deleteAllReviews() /**:Promise<void> */ { }
+    async deleteAllReviews(): Promise<void> {
+        await ReviewDAO.deleteAll();
+    }
 }
 
 export default ReviewController;

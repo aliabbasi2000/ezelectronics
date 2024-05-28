@@ -110,12 +110,29 @@ class ReviewRoutes {
          */
         this.router.delete(
             "/:model",
-            (req: any, res: any, next: any) => this.controller.deleteReview(req.params.model, req.user)
-                .then(() => res.status(200).send())
-                .catch((err: Error) => {
-                    console.log(err)
-                    next(err)
-                })
+            async (req: any, res: any, next: any) => {
+                try {
+                    const model = req.params.model;
+                    const user = req.user;
+        
+                    if (!model || typeof model !== 'string') {
+                        return res.status(400).json({ error: 'Model parameter must be a non-empty string' });
+                    }
+        
+                    await this.controller.deleteReview(model, user);
+                    res.status(200).send();
+                } catch (err) {
+                    console.error(err);
+        
+                    if (err.message === 'Access denied: Only customers can delete reviews.') {
+                        res.status(403).json({ error: err.message });
+                    } else if (err.message === 'Product not found' || err.message === 'Review not found') {
+                        res.status(404).json({ error: err.message });
+                    } else {
+                        res.status(500).json({ error: 'Internal server error' });
+                    }
+                }
+            }
         )
 
         /**
@@ -126,9 +143,31 @@ class ReviewRoutes {
          */
         this.router.delete(
             "/:model/all",
-            (req: any, res: any, next: any) => this.controller.deleteReviewsOfProduct(req.params.model)
-                .then(() => res.status(200).send())
-                .catch((err: Error) => next(err))
+            async (req: any, res: any, next: any) => {
+                try {
+                    const model = req.params.model;
+                    const user = req.user;
+        
+                    if (!model || typeof model !== 'string') {
+                        return res.status(400).json({ error: 'Model parameter must be a non-empty string' });
+                    }
+        
+                    if (user.role !== 'Admin' && user.role !== 'Manager') {
+                        return res.status(403).json({ error: 'Access denied: Only Admin or Manager can delete all reviews.' });
+                    }
+        
+                    await this.controller.deleteReviewsOfProduct(model);
+                    res.status(200).send();
+                } catch (err) {
+                    console.error(err);
+        
+                    if (err.message === 'Product not found') {
+                        res.status(404).json({ error: err.message });
+                    } else {
+                        res.status(500).json({ error: 'Internal server error' });
+                    }
+                }
+            }
         )
 
         /**
@@ -138,9 +177,21 @@ class ReviewRoutes {
          */
         this.router.delete(
             "/",
-            (req: any, res: any, next: any) => this.controller.deleteAllReviews()
-                .then(() => res.status(200).send())
-                .catch((err: Error) => next(err))
+            async (req: any, res: any, next: any) => {
+                try {
+                    const user = req.user;
+        
+                    if (user.role !== 'Admin' && user.role !== 'Manager') {
+                        return res.status(403).json({ error: 'Access denied: Only Admin or Manager can delete all reviews.' });
+                    }
+        
+                    await this.controller.deleteAllReviews();
+                    res.status(200).send();
+                } catch (err) {
+                    console.error(err);
+                    res.status(500).json({ error: 'Internal server error' });
+                }
+            }
         )
     }
 }
