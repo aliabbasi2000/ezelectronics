@@ -125,6 +125,47 @@ class ProductRoutes {
                 .then((quantity: any /**number */) => res.status(200).json({ quantity: quantity }))
                 .catch((err) => next(err))
         )
+        this.router.patch(
+            "/:model",
+            // Validate request parameters and body
+            param('model').isString().notEmpty().withMessage('Invalid or missing model'),
+            body('quantity').isInt({ gt: 0 }).withMessage('Invalid or missing quantity'),
+            body('changeDate')
+                .optional()
+                .isISO8601().withMessage('Invalid changeDate format')
+                .custom((value, { req }) => {
+                    const currentDate = new Date().toISOString().split('T')[0]; // current date in YYYY-MM-DD format
+                    if (value && value > currentDate) {
+                        throw new Error('changeDate cannot be after the current date');
+                    }
+                    return true;
+                }),
+            (req: any, res: any, next: any) => {
+                try {
+                    const errors = validationResult(req);
+                    if (!errors.isEmpty()) {
+                        return res.status(422).json({ errors: errors.array() });
+                    }
+        
+                    const { model } = req.params;
+                    const { quantity, changeDate } = req.body;
+        
+                    // Proceed with controller method if validation passes
+                    this.controller.changeProductQuantity(model, quantity, changeDate)
+                        .then((newQuantity: any) => res.status(200).json({ quantity: newQuantity }))
+                        .catch((error: any) => {
+                            if (error instanceof ProductNotFoundError || error instanceof LowProductStockError || error instanceof ProductSoldError) {
+                                res.status(error.customCode).json({ error: error.customMessage });
+                            } else {
+                                next(error);
+                            }
+                        });
+                } catch (error) {
+                    next(error);
+                }
+            }
+        );
+
 
         /**
          * Route for selling a product.

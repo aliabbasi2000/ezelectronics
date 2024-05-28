@@ -40,8 +40,16 @@ class ProductDAO {
             });
         });
     }
+    
+    async  changeProductQuantity(model: string, newQuantity: number, changeDate: string | null): Promise<number> {
+
+    const query = 'UPDATE products SET stock = $1 WHERE model = $2';
+    await dbClient.query(query, [model, newQuantity,changeDate]);
+}
+
+
 
 
 }
 
-export default ProductDAO
+export default ProductDAO  

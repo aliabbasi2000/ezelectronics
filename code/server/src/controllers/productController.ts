@@ -48,7 +48,47 @@ class ProductController {
      * @param changeDate The optional date in which the change occurred.
      * @returns A Promise that resolves to the new available quantity of the product.
      */
-    async changeProductQuantity(model: string, newQuantity: number, changeDate: string | null) /**:Promise<number> */ { }
+    async  changeProductQuantity(model: string, newQuantity: number, changeDate: string | null): Promise<number> {
+        if (!model) {
+            throw new Error("Model cannot be empty");
+        }
+    
+        if (newQuantity <= 0) {
+            throw new Error("Quantity must be higher than 0");
+        }
+    
+        const product = await ProductDAO.findByModel(model);
+    
+        if (!product) {
+            throw new ProductNotFoundError();
+        }
+    
+        const currentDate = new Date();
+        let changeDateObj: Date;
+    
+        if (changeDate) {
+            changeDateObj = new Date(changeDate);
+            if (isNaN(changeDateObj.getTime())) {
+                throw new Error("Invalid date format. Date must be in YYYY-MM-DD format.");
+            }
+    
+            if (changeDateObj > currentDate) {
+                throw new Error("Change date cannot be after the current date");
+            }
+    
+            const arrivalDateObj = new Date(product.arrivalDate);
+            if (changeDateObj < arrivalDateObj) {
+                throw new Error("Change date cannot be before the product's arrival date");
+            }
+        } else {
+            changeDateObj = currentDate;
+        }
+    
+        product.quantity += newQuantity;
+        await ProductDAO.save(product);
+    
+        return product.quantity;
+    }
 
     /**
      * Decreases the available quantity of a product through the sale of units.
