@@ -185,6 +185,47 @@ class ProductRoutes {
                     next(err)
                 })
         )
+        this.router.patch(
+            "/:model/sell",
+            async (req: any, res: any, next: any) => {
+                try {
+                    // Validate request parameters
+                    const model = req.params.model;
+                    const { quantity, sellingDate } = req.body;
+        
+                    // Check if model is a non-empty string
+                    if (!model || typeof model !== 'string') {
+                        throw new Error("Model must be a non-empty string");
+                    }
+        
+                    // Check if quantity is a positive number
+                    if (!quantity || typeof quantity !== 'number' || quantity <= 0) {
+                        throw new Error("Quantity must be a positive number");
+                    }
+        
+                    // Check if sellingDate is a valid date in the format YYYY-MM-DD
+                    if (sellingDate && !/^\d{4}-\d{2}-\d{2}$/.test(sellingDate)) {
+                        throw new Error("Selling date must be a valid date in the format YYYY-MM-DD");
+                    }
+        
+                    // Call the controller method
+                    const newQuantity = await this.controller.sellProduct(model, quantity, sellingDate);
+        
+                    // Send response with the new quantity
+                    res.status(200).json({ quantity: newQuantity });
+                } catch (error) {
+                    // Handle specific product errors
+                    if (error instanceof ProductNotFoundError ||
+                        error instanceof EmptyProductStockError ||
+                        error instanceof LowProductStockError) {
+                        res.status(error.customCode).json({ error: error.customMessage });
+                    } else {
+                        // Pass other errors to the error handling middleware
+                        next(error);
+                    }
+                }
+            }
+        );
 
         /**
          * Route for retrieving all products.

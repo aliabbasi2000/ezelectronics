@@ -97,8 +97,49 @@ class ProductController {
      * @param sellingDate The optional date in which the sale occurred.
      * @returns A Promise that resolves to the new available quantity of the product.
      */
-    async sellProduct(model: string, quantity: number, sellingDate: string | null) /**:Promise<number> */ { }
-
+    
+    async sellProduct(model: string, quantity: number, sellingDate: string | null): Promise<number> {
+        try {
+            // Check if the selling date is after the current date
+            if (sellingDate && new Date(sellingDate) > new Date()) {
+                throw new Error("Selling date cannot be in the future");
+            }
+            
+            // Retrieve the product from the database
+            const product = await ProductDAO.getProductByModel(model);
+            
+            // Throw error if product is not found
+            if (!product) {
+                throw new ProductNotFoundError();
+            }
+            
+            // Check if the selling date is before the product's arrival date
+            if (sellingDate && new Date(sellingDate) < product.arrivalDate) {
+                throw new Error("Selling date cannot be before product's arrival date");
+            }
+            
+            // Check if the available quantity is greater than 0
+            if (product.availableQuantity === 0) {
+                throw new EmptyProductStockError();
+            }
+            
+            // Check if the available quantity is enough for the sale
+            if (product.availableQuantity < quantity) {
+                throw new LowProductStockError();
+            }
+            
+            // Update the available quantity
+            product.availableQuantity -= quantity;
+            
+            // Update the product in the database
+            await ProductDAO.updateProduct(product);
+            
+            // Perform any other necessary actions (e.g., logging)
+            
+        } catch (error) {
+            throw error;
+        }
+    }
     /**
      * Returns all products in the database, with the option to filter them by category or model.
      * @param grouping An optional parameter. If present, it can be either "category" or "model".

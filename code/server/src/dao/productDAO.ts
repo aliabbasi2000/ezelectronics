@@ -47,6 +47,18 @@ class ProductDAO {
     await dbClient.query(query, [model, newQuantity,changeDate]);
 }
 
+static async sellProduct(product: Product): Promise<void> {
+    try {
+        // Implement your database query to update the product
+        // This method should update the product's available quantity
+    } catch (error) {
+        // Handle any database errors
+        throw error;
+    }
+}
+
+
+
 
 
 
