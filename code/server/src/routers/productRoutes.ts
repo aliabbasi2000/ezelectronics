@@ -245,6 +245,43 @@ class ProductRoutes {
                     next(err)
                 })
         )
+        this.router.get(
+            "/",
+            async (req: any, res: any, next: any) => {
+                const { grouping, category, model } = req.query;
+        
+                // Input validation
+                try {
+                    if (grouping === undefined) {
+                        if (category !== undefined || model !== undefined) {
+                            throw new Error('422: Invalid parameters - grouping is null but category or model is provided');
+                        }
+                    } else if (grouping === 'category') {
+                        if (category === undefined || !['Smartphone', 'Laptop', 'Appliance'].includes(category) || model !== undefined) {
+                            throw new Error('422: Invalid parameters - for category grouping, category must be one of ["Smartphone", "Laptop", "Appliance"] and model must be null');
+                        }
+                    } else if (grouping === 'model') {
+                        if (model === undefined || model === '' || category !== undefined) {
+                            throw new Error('422: Invalid parameters - for model grouping, model must be provided and not empty, and category must be null');
+                        }
+                    } else {
+                        throw new Error('422: Invalid parameters - grouping must be either "category" or "model"');
+                    }
+        
+                    const products = await getProducts(grouping || null, category || null, model || null);
+                    res.status(200).json(products);
+                } catch (err) {
+                    if (err instanceof ProductNotFoundError) {
+                        res.status(err.customCode).json({ message: err.customMessage });
+                    } else if (err.message.startsWith('422:')) {
+                        res.status(422).json({ message: err.message });
+                    } else {
+                        console.error(err);
+                        res.status(500).json({ message: 'Internal Server Error' });
+                    }
+                }
+            }
+        );
 
         /**
          * Route for retrieving all available products.

@@ -56,7 +56,31 @@ static async sellProduct(model: string, quantity: number): Promise<void> {
     await dbClient.query(query, [quantity, model]);
 }
 
+async  getAllProducts(): Promise<Product[]> {
+    // Simulate a database call
+    return await database.query('SELECT * FROM products');
+}
 
+/**
+ * Retrieves products by category from the database.
+ * @param category The category of the products to retrieve.
+ * @returns A Promise that resolves to an array of Product objects.
+ */
+async  getProductByCategory(category: string): Promise<Product[]> {
+    // Simulate a database call
+    return await database.query('SELECT * FROM products WHERE category = ?', [category]);
+}
+
+/**
+ * Retrieves a product by model from the database.
+ * @param model The model of the product to retrieve.
+ * @returns A Promise that resolves to a Product object or null if not found.
+ */
+async  getProductByModel(model: string): Promise<Product | null> {
+    // Simulate a database call
+    const results = await database.query('SELECT * FROM products WHERE model = ?', [model]);
+    return results.length > 0 ? results[0] : null;
+}
 
 
 

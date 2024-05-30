@@ -147,8 +147,32 @@ class ProductController {
      * @param model An optional parameter. It can only be present if grouping is equal to "model" (in which case it must be present and not empty).
      * @returns A Promise that resolves to an array of Product objects.
      */
-    async getProducts(grouping: string | null, category: string | null, model: string | null) /**Promise<Product[]> */ { }
-
+   
+    async getProducts(grouping: string | null, category: string | null, model: string | null): Promise<Product[]> {
+        // Validate input parameters
+        if (grouping === null) {
+            if (category !== null || model !== null) {
+                throw new Error('422: Invalid parameters');
+            }
+            return await getAllProducts();
+        } else if (grouping === 'category') {
+            if (category === null || model !== null) {
+                throw new Error('422: Invalid parameters');
+            }
+            return await getProductByCategory(category);
+        } else if (grouping === 'model') {
+            if (model === null || model === '' || category !== null) {
+                throw new Error('422: Invalid parameters');
+            }
+            const product = await getProductByModel(model);
+            if (!product) {
+                throw new ProductNotFoundError();
+            }
+            return [product];
+        } else {
+            throw new Error('422: Invalid parameters');
+        }
+    }
     /**
      * Returns all available products (with a quantity above 0) in the database, with the option to filter them by category or model.
      * @param grouping An optional parameter. If present, it can be either "category" or "model".
