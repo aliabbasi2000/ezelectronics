@@ -298,6 +298,50 @@ class ProductRoutes {
                 .then((products: any/*Product[]*/) => res.status(200).json(products))
                 .catch((err) => next(err))
         )
+        this.router.get(
+            "/available",
+            async (req: any, res: any, next: any) => {
+                try {
+                    const { grouping, category, model } = req.query;
+
+                    // Validate input parameters
+                    if (grouping === undefined) {
+                        if (category !== undefined || model !== undefined) {
+                            throw new ValidationError('If grouping is null, both category and model must also be null.');
+                        }
+                    } else if (grouping === 'category') {
+                        if (category === undefined || model !== undefined) {
+                            throw new ValidationError('If grouping is category, category cannot be null and model must be null.');
+                        }
+                        if (!['Smartphone', 'Laptop', 'Appliance'].includes(category)) {
+                            throw new ValidationError('Invalid category value. Must be one of "Smartphone", "Laptop", "Appliance".');
+                        }
+                    } else if (grouping === 'model') {
+                        if (model === undefined || category !== undefined) {
+                            throw new ValidationError('If grouping is model, model cannot be null and category must be null.');
+                        }
+                        if (model.trim() === '') {
+                            throw new ValidationError('Model cannot be empty.');
+                        }
+                    } else {
+                        throw new ValidationError('Invalid grouping parameter.');
+                    }
+
+                    // Call the controller method
+                    const products = await this.controller.getAvailableProducts(grouping || null, category || null, model || null);
+                    res.status(200).json(products);
+                } catch (err) {
+                    if (err instanceof ProductNotFoundError || err instanceof ValidationError) {
+                        res.status(err.customCode).json({ error: err.customMessage });
+                    } else {
+                        next(err);
+                    }
+                }
+            }
+        );
+    
+
+
 
         /**
          * Route for deleting all products.
@@ -326,6 +370,7 @@ class ProductRoutes {
 
 
     }
+    
 }
 
 export default ProductRoutes

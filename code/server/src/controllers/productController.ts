@@ -180,7 +180,38 @@ class ProductController {
      * @param model An optional parameter. It can only be present if grouping is equal to "model" (in which case it must be present and not empty).
      * @returns A Promise that resolves to an array of Product objects.
      */
-    async getAvailableProducts(grouping: string | null, category: string | null, model: string | null) /**:Promise<Product[]> */ { }
+    
+    async getAvailableProducts(grouping: string | null, category: string | null, model: string | null): Promise<Product[]> {
+        // Validate input parameters
+        if (grouping === null) {
+            if (category !== null || model !== null) {
+                throw new Error('422: If grouping is null, both category and model must also be null.');
+            }
+        } else if (grouping === 'category') {
+            if (category === null || model !== null) {
+                throw new Error('422: If grouping is category, category cannot be null and model must be null.');
+            }
+        } else if (grouping === 'model') {
+            if (model === null || category !== null) {
+                throw new Error('422: If grouping is model, model cannot be null and category must be null.');
+            }
+        } else {
+            throw new Error('422: Invalid grouping parameter.');
+        }
+
+        // Fetch data from the DAO
+        if (grouping === 'category') {
+            return await this.productDAO.getAvailableProductsByCategory(category);
+        } else if (grouping === 'model') {
+            const products = await this.productDAO.getAvailableProductsByModel(model);
+            if (products.length === 0) {
+                throw new ProductNotFoundError();
+            }
+            return products;
+        } else {
+            return await this.productDAO.getAllAvailableProducts();
+        }
+    }
 
     /**
      * Deletes all products.

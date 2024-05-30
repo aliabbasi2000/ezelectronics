@@ -56,7 +56,7 @@ static async sellProduct(model: string, quantity: number): Promise<void> {
     await dbClient.query(query, [quantity, model]);
 }
 
-async  getAllProducts(): Promise<Product[]> {
+async  getProducts(): Promise<Product[]> {
     // Simulate a database call
     return await database.query('SELECT * FROM products');
 }
@@ -82,6 +82,30 @@ async  getProductByModel(model: string): Promise<Product | null> {
     return results.length > 0 ? results[0] : null;
 }
 
+async getAvailableProducts(): Promise<Product[]> {
+    // Replace with actual database query
+    return db.query('SELECT * FROM products WHERE quantity > 0');
+}
+
+/**
+ * Fetches available products from the database filtered by category.
+ * @param category The category to filter by.
+ * @returns A Promise that resolves to an array of Product objects that belong to the specified category.
+ */
+async getAvailableProductsByCategory(category: string): Promise<Product[]> {
+    // Replace with actual database query
+    return db.query('SELECT * FROM products WHERE quantity > 0 AND category = ?', [category]);
+}
+
+/**
+ * Fetches available products from the database filtered by model.
+ * @param model The model to filter by.
+ * @returns A Promise that resolves to an array of Product objects that match the specified model.
+ */
+async getAvailableProductsByModel(model: string): Promise<Product[]> {
+    // Replace with actual database query
+    return db.query('SELECT * FROM products WHERE quantity > 0 AND model = ?', [model]);
+}
 
 
 
