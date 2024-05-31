@@ -241,7 +241,18 @@ class ProductController {
      * @param model The model of the product to delete
      * @returns A Promise that resolves to `true` if the product has been successfully deleted.
      */
-    async deleteProduct(model: string) /**:Promise <Boolean> */ { }
+    
+    async deleteProduct(model: string): Promise<boolean> {
+        try {
+            return await this.productDAO.deleteByModel(model);
+        } catch (error) {
+            if (error instanceof ProductNotFoundError) {
+                throw new ProductNotFoundError();
+            }
+            throw error; // re-throw any other errors
+        }
+    }
+
 
 }
 

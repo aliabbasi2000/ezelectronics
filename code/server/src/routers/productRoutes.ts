@@ -384,6 +384,24 @@ class ProductRoutes {
                 .then(() => res.status(200).end())
                 .catch((err: any) => next(err))
         )
+        router.delete("/:model", async (req, res, next) => {
+            const model = req.params.model;
+            if (typeof model !== 'string' || model.trim() === '') {
+                return res.status(400).json({ error: "Invalid product model" });
+            }
+        
+            try {
+                await productController.deleteProduct(model);
+                return res.status(200).end();
+            } catch (error) {
+                if (error instanceof ProductNotFoundError) {
+                    return res.status(404).json({ error: error.customMessage });
+                }
+                return next(error); // Passes other errors to the error handler
+            }
+        }
+        );
+        
 
 
     }

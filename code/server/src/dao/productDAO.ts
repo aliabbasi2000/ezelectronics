@@ -119,6 +119,25 @@ async  deleteProductByModel(model) {
 
     return true;
 }
+async deleteByModel(model: string): Promise<boolean> {
+    const product = await this.findProductByModel(model);
+    if (!product) {
+        throw new ProductNotFoundError();
+    }
+
+    // Assuming we have a method to delete the product
+    await this.deleteProduct(product.id);
+    return true;
+}
+
+private async findProductByModel(model: string): Promise<any> {
+    // Method to find a product by its model
+}
+
+private async deleteProduct(productId: string): Promise<void> {
+    // Method to delete a product by its ID
+}
+
 
 
 
