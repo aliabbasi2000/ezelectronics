@@ -354,6 +354,23 @@ class ProductRoutes {
                 .then(() => res.status(200).end())
                 .catch((err: any) => next(err))
         )
+        this.router.delete(
+            "/:model",
+            validateModelParameter,
+            async (req, res, next) => {
+                const model = req.params.model;
+                try {
+                    await this.controller.deleteAllProducts(model);
+                    res.status(200).end();
+                } catch (err) {
+                    if (err instanceof ProductNotFoundError) {
+                        res.status(err.customCode).json({ error: err.customMessage });
+                    } else {
+                        next(err);
+                    }
+                }
+            }
+        );
 
         /**
          * Route for deleting a product.

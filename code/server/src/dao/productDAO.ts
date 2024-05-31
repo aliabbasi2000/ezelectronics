@@ -106,6 +106,19 @@ async getAvailableProductsByModel(model: string): Promise<Product[]> {
     // Replace with actual database query
     return db.query('SELECT * FROM products WHERE quantity > 0 AND model = ?', [model]);
 }
+async  deleteProductByModel(model) {
+    // Find the product by model
+    const product = db.products.find(product => product.model === model);
+
+    if (!product) {
+        return false;
+    }
+
+    // Remove the product from the database
+    db.products = db.products.filter(product => product.model !== model);
+
+    return true;
+}
 
 
 
