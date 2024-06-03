@@ -1,9 +1,8 @@
 import { User } from "../components/user";
 import ReviewDAO from "../dao/reviewDAO";
-import { CartNotFoundError, ProductInCartError, ProductNotInCartError, WrongUserCartError, EmptyCartError } from "../errors/cartError";
-import { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, EmptyProductStockError, LowProductStockError } from "../errors/productError";
-
-
+import { ProductNotFoundError } from "../errors/productError";
+import {  UserNotCustomerError }from "../errors/userError"
+import { ExistingReviewError, NoReviewProductError }from "../errors/reviewError"
 
 class ReviewController {
     private dao: ReviewDAO
@@ -28,19 +27,19 @@ class ReviewController {
      * @returns A Promise that resolves to an array of ProductReview objects
      */
     if (user.role !== 'Customer') {
-        throw new Error('Access denied: Only customers can add reviews.');
+        throw new UserNotCustomerError();
     }
 
     // Check if the product exists
     const product = await ProductDAO.findByModel(model);
     if (!product) {
-        throw new Error('Product not found');
+        throw new ProductNotFoundError();
     }
 
     // Check if the user has already reviewed the product
     const existingReview = await ReviewDAO.findByUserAndModel(user.id, model);
     if (existingReview) {
-        throw new Error('Review already exists');
+        throw new ExistingReviewError();
     }
 
     // Add the new review
@@ -59,7 +58,7 @@ class ReviewController {
 async getProductReviews(model: string): Promise<ProductReview[]> {
     const product = await ProductDAO.findByModel(model);
     if (!product) {
-        throw new Error('Product not found');
+        throw new ProductNotFoundError();
     }
     const reviews = await ReviewDAO.findByModel(model);
     return reviews;
@@ -72,19 +71,19 @@ async getProductReviews(model: string): Promise<ProductReview[]> {
      */
     async deleteReview(model: string, user: User): Promise<void> {
         if (user.role !== 'Customer') {
-            throw new Error('Access denied: Only customers can delete reviews.');
-        }
+            throw new UserNotCustomerError();
+                }
 
         // Check if the product exists
         const product = await ProductDAO.findByModel(model);
         if (!product) {
-            throw new Error('Product not found');
+            throw new ProductNotFoundError();
         }
 
         // Check if the user has a review for the product
         const existingReview = await ReviewDAO.findByUserAndModel(user.id, model);
         if (!existingReview) {
-            throw new Error('Review not found');
+            throw new NoReviewProductError();
         }
 
         // Delete the review
@@ -98,7 +97,7 @@ async getProductReviews(model: string): Promise<ProductReview[]> {
     async deleteReviewsOfProduct(model: string): Promise<void> {
         const product = await ProductDAO.findByModel(model);
         if (!product) {
-            throw new Error('Product not found');
+            throw new ProductNotFoundError();
         }
 
         await ReviewDAO.deleteAllReviews(model);
