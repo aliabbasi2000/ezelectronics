@@ -115,11 +115,7 @@ class UserController {
      * @param user - The user making the request.
      * @returns A Promise that resolves to true if the operation was successful.
      */
-    async deleteAll(user: User): Promise<boolean> {
-        // Check if the user is an Admin
-        if (user.role !== 'Admin') {
-            throw new UserNotAdminError();
-        }
+    async deleteAll(): Promise<boolean> {
 
         // Delete all non-Admin users
         const result = await this.dao.deleteAll();

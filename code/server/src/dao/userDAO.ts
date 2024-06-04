@@ -1,7 +1,7 @@
 import db from "../db/db"
 import { User } from "../components/user"
 import crypto from "crypto"
-import { UserAlreadyExistsError, UserNotFoundError } from "../errors/userError";
+import { UserAlreadyExistsError, UserNotFoundError, UnauthorizedUserError, UserNotAdminError } from "../errors/userError";
 
 /**
  * A class that implements the interaction with the database for all user-related operations.
