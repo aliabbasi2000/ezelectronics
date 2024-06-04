@@ -1,5 +1,7 @@
 import { User } from "../components/user";
+import { Cart } from "../components/cart";
 import CartDAO from "../dao/cartDAO";
+import ProductDAO from "../dao/productDAO"; 
 import { CartNotFoundError, ProductInCartError, ProductNotInCartError, WrongUserCartError, EmptyCartError } from "../errors/cartError";
 import { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, EmptyProductStockError, LowProductStockError } from "../errors/productError";
 
@@ -9,10 +11,12 @@ import { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, Empt
  * All methods of this class must interact with the corresponding DAO class to retrieve or store data.
  */
 class CartController {
-    private dao: CartDAO
+    private cartDAO: CartDAO;
+    private productDAO: ProductDAO;
 
     constructor() {
-        this.dao = new CartDAO
+        this.cartDAO = new CartDAO();
+        this.productDAO = new ProductDAO(); 
     }
 
 
@@ -31,7 +35,7 @@ class CartController {
             throw new ProductNotFoundError();
         }
         if (product.availableQuantity === 0) {
-            throw new ProductOutOfStockError();
+            throw new EmptyProductStockError();
         }
 
         let cart = await this.cartDAO.getUnpaidCartByUser(user.username);
@@ -57,9 +61,9 @@ class CartController {
      * @param user - The user for whom to retrieve the cart.
      * @returns A Promise that resolves to the user's cart or an empty one if there is no current cart.
      */
-        async getCart(user: User): Promise<Cart> {
-            return this.cartDAO.getCart(user.username);
-        }
+    async getCart(user: User): Promise<Cart> {
+        return this.cartDAO.getCart(user.username);
+    }
 
 
 
@@ -121,7 +125,7 @@ class CartController {
             throw new CartNotFoundError();
         }
 
-        const productInCart = cart.products.find(p => p.model === product);
+        const productInCart = cart.products.find((p) => p.model === product);
         if (!productInCart) {
             throw new ProductNotInCartError();
         }
