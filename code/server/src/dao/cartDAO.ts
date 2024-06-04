@@ -1,9 +1,23 @@
 import db from "../db/db"
-import {ProductInCart} from "../components/user"
+
 import { Cart } from "../components/cart";
-import crypto from "crypto"
 import { CartNotFoundError, ProductInCartError, ProductNotInCartError, WrongUserCartError, EmptyCartError } from "../errors/cartError";
 import { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, EmptyProductStockError, LowProductStockError } from "../errors/productError";
+
+
+class ProductInCart {
+    model: string;
+    quantity: number;
+    category: string;
+    price: number;
+
+    constructor(model: string, quantity: number, category: string, price: number) {
+        this.model = model;
+        this.quantity = quantity;
+        this.category = category;
+        this.price = price;
+    }
+}
 
 
 /**
@@ -157,7 +171,7 @@ class CartDAO {
                 }
 
                 const updateProductPromises = products.map(product => {
-                    return new Promise((resolve, reject) => {
+                    return new Promise<void>((resolve, reject) => {
                         db.run(updateProductSql, [product.quantity, product.model], (err: Error | null) => {
                             if (err) {
                                 return reject(err);
@@ -270,45 +284,45 @@ class CartDAO {
     
 
     async getAllCarts(): Promise<Cart[]> {
-        const getAllCartsSql = `
-            SELECT carts.*, products.model, products.category, products.price, cart_products.quantity
-            FROM carts
-            LEFT JOIN cart_products ON carts.id = cart_products.cart_id
-            LEFT JOIN products ON cart_products.product_id = products.id
-        `;
+    const getAllCartsSql = `
+        SELECT carts.*, products.model, products.category, products.price, cart_products.quantity
+        FROM carts
+        LEFT JOIN cart_products ON carts.id = cart_products.cart_id
+        LEFT JOIN products ON cart_products.product_id = products.id
+    `;
 
-        return new Promise((resolve, reject) => {
-            db.all(getAllCartsSql, (err: Error | null, rows: any[]) => {
-                if (err) {
-                    return reject(err);
+    return new Promise((resolve, reject) => {
+        db.all(getAllCartsSql, (err: Error | null, rows: any[]) => {
+            if (err) {
+                return reject(err);
+            }
+            const cartsMap: { [key: string]: Cart } = {};
+
+            rows.forEach(row => {
+                if (!cartsMap[row.id]) {
+                    cartsMap[row.id] = {
+                        customer: row.customer,
+                        paid: row.paid,
+                        paymentDate: row.paymentDate,
+                        total: row.total,
+                        products: []
+                    };
                 }
-                const cartsMap: { [key: string]: Cart } = {};
 
-                rows.forEach(row => {
-                    if (!cartsMap[row.id]) {
-                        cartsMap[row.id] = {
-                            customer: row.customer,
-                            paid: row.paid,
-                            paymentDate: row.paymentDate,
-                            total: row.total,
-                            products: []
-                        };
-                    }
-
-                    if (row.model) {
-                        cartsMap[row.id].products.push({
-                            model: row.model,
-                            category: row.category,
-                            price: row.price,
-                            quantity: row.quantity
-                        });
-                    }
-                });
-
-                resolve(Object.values(cartsMap));
+                if (row.model) {
+                    cartsMap[row.id].products.push({
+                        model: row.model,
+                        category: row.category,
+                        price: row.price,
+                        quantity: row.quantity
+                    });
+                }
             });
+
+            resolve(Object.keys(cartsMap).map(key => cartsMap[key]));
         });
-    }
+    });
+}
 
 }
 
