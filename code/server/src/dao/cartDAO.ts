@@ -1,5 +1,6 @@
 import db from "../db/db"
-import { Cart, ProductInCart } from "../components/user"
+import {ProductInCart} from "../components/user"
+import { Cart } from "../components/cart";
 import crypto from "crypto"
 import { CartNotFoundError, ProductInCartError, ProductNotInCartError, WrongUserCartError, EmptyCartError } from "../errors/cartError";
 import { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, EmptyProductStockError, LowProductStockError } from "../errors/productError";
@@ -67,7 +68,7 @@ class CartDAO {
     async getUnpaidCartByUser(customer: string): Promise<Cart | null> {
         const sql = "SELECT * FROM carts WHERE customer = ? AND paid = 0";
         return new Promise((resolve, reject) => {
-            db.get(sql, [customer], (err, row) => {
+            db.get(sql, [customer], (err: Error | null, row: any) => {
                 if (err) {
                     return reject(err);
                 }
@@ -83,7 +84,7 @@ class CartDAO {
     async createCart(customer: string): Promise<Cart> {
         const sql = "INSERT INTO carts (customer, paid) VALUES (?, 0)";
         return new Promise((resolve, reject) => {
-            db.run(sql, [customer], function(err) {
+            db.run(sql, [customer], function(err: Error | null) {
                 if (err) {
                     return reject(err);
                 }
@@ -95,7 +96,7 @@ class CartDAO {
     async addProductToCart(customer: string, model: string, price: number): Promise<void> {
         const sql = "INSERT INTO cart_products (customer, model, quantity, price) VALUES (?, ?, 1, ?)";
         return new Promise((resolve, reject) => {
-            db.run(sql, [customer, model, price], (err) => {
+            db.run(sql, [customer, model, price], (err: Error | null) => {
                 if (err) {
                     return reject(err);
                 }
@@ -107,7 +108,7 @@ class CartDAO {
     async getProductInCart(customer: string, model: string): Promise<ProductInCart | null> {
         const sql = "SELECT * FROM cart_products WHERE customer = ? AND model = ?";
         return new Promise((resolve, reject) => {
-            db.get(sql, [customer, model], (err, row) => {
+            db.get(sql, [customer, model], (err: Error | null, row: any) => {
                 if (err) {
                     return reject(err);
                 }
@@ -122,7 +123,7 @@ class CartDAO {
     async updateProductQuantity(customer: string, model: string, quantity: number): Promise<void> {
         const sql = "UPDATE cart_products SET quantity = ? WHERE customer = ? AND model = ?";
         return new Promise((resolve, reject) => {
-            db.run(sql, [quantity, customer, model], (err) => {
+            db.run(sql, [quantity, customer, model], (err: Error | null) => {
                 if (err) {
                     return reject(err);
                 }
@@ -134,7 +135,7 @@ class CartDAO {
     async updateCartTotal(customer: string, price: number): Promise<void> {
         const sql = "UPDATE carts SET total = total + ? WHERE customer = ? AND paid = 0";
         return new Promise((resolve, reject) => {
-            db.run(sql, [price, customer], (err) => {
+            db.run(sql, [price, customer], (err: Error | null) => {
                 if (err) {
                     return reject(err);
                 }
@@ -150,14 +151,14 @@ class CartDAO {
         const paymentDate = new Date().toISOString().split('T')[0];
 
         return new Promise((resolve, reject) => {
-            db.run(updateCartSql, [paymentDate, customer], (err) => {
+            db.run(updateCartSql, [paymentDate, customer], (err: Error | null) => {
                 if (err) {
                     return reject(err);
                 }
 
                 const updateProductPromises = products.map(product => {
                     return new Promise((resolve, reject) => {
-                        db.run(updateProductSql, [product.quantity, product.model], (err) => {
+                        db.run(updateProductSql, [product.quantity, product.model], (err: Error | null) => {
                             if (err) {
                                 return reject(err);
                             }
@@ -179,7 +180,7 @@ class CartDAO {
         const productSql = "SELECT * FROM cart_products WHERE customer = ? AND cart_id = ?";
 
         return new Promise((resolve, reject) => {
-            db.all(cartSql, [customer], (err, cartRows) => {
+            db.all(cartSql, [customer], (err: Error | null, cartRows: any[]) => {
                 if (err) {
                     return reject(err);
                 }
@@ -187,7 +188,7 @@ class CartDAO {
                 const carts: Cart[] = [];
                 const productPromises = cartRows.map(cartRow => {
                     return new Promise<void>((resolve, reject) => {
-                        db.all(productSql, [customer, cartRow.id], (err, productRows) => {
+                        db.all(productSql, [customer, cartRow.id], (err: Error | null, productRows: any[]) => {
                             if (err) {
                                 return reject(err);
                             }
@@ -209,7 +210,7 @@ class CartDAO {
     async removeProductFromCart(username: string, model: string): Promise<void> {
         const sql = "DELETE FROM cart_products WHERE customer = ? AND model = ?";
         return new Promise((resolve, reject) => {
-            db.run(sql, [username, model], function (err) {
+            db.run(sql, [username, model], function (err: Error | null) {
                 if (err) {
                     return reject(err);
                 }
@@ -221,7 +222,7 @@ class CartDAO {
     async decreaseProductQuantity(username: string, model: string): Promise<void> {
         const sql = "UPDATE cart_products SET quantity = quantity - 1 WHERE customer = ? AND model = ?";
         return new Promise((resolve, reject) => {
-            db.run(sql, [username, model], function (err) {
+            db.run(sql, [username, model], function (err: Error | null) {
                 if (err) {
                     return reject(err);
                 }
@@ -234,7 +235,7 @@ class CartDAO {
     async clearCartProducts(username: string): Promise<void> {
         const sql = "DELETE FROM cart_products WHERE customer = ?";
         return new Promise((resolve, reject) => {
-            db.run(sql, [username], function (err) {
+            db.run(sql, [username], function (err: Error | null) {
                 if (err) {
                     return reject(err);
                 }
@@ -250,13 +251,13 @@ class CartDAO {
 
         return new Promise((resolve, reject) => {
             db.serialize(() => {
-                db.run(deleteCartProductsSql, function(err) {
+                db.run(deleteCartProductsSql, function(err: Error | null) {
                     if (err) {
                         return reject(err);
                     }
                 });
 
-                db.run(deleteCartsSql, function(err) {
+                db.run(deleteCartsSql, function(err: Error | null) {
                     if (err) {
                         return reject(err);
                     }
@@ -277,7 +278,7 @@ class CartDAO {
         `;
 
         return new Promise((resolve, reject) => {
-            db.all(getAllCartsSql, (err, rows) => {
+            db.all(getAllCartsSql, (err: Error | null, rows: any[]) => {
                 if (err) {
                     return reject(err);
                 }
