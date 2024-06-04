@@ -107,7 +107,7 @@ class UserRoutes {
          */
         this.router.get( "/:username",
             this.errorHandler.validateRequest,
-            (req: any, res: any, next: any) => {
+            async (req: any, res: any, next: any) => {
 
                 try{           
                     const user = await this.controller.getUserByUsername(req.user, req.params.username)
@@ -153,6 +153,9 @@ class UserRoutes {
                 .then(() => res.status(200).end())
                 .catch((err: any) => next(err))
         )
+
+        
+        
 
         /**
          * Route for updating the information of a user.
