@@ -1,146 +1,270 @@
+import db from "../db/db";
+import {Product} from "../components/product";
+import {
+    EmptyProductStockError,
+    LowProductStockError,
+    ProductAlreadyExistsError,
+    ProductNotFoundError
+} from "../errors/productError";
 
 /**
  * A class that implements the interaction with the database for all product-related operations.
  * You are free to implement any method you need here, as long as the requirements are satisfied.
  */
 class ProductDAO {
+ /**
+     * Adds a new product to the database.
+     * @param model - The model of the new product.
+     * @param category - The product's category.
+     * @param details - The details of this product.
+     * @param quantity - The product stock quantity.
+     * @param sellingPrice - The product's selling price.
+     * @param arrivalDate - The product's arrival date.
+     * @returns A Promise that resolves if the product has been added to the database.
+     */
+ registerProducts(model: string, category: string, quantity: number, details: string | null, sellingPrice: number, arrivalDate: string | null): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+        try {
+            const insert_sql = "INSERT INTO products(model, selling_price, category, arrival_date, details, quantity) VALUES(?, ?, ?, ?, ?, ?)";
+            let date: String | null = arrivalDate;
+            if (!date) date = (new Date(Date.now())).toDateString();
 
+            db.run(insert_sql, [model, sellingPrice, category, date, details, quantity], (error: Error | null) => {
+                if (error && error.message.includes("UNIQUE constraint failed: products.model")) reject(new ProductAlreadyExistsError)
+                if (error) reject(error);
 
-
-    static async checkProductExists(model: string): Promise<boolean> {
-        const result = await dbClient.query('SELECT COUNT(*) FROM products WHERE model = $1', [model]);
-        return result.rows[0].count > 0;
-    }
-
-
-
-    
-    // Method to register a new product
-    static async registerProducts(model: string, category: string, quantity: number, details: string | null, sellingPrice: number, arrivalDate: string): Promise<void> {
-        const query = `
-            INSERT INTO products (model, category, quantity, details, selling_price, arrival_date)
-            VALUES ($1, $2, $3, $4, $5, $6)
-        `;
-        await dbClient.query(query, [model, category, quantity, details, sellingPrice, arrivalDate]);
-    }
-
-
-    
-    async getProductByModel(model: string): Promise<Product | null> {
-        const sql = "SELECT * FROM products WHERE model = ?";
-        return new Promise((resolve, reject) => {
-            db.get(sql, [model], (err, row) => {
-                if (err) {
-                    return reject(err);
-                }
-                if (!row) {
-                    return resolve(null);
-                }
-                resolve(new Product(row.model, row.category, row.price, row.availableQuantity));
-            });
-        });
-    }
-    
-    async  changeProductQuantity(model: string, newQuantity: number, changeDate: string | null): Promise<number> {
-
-    const query = 'UPDATE products SET stock = $1 WHERE model = $2';
-    await dbClient.query(query, [model, newQuantity,changeDate]);
-}
-
-static async sellProduct(model: string, quantity: number): Promise<void> {
-    const query = `
-        UPDATE products
-        SET available_quantity = available_quantity - $1
-        WHERE model = $2;
-    `;
-    await dbClient.query(query, [quantity, model]);
-}
-
-async  getProducts(): Promise<Product[]> {
-    // Simulate a database call
-    return await database.query('SELECT * FROM products');
+                resolve();
+            })
+        } catch (error) {
+            reject(error);
+        }
+    })
 }
 
 /**
- * Retrieves products by category from the database.
- * @param category The category of the products to retrieve.
- * @returns A Promise that resolves to an array of Product objects.
+ * Increases the quantity of a given product.
+ * @param model - The product's model.
+ * @param newQuantity - The quantity increase.
+ * @param changeDate - The date in which the increase happened.
+ * @returns A Promise that resolves to the new quantity of the product.
  */
-async  getProductByCategory(category: string): Promise<Product[]> {
-    // Simulate a database call
-    return await database.query('SELECT * FROM products WHERE category = ?', [category]);
+changeProductQuantity(model: string, newQuantity: number, changeDate: string | null): Promise<number> {
+    return new Promise<number>(async (resolve, reject) => {
+        try {
+            const search_product_sql = "SELECT * FROM products WHERE model = ?"
+            let product = await new Promise<Product>((resolve, reject) => {
+                db.get(search_product_sql, [model], (err: Error | null, row: Product) => {
+                    if (err) reject(err);
+
+                    resolve(row);
+                })
+            })
+
+            if (!product) reject (new ProductNotFoundError);
+
+            const update_sql = "UPDATE products SET quantity = quantity + ?, arrival_date = ? WHERE model = ?";
+            let date: String | null = changeDate;
+            if (!date) date = (new Date(Date.now())).toDateString();
+
+            await new Promise<void>((resolve, reject) => {
+                db.run(update_sql, [newQuantity, date, product.model], (error: Error | null) => {
+                    if (error) reject(error);
+
+                    resolve();
+                })
+            })
+
+            const get_quantity_sql = "SELECT quantity FROM products WHERE model = ?"
+            db.get(get_quantity_sql, [model], (err: Error | null, row: number) => {
+                if (err) reject(err);
+
+                resolve(row);
+            })
+        } catch (error) {
+            reject(error);
+        }
+    })
 }
 
 /**
- * Retrieves a product by model from the database.
- * @param model The model of the product to retrieve.
- * @returns A Promise that resolves to a Product object or null if not found.
+ * Decreases the quantity of a given product.
+ * @param model - The product's model.
+ * @param quantity - The quantity decrease.
+ * @param sellingDate - The date in which the decrease happened.
+ * @returns A Promise that resolves to the new quantity of the product.
  */
-async  getProductByModel(model: string): Promise<Product | null> {
-    // Simulate a database call
-    const results = await database.query('SELECT * FROM products WHERE model = ?', [model]);
-    return results.length > 0 ? results[0] : null;
-}
+sellProduct(model: string, quantity: number, sellingDate: string | null): Promise<number> {
+    return new Promise<number>(async (resolve, reject) => {
+        try {
+            const search_product_sql = "SELECT * FROM products WHERE model = ?"
 
-async getAvailableProducts(): Promise<Product[]> {
-    // Replace with actual database query
-    return db.query('SELECT * FROM products WHERE quantity > 0');
+            let product = await new Promise<Product>((resolve, reject) => {
+                db.get(search_product_sql, [model], (err: Error | null, row: Product) => {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    resolve(row);
+                })
+            })
+
+            if (!product) reject(new ProductNotFoundError)
+            if (product.quantity == 0) reject(new EmptyProductStockError)
+            if (product.quantity < quantity) reject(new LowProductStockError)
+
+            const update_sql = "UPDATE products SET quantity = quantity - ?, arrival_date = ? WHERE model = ? AND quantity >= ?";
+            let date: String | null = sellingDate;
+            if (!date) date = (new Date(Date.now())).toDateString();
+
+            await new Promise<void>((resolve, reject) => {
+                db.run(update_sql, [quantity, date, product.model, quantity], (error: Error | null) => {
+                    if (error) reject(error);
+
+                    resolve();
+                })
+            })
+
+            const get_sql = "SELECT quantity FROM products WHERE model = ?"
+            db.get(get_sql, [product.model], (err: Error | null, row: number) => {
+                if (err) reject(err);
+
+                resolve(row);
+            })
+        } catch (error) {
+            reject(error);
+        }
+    })
 }
 
 /**
- * Fetches available products from the database filtered by category.
- * @param category The category to filter by.
- * @returns A Promise that resolves to an array of Product objects that belong to the specified category.
+ * Provides information on all products registered in the database.
+ * @param grouping - If not empty, the filter to apply to the search (category or model).
+ * @param category - If not empty and grouping is set to "category", the category filter to apply to the search.
+ * @param model - If not empty and grouping is set to "model", the model filter to apply to the search.
+ * @returns A Promise that resolves to an array of Product objects, matching the query provided.
  */
-async getAvailableProductsByCategory(category: string): Promise<Product[]> {
-    // Replace with actual database query
-    return db.query('SELECT * FROM products WHERE quantity > 0 AND category = ?', [category]);
+getProducts(grouping: string | null, category: string | null, model: string | null): Promise<Product[]> {
+    return new Promise<Product[]>((resolve, reject) => {
+        try {
+            if (!grouping && !category && !model) {
+                let get_products_sql = "SELECT * FROM products";
+                db.all(get_products_sql, (err: Error | null, rows: Product[]) => {
+                    if (err) reject(err);
+
+                    resolve(rows);
+                })
+            }
+            if (grouping == "category" && category) {
+                let get_products_sql = "SELECT * FROM products WHERE category = ?";
+                db.all(get_products_sql, [category], (err: Error | null, rows: Product[]) => {
+                    if (err) reject(err);
+
+                    resolve(rows);
+                })
+            }
+            if (grouping == "model" && model) {
+                let get_products_sql = "SELECT * FROM products WHERE model = ?";
+                db.all(get_products_sql, [model], (err: Error | null, rows: Product[]) => {
+                    if (err) reject(err);
+
+                    resolve(rows);
+                })
+            }
+        } catch (error) {
+            reject(error);
+        }
+    })
 }
 
 /**
- * Fetches available products from the database filtered by model.
- * @param model The model to filter by.
- * @returns A Promise that resolves to an array of Product objects that match the specified model.
+ * Provides information on all available products (quantity > 0) registered in the database.
+ * @param grouping - If not empty, the filter to apply to the search (category or model).
+ * @param category - If not empty and grouping is set to "category", the category filter to apply to the search.
+ * @param model - If not empty and grouping is set to "model", the model filter to apply to the search.
+ * @returns A Promise that resolves to an array of Product objects, matching the query provided.
  */
-async getAvailableProductsByModel(model: string): Promise<Product[]> {
-    // Replace with actual database query
-    return db.query('SELECT * FROM products WHERE quantity > 0 AND model = ?', [model]);
-}
-async  deleteProductByModel(model) {
-    // Find the product by model
-    const product = db.products.find(product => product.model === model);
+getAvailableProducts(grouping: string | null, category: string | null, model: string | null): Promise<Product[]> {
+    return new Promise<Product[]>((resolve, reject) => {
+        try {
+            if (!grouping && !category && !model) {
+                let get_products_sql = "SELECT * FROM products WHERE quantity > 0";
+                db.all(get_products_sql, (err: Error | null, rows: Product[]) => {
+                    if (err) reject(err);
 
-    if (!product) {
-        return false;
-    }
+                    resolve(rows);
+                })
+            }
+            if (grouping == "category" && category) {
+                let get_products_sql = "SELECT * FROM products WHERE quantity > 0 AND category = ?";
+                db.all(get_products_sql, [category], (err: Error | null, rows: Product[]) => {
+                    if (err) reject(err);
 
-    // Remove the product from the database
-    db.products = db.products.filter(product => product.model !== model);
+                    resolve(rows);
+                })
+            }
+            if (grouping == "model" && model) {
+                let get_products_sql = "SELECT * FROM products WHERE quantity > 0 AND model = ?";
+                db.all(get_products_sql, [model], (err: Error | null, rows: Product[]) => {
+                    if (err) reject(err);
 
-    return true;
-}
-async deleteByModel(model: string): Promise<boolean> {
-    const product = await this.findProductByModel(model);
-    if (!product) {
-        throw new ProductNotFoundError();
-    }
-
-    // Assuming we have a method to delete the product
-    await this.deleteProduct(product.id);
-    return true;
-}
-
-private async findProductByModel(model: string): Promise<any> {
-    // Method to find a product by its model
-}
-
-private async deleteProduct(productId: string): Promise<void> {
-    // Method to delete a product by its ID
+                    resolve(rows);
+                })
+            }
+        } catch (error) {
+            reject(error);
+        }
+    })
 }
 
+/**
+ * Removes all products from the database
+ * @returns A Promise that resolves to true if the deletion is successful.
+ */
+deleteAllProducts(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+        try {
+            const sql = "DELETE FROM products"
+            db.run(sql, (err: Error | null) => {
+                if (err) reject(err);
 
+                resolve(true);
+            })
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
 
+/**
+ * Removes a given product from the database.
+ * @param model - The product's model.
+ * @returns A Promise that resolves to true if the deletion is successful.
+ */
+deleteProduct(model: string): Promise<boolean> {
+    return new Promise<boolean>(async (resolve, reject) => {
+        try {
+            const search_product_sql = "SELECT * FROM products WHERE model = ?"
+            let product = await new Promise<Product>((resolve, reject) => {
+                db.get(search_product_sql, [model], (err: Error | null, row: Product) => {
+                    if (err) reject(err);
 
+                    resolve(row);
+                })
+            })
+
+            if (!product) reject(new ProductNotFoundError)
+
+            const delete_sql = "DELETE FROM products WHERE model = ?";
+            db.run(delete_sql, [product.model], (err: Error | null) => {
+                if (err) reject(err);
+
+                resolve(true)
+            })
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
 
 }
 
