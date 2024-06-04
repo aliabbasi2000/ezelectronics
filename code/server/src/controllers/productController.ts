@@ -1,4 +1,7 @@
+import { ProductAlreadyExistsError } from "src/errors/productError";
 import ProductDAO from "../dao/productDAO";
+import { Product } from "src/components/product";
+import { ProductNotFoundError, EmptyProductStockError, LowProductStockError } from "src/errors/productError";
 
 /**
  * Represents a controller for managing products.
