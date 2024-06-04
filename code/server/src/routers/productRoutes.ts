@@ -1,9 +1,10 @@
 import express, { Router } from "express"
 import ErrorHandler from "../helper"
-import { body, param, query } from "express-validator"
+import { body, oneOf, param, query } from "express-validator"
 import ProductController from "../controllers/productController"
 import Authenticator from "./auth"
 import { Product } from "../components/product"
+
 
 /**
  * Represents a class that defines the routes for handling proposals.
