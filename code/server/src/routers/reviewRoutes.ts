@@ -36,42 +36,19 @@ class ReviewRoutes {
          */
         this.router.post(
             "/:model",
-    async (req: any, res: any, next: any) => {
-        try {
-            const model = req.params.model;
-            const { score, comment } = req.body;
-            const user = req.user;
-
-            if (!model || typeof model !== 'string') {
-                return res.status(400).json({ error: 'Model parameter must be a non-empty string' });
-            }
-
-            if (!score || !Number.isInteger(score) || score < 1 || score > 5) {
-                return res.status(400).json({ error: 'Score must be an integer between 1 and 5' });
-            }
-
-            if (!comment || typeof comment !== 'string' || comment.trim() === '') {
-                return res.status(400).json({ error: 'Comment cannot be null or empty' });
-            }
-
-            await this.controller.addReview(model, user, score, comment);
-            res.status(200).send();
-        } catch (err) {
-            console.error(err);
-
-            if (err.message === 'Access denied: Only customers can add reviews.') {
-                res.status(403).json({ error: err.message });
-            } else if (err.message === 'Product not found') {
-                res.status(404).json({ error: err.message });
-            } else if (err.message === 'Review already exists') {
-                res.status(409).json({ error: err.message });
-            } else {
-                res.status(500).json({ error: 'Internal server error' });
-            }
-        }
-    }
-);
-
+            this.authenticator.isLoggedIn,
+            this.authenticator.isCustomer,
+            body("score").isInt({min:0 , max:5}),
+            body("comment").isString().isLength({min : 1}),
+            param("model").isString().isLength({min:1}),
+            this.errorHandler.validateRequest,
+            (req: any, res: any, next: any) => this.controller.addReview(req.params.model, req.user, req.body.score, req.body.comment)
+                .then(() => res.status(200).send())
+                .catch((err: Error) => {
+                    console.log(err)
+                    next(err)
+                })
+        )
 
         /**
          * Route for retrieving all reviews of a product.
@@ -81,25 +58,10 @@ class ReviewRoutes {
          */
         this.router.get(
             "/:model",
-            async (req: any, res: any, next: any) => {
-                try {
-                    const model = req.params.model;
-                    if (!model || typeof model !== 'string') {
-                        return res.status(400).json({ error: 'Model parameter must be a non-empty string' });
-                    }
-        
-                    const reviews = await this.controller.getProductReviews(model);
-                    res.status(200).json(reviews);
-                } catch (err) {
-                    console.error(err);
-        
-                    if (err.message === 'Product not found') {
-                        res.status(404).json({ error: err.message });
-                    } else {
-                        res.status(500).json({ error: 'Internal server error' });
-                    }
-                }
-            }
+            this.authenticator.isLoggedIn,
+            (req: any, res: any, next: any) => this.controller.getProductReviews(req.params.model)
+                .then((reviews: any/*ProductReview[]*/) => res.status(200).json(reviews))
+                .catch((err: Error) => next(err))
         )
 
         /**
@@ -110,29 +72,14 @@ class ReviewRoutes {
          */
         this.router.delete(
             "/:model",
-            async (req: any, res: any, next: any) => {
-                try {
-                    const model = req.params.model;
-                    const user = req.user;
-        
-                    if (!model || typeof model !== 'string') {
-                        return res.status(400).json({ error: 'Model parameter must be a non-empty string' });
-                    }
-        
-                    await this.controller.deleteReview(model, user);
-                    res.status(200).send();
-                } catch (err) {
-                    console.error(err);
-        
-                    if (err.message === 'Access denied: Only customers can delete reviews.') {
-                        res.status(403).json({ error: err.message });
-                    } else if (err.message === 'Product not found' || err.message === 'Review not found') {
-                        res.status(404).json({ error: err.message });
-                    } else {
-                        res.status(500).json({ error: 'Internal server error' });
-                    }
-                }
-            }
+            this.authenticator.isLoggedIn,
+            this.authenticator.isCustomer,
+            (req: any, res: any, next: any) => this.controller.deleteReview(req.params.model, req.user)
+                .then(() => res.status(200).send())
+                .catch((err: Error) => {
+                    console.log(err)
+                    next(err)
+                })
         )
 
         /**
@@ -143,31 +90,11 @@ class ReviewRoutes {
          */
         this.router.delete(
             "/:model/all",
-            async (req: any, res: any, next: any) => {
-                try {
-                    const model = req.params.model;
-                    const user = req.user;
-        
-                    if (!model || typeof model !== 'string') {
-                        return res.status(400).json({ error: 'Model parameter must be a non-empty string' });
-                    }
-        
-                    if (user.role !== 'Admin' && user.role !== 'Manager') {
-                        return res.status(403).json({ error: 'Access denied: Only Admin or Manager can delete all reviews.' });
-                    }
-        
-                    await this.controller.deleteReviewsOfProduct(model);
-                    res.status(200).send();
-                } catch (err) {
-                    console.error(err);
-        
-                    if (err.message === 'Product not found') {
-                        res.status(404).json({ error: err.message });
-                    } else {
-                        res.status(500).json({ error: 'Internal server error' });
-                    }
-                }
-            }
+            this.authenticator.isLoggedIn,
+            this.authenticator.isAdminOrManager,
+            (req: any, res: any, next: any) => this.controller.deleteReviewsOfProduct(req.params.model)
+                .then(() => res.status(200).send())
+                .catch((err: Error) => next(err))
         )
 
         /**
@@ -177,21 +104,11 @@ class ReviewRoutes {
          */
         this.router.delete(
             "/",
-            async (req: any, res: any, next: any) => {
-                try {
-                    const user = req.user;
-        
-                    if (user.role !== 'Admin' && user.role !== 'Manager') {
-                        return res.status(403).json({ error: 'Access denied: Only Admin or Manager can delete all reviews.' });
-                    }
-        
-                    await this.controller.deleteAllReviews();
-                    res.status(200).send();
-                } catch (err) {
-                    console.error(err);
-                    res.status(500).json({ error: 'Internal server error' });
-                }
-            }
+            this.authenticator.isLoggedIn,
+            this.authenticator.isAdminOrManager,
+            (req: any, res: any, next: any) => this.controller.deleteAllReviews()
+                .then(() => res.status(200).send())
+                .catch((err: Error) => next(err))
         )
     }
 }
