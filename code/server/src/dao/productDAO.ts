@@ -266,6 +266,7 @@ deleteProduct(model: string): Promise<boolean> {
     })
 }
 
+
 }
 
 export default ProductDAO  

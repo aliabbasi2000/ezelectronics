@@ -29,32 +29,12 @@ class CartController {
      * @param model - The model of the product to add.
      * @returns A Promise that resolves to `true` if the product was successfully added.
      */
-    async addToCart(user: User, model: string): Promise<boolean> {
-        const product = await this.productDAO.getProductByModel(model);
-        if (!product) {
-            throw new ProductNotFoundError();
-        }
-        if (product.availableQuantity === 0) {
-            throw new EmptyProductStockError();
-        }
 
-        let cart = await this.cartDAO.getUnpaidCartByUser(user.username);
-        if (!cart) {
-            cart = await this.cartDAO.createCart(user.username);
-        }
+    async addToCart(user: User, model: string) : Promise<Boolean> {
+        const ret = await this.cartDAO.addToCart(user, model);
+        return this.cartDAO.addToCart(user, model);
 
-        const cartProduct = await this.cartDAO.getProductInCart(cart.customer, model);
-        if (!cartProduct) {
-            await this.cartDAO.addProductToCart(cart.customer, model, product.price);
-        } else {
-            await this.cartDAO.updateProductQuantity(cart.customer, model, cartProduct.quantity + 1);
-        }
-
-        await this.cartDAO.updateCartTotal(cart.customer, product.price);
-        return true;
-}
-
-
+    }
 
     /**
      * Retrieves the current cart for a specific user.
@@ -62,7 +42,7 @@ class CartController {
      * @returns A Promise that resolves to the user's cart or an empty one if there is no current cart.
      */
     async getCart(user: User): Promise<Cart> {
-        return this.cartDAO.getCart(user.username);
+        return this.cartDAO.getCart(user);
     }
 
 
@@ -72,30 +52,9 @@ class CartController {
      * @param user - The user whose cart should be checked out.
      * @returns A Promise that resolves to `true` if the cart was successfully checked out.
      */
-    async checkoutCart(user: User): Promise<boolean> {
-        const cart = await this.cartDAO.getUnpaidCartByUser(user.username);
-        if (!cart) {
-            throw new CartNotFoundError();
-        }
-        if (cart.products.length === 0) {
-            throw new EmptyCartError();
-        }
 
-        for (const product of cart.products) {
-            const dbProduct = await this.productDAO.getProductByModel(product.model);
-            if (!dbProduct) {
-                throw new ProductNotFoundError();
-            }
-            if (dbProduct.availableQuantity === 0) {
-                throw new EmptyProductStockError();
-            }
-            if (product.quantity > dbProduct.availableQuantity) {
-                throw new LowProductStockError();
-            }
-        }
-
-        await this.cartDAO.checkoutCart(cart.customer, cart.products);
-        return true;
+    async checkoutCart(user: User){
+        return this.cartDAO.checkoutCart(user);
     }
 
 
@@ -119,7 +78,7 @@ class CartController {
      * @returns A Promise that resolves to `true` if the product was successfully removed.
      */
     async removeProductFromCart(user: User, product: string): Promise<boolean> {
-        const cart = await this.cartDAO.getCart(user.username);
+        const cart = await this.cartDAO.getCart(user);
 
         if (!cart) {
             throw new CartNotFoundError();
@@ -151,7 +110,7 @@ class CartController {
      * @returns A Promise that resolves to `true` if the cart was successfully cleared.
      */
     async clearCart(user: User): Promise<boolean> {
-        const cart = await this.cartDAO.getCart(user.username);
+        const cart = await this.cartDAO.getCart(user);
 
         if (!cart) {
             throw new CartNotFoundError();

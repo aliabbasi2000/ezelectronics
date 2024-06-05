@@ -4,6 +4,7 @@ import { Category } from "./product"
  * Represents a shopping cart.
  */
 class Cart {
+    id: number
     customer: string
     paid: boolean
     paymentDate: string
