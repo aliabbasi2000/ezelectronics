@@ -73,18 +73,11 @@ class UserController {
 
     async getUserByUsername(user: User, username: string): Promise<User> {
 
-        if (user.role === 'Admin') {
-            const requestedUser = await this.dao.getUserByUsername(username);
-            if (!requestedUser) {
-                throw new UserNotFoundError();
-            }
-            return requestedUser;
-        } else {
-            if (user.username !== username) {
-                throw new UnauthorizedUserError();
-            }
-            return user;
+        if (user.role !== "Admin" && user.username !== username) {
+            throw new UnauthorizedUserError();
         }
+        const ret = await this.dao.getUserByUsername(username)
+        return ret;
     }
 
 
@@ -98,7 +91,6 @@ class UserController {
      * @returns A Promise that resolves to true if the user has been deleted.
      */
     async deleteUser(user: User, username: string): Promise<boolean> {
-
         const userToDelete = await this.dao.getUserByUsername(username);
 
         // Check if the user exists
@@ -119,8 +111,8 @@ class UserController {
         }
 
         // Delete the user
-        const result = await this.dao.deleteUser(username);
-        return result;
+        const ret = await this.dao.deleteUser(username);
+        return ret;
     }
 
 
@@ -172,7 +164,6 @@ class UserController {
             }
         }
 
-        // Perform the update
         const updatedUser = await this.dao.updateUserInfo(username, name, surname, address, birthdate);
         return updatedUser;
     }
