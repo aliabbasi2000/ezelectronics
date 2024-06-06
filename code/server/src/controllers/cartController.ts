@@ -1,9 +1,6 @@
 import { User } from "../components/user";
 import { Cart } from "../components/cart";
 import CartDAO from "../dao/cartDAO";
-import ProductDAO from "../dao/productDAO"; 
-import { CartNotFoundError, ProductInCartError, ProductNotInCartError, WrongUserCartError, EmptyCartError } from "../errors/cartError";
-import { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, EmptyProductStockError, LowProductStockError } from "../errors/productError";
 
 
 /**
@@ -12,11 +9,10 @@ import { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, Empt
  */
 class CartController {
     private cartDAO: CartDAO;
-    private productDAO: ProductDAO;
 
     constructor() {
         this.cartDAO = new CartDAO();
-        this.productDAO = new ProductDAO(); 
+        
     }
 
 
@@ -31,9 +27,7 @@ class CartController {
      */
 
     async addToCart(user: User, model: string) : Promise<Boolean> {
-        const ret = await this.cartDAO.addToCart(user, model);
         return this.cartDAO.addToCart(user, model);
-
     }
 
     /**
@@ -66,7 +60,7 @@ class CartController {
      * Only the carts that have been checked out should be returned, the current cart should not be included in the result.
      */
     async getCustomerCarts(user: User): Promise<Cart[]> {
-        return this.cartDAO.getPaidCartsByUser(user.username);
+        return this.cartDAO.getCustomerCarts(user);
     }
     
 
@@ -77,30 +71,8 @@ class CartController {
      * @param product The model of the product to remove.
      * @returns A Promise that resolves to `true` if the product was successfully removed.
      */
-    async removeProductFromCart(user: User, product: string): Promise<boolean> {
-        const cart = await this.cartDAO.getCart(user);
-
-        if (!cart) {
-            throw new CartNotFoundError();
-        }
-
-        const productInCart = cart.products.find((p) => p.model === product);
-        if (!productInCart) {
-            throw new ProductNotInCartError();
-        }
-
-        if (productInCart.quantity === 1) {
-
-            await this.cartDAO.removeProductFromCart(user.username, product);
-        } else {
-  
-            await this.cartDAO.decreaseProductQuantity(user.username, product);
-        }
-
-
-        await this.cartDAO.updateCartTotal(user.username, -productInCart.price);
-
-        return true;
+    async removeProductFromCart(user: User, product: string) {
+        return this.cartDAO.removeProductFromCart(user, product);
     }
 
 
@@ -110,18 +82,8 @@ class CartController {
      * @returns A Promise that resolves to `true` if the cart was successfully cleared.
      */
     async clearCart(user: User): Promise<boolean> {
-        const cart = await this.cartDAO.getCart(user);
-
-        if (!cart) {
-            throw new CartNotFoundError();
-        }
-
-        await this.cartDAO.clearCartProducts(user.username);
-        await this.cartDAO.updateCartTotal(user.username, 0);
-
-        return true;
+        return this.cartDAO.clearCart(user)
     }
-
 
 
     /**
@@ -129,11 +91,8 @@ class CartController {
      * @returns A Promise that resolves to `true` if all carts were successfully deleted.
      */
     async deleteAllCarts(): Promise<boolean> {
-        await this.cartDAO.deleteAllCarts();
-        return true;
+        return this.cartDAO.deleteAllCarts();
     }
-
-
 
     /**
      * Retrieves all carts in the database.
@@ -142,6 +101,7 @@ class CartController {
     async getAllCarts(): Promise<Cart[]> {
         return this.cartDAO.getAllCarts();
     }
+ 
 
 }
 
