@@ -25,7 +25,7 @@ class ProductDAO {
  registerProducts(model: string, category: string, quantity: number, details: string | null, sellingPrice: number, arrivalDate: string | null): Promise<void> {
     return new Promise<void>((resolve, reject) => {
         try {
-            const insert_sql = "INSERT INTO products(model, selling_price, category, arrival_date, details, quantity) VALUES(?, ?, ?, ?, ?, ?)";
+            const insert_sql = "INSERT INTO products(model, sellingPrice, category, arrivalDate, details, quantity) VALUES(?, ?, ?, ?, ?, ?)";
             let date: String | null = arrivalDate;
             if (!date) date = (new Date(Date.now())).toDateString();
 
@@ -62,7 +62,7 @@ changeProductQuantity(model: string, newQuantity: number, changeDate: string | n
 
             if (!product) reject (new ProductNotFoundError);
 
-            const update_sql = "UPDATE products SET quantity = quantity + ?, arrival_date = ? WHERE model = ?";
+            const update_sql = "UPDATE products SET quantity = quantity + ?, arrivalDate = ? WHERE model = ?";
             let date: String | null = changeDate;
             if (!date) date = (new Date(Date.now())).toDateString();
 
@@ -112,7 +112,7 @@ sellProduct(model: string, quantity: number, sellingDate: string | null): Promis
             if (product.quantity == 0) reject(new EmptyProductStockError)
             if (product.quantity < quantity) reject(new LowProductStockError)
 
-            const update_sql = "UPDATE products SET quantity = quantity - ?, arrival_date = ? WHERE model = ? AND quantity >= ?";
+            const update_sql = "UPDATE products SET quantity = quantity - ?, arrivalDate = ? WHERE model = ? AND quantity >= ?";
             let date: String | null = sellingDate;
             if (!date) date = (new Date(Date.now())).toDateString();
 
