@@ -32,7 +32,7 @@ class Cart {
  * Represents a product in a shopping cart.
  */
 class ProductInCart {
-    model: string
+    product_model: string
     quantity: number
     category: Category
     price: number
@@ -45,7 +45,7 @@ class ProductInCart {
      * @param price - The price of a single product unit.
      */
     constructor(model: string, quantity: number, category: Category, price: number) {
-        this.model = model
+        this.product_model = model
         this.quantity = quantity
         this.category = category
         this.price = price

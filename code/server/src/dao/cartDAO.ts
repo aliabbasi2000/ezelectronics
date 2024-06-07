@@ -13,12 +13,6 @@ import { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, Empt
 class CartDAO {
 
 
-
-    /**
-     * Retrieves the current cart for a specific user.
-     * @param userId - The ID of the user for whom to retrieve the cart.
-     * @returns A Promise that resolves to the user's cart or an empty one if there is no current cart.
-     */
     getCart(user: User): Promise<Cart> {
         return new Promise<Cart>(async (resolve, reject) => {
             try {
@@ -56,7 +50,6 @@ class CartDAO {
             try {
                 const search_cart_sql = "SELECT * FROM carts WHERE customer = ? AND paid = ?";
 
-                // Finds the product
                 const search_product_sql = "SELECT * FROM products WHERE model = ?";
                 let product = await new Promise<Product>((resolve, reject) => {
                     db.get(search_product_sql, [model], (err: Error | null, row: Product) => {
@@ -69,7 +62,6 @@ class CartDAO {
                 if (!product) reject(new ProductNotFoundError);
                 if (product.quantity <= 0) reject(new EmptyProductStockError);
 
-                // Finds the cart for the given customer
                 let cart = await new Promise<Cart>((resolve, reject) => {
                     db.get(search_cart_sql, [user.username, false], (err: Error | null, row: Cart) => {
                         if (err) reject(err);
@@ -80,7 +72,7 @@ class CartDAO {
 
                 let cart_id = await new Promise<number>(async (resolve, reject) => {
                     if (!cart) {
-                        // If no cart is found, creates a new one
+
                         const new_cart_sql = "INSERT INTO carts (customer, paid, payment_date, total) VALUES (?, ?, ?, ?)"
                         await new Promise<void>((resolve, reject) => {
                             db.run(new_cart_sql, [user.username, false, null, 0.0], (err: Error | null) => {
@@ -90,7 +82,7 @@ class CartDAO {
                             })
                         })
 
-                        // Fetches the id of the new cart
+
                         let new_cart_id = await new Promise<number>((resolve, reject) => {
                             db.get(search_cart_sql, [user.username, false], (err: Error | null, row: Cart) => {
                                 if (err) reject(err);
@@ -99,17 +91,16 @@ class CartDAO {
                             })
                         })
 
-                        // Since the cart is new, there's no need to check if there was already the given product in it
-                        // Therefore, creates a new ProductInCart
+                       
                         const new_product_in_cart_sql = "INSERT INTO products_in_cart VALUES (?, ?, ?, ?, ?)";
                         db.run(new_product_in_cart_sql, [new_cart_id, product.model, 1, product.category, product.sellingPrice], (err: Error | null) => {
                             if (err) reject(err);
 
-                            // Returns the id of the new cart (used later to update the cart's total)
+                        
                             resolve(new_cart_id);
                         })
                     } else {
-                        // If the cart is found, checks if the given product is already present in it
+                        
                         const search_product_in_cart_sql = "SELECT * FROM products_in_cart WHERE cart_id = ? AND product_model = ?";
                         let product_in_cart = await new Promise<ProductInCart>((resolve, reject) => {
                             db.get(search_product_in_cart_sql, [cart.id, product.model], (err: Error | null, row: ProductInCart) => {
@@ -120,28 +111,27 @@ class CartDAO {
                         })
 
                         if (!product_in_cart) {
-                            // If the product is not already in the cart, creates a new ProductInCart
+                            
                             const post_sql = "INSERT INTO products_in_cart VALUES (?, ?, ?, ?, ?)";
                             db.run(post_sql, [cart.id, product.model, 1, product.category, product.sellingPrice], (err: Error | null) => {
                                 if (err) reject(err);
 
-                                // Returns the cart id
+                                
                                 resolve(cart.id);
                             })
                         } else {
-                            // Otherwise, updates the quantity of the relevant ProductInCart
+                            
                             const update_sql = "UPDATE products_in_cart SET quantity = quantity + 1 WHERE cart_id = ? AND product_model = ?";
                             db.run(update_sql, [cart.id, product.model], (err: Error | null) => {
                                 if (err) reject(err);
 
-                                // Returns the cart id
+
                                 resolve(cart.id);
                             })
                         }
                     }
                 })
 
-                // Updates the cart total
                 const update_cart_sql = "UPDATE carts SET total = total + ? WHERE id = ?";
                 db.run(update_cart_sql, [product.sellingPrice, cart_id], (err: Error | null) => {
                     if (err) reject(err);
@@ -168,10 +158,9 @@ class CartDAO {
                     })
                 })
 
-                // If no cart is found, rejects
+
                 if (!cart) reject(new CartNotFoundError);
 
-                // Otherwise, get the products in the cart
                 const get_products_in_cart_sql = "SELECT * FROM products_in_cart WHERE cart_id = ?";
                 let products = await new Promise<ProductInCart[]>((resolve, reject) => {
                     db.all(get_products_in_cart_sql, [cart.id], (err: Error | null, rows: ProductInCart[]) => {
@@ -181,18 +170,15 @@ class CartDAO {
                     })
                 })
 
-                // If no products are found, rejects
                 if (!products || !products.length) reject(new EmptyCartError);
 
-                // Otherwise, checks each product
                 await new Promise<void>((resolve, reject) => {
                     products.forEach((product, index) => {
                         const search_product_sql = "SELECT * FROM products WHERE model = ?"
-                        db.get(search_product_sql, [product.model], (err: Error | null, row: Product) => {
+                        db.get(search_product_sql, [product.product_model], (err: Error | null, row: Product) => {
                             if (err) reject(err);
                             if (!row) reject(new ProductNotFoundError)
 
-                            // If a product's stock is not enough, rejects
                             if (row.quantity < product.quantity) reject(new LowProductStockError)
 
                             if (index >= products.length - 1) resolve();
@@ -200,14 +186,14 @@ class CartDAO {
                     })
                 })
 
-                // Finally, updates the cart, setting paid to true and payment_date to the current date.
+                
                 const update_cart_sql = "UPDATE carts SET paid = ?, payment_date = ? WHERE id = ?"
                 db.run(update_cart_sql, [true, (new Date(Date.now())).toDateString(), cart.id], (err: Error | null) => {
                     if (err) reject(err);
 
                     products.forEach((product, index) => {
                         const update_product_sql = "UPDATE products SET quantity = quantity - ? WHERE model = ?"
-                        db.run(update_product_sql, [product.quantity, product.model], (err: Error | null) => {
+                        db.run(update_product_sql, [product.quantity, product.product_model], (err: Error | null) => {
                             if (err) reject(err);
 
                             if (index >= products.length - 1) resolve(true);
