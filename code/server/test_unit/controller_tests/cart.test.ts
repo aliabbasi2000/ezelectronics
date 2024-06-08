@@ -224,3 +224,35 @@ test("It should return true", async () => {
 
 
 
+//getAllCarts method test unit
+test("Controller should retrieve all carts with their products", async () => {
+    const cartController = new CartController();
+
+    // Mock data
+    const mockProductsInCart1: ProductInCart[] = [
+        new ProductInCart("testModel1", 2, Category.APPLIANCE, 50),
+        new ProductInCart("testModel2", 1, Category.APPLIANCE, 50)
+    ];
+
+    const mockProductsInCart2: ProductInCart[] = [
+        new ProductInCart("testModel3", 1, Category.SMARTPHONE, 200)
+    ];
+
+    const mockCarts: Cart[] = [
+        new Cart("user1", false, null as unknown as string, 100, mockProductsInCart1),
+        new Cart("user2", true, "2024-06-08", 200, mockProductsInCart2)
+    ];
+
+    // Mock the DAO's getAllCarts method
+    jest.spyOn(CartDAO.prototype, "getAllCarts").mockResolvedValue(mockCarts);
+
+    const result = await cartController.getAllCarts();
+
+    // Validate the result
+    expect(result).toEqual(mockCarts);
+
+    // Check the calls
+    expect(CartDAO.prototype.getAllCarts).toHaveBeenCalledTimes(1);
+
+    jest.restoreAllMocks();
+});
