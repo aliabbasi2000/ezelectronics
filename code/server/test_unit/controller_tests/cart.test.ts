@@ -4,6 +4,8 @@ import CartDAO from "../../src/dao/cartDAO"
 import { User, Role } from "../../src/components/user";
 import { Category } from "../../src/components/product";
 import CartController from "../../src/controllers/cartController"
+import { CartNotFoundError } from  "../../src/errors/cartError";
+import { Cart, ProductInCart } from "../../src/components/cart"; // Import the Cart and ProductInCart classes
 
 jest.mock("../../src/dao/userDAO")
 jest.mock("../../src/dao/cartDAO")
@@ -36,9 +38,7 @@ test("It should return true", async () => {
 
 
 //getCart method unit test
-import { Cart, ProductInCart } from "../../src/components/cart"; // Import the Cart and ProductInCart classes
 
-jest.mock("../../src/dao/cartDAO");
 
 test("It should retrieve the cart with products", async () => {
     const testUser = { 
@@ -77,7 +77,6 @@ test("It should retrieve the cart with products", async () => {
 
 
 //checkoutCart method unit test
-jest.mock("../../src/dao/cartDAO");
 
 test("It should checkout the cart", async () => {
     const testUser = {
@@ -109,7 +108,6 @@ test("It should checkout the cart", async () => {
 
 //getCustomerCarts method unit test
 
-jest.mock("../../src/dao/cartDAO");
 
 test("It should return customer carts", async () => {
     const testUser = { 
@@ -143,7 +141,6 @@ test("It should return customer carts", async () => {
 
 
 //removeProductFromCart method test unit
-jest.mock("../../src/dao/cartDAO");
 
 test("It should remove product from cart", async () => {
     const testUser = { 
@@ -164,4 +161,51 @@ test("It should remove product from cart", async () => {
     expect(CartDAO.prototype.removeProductFromCart).toHaveBeenCalledTimes(1);
     expect(CartDAO.prototype.removeProductFromCart).toHaveBeenCalledWith(testUser, "testModel");
     expect(response).toBe(true);
+});
+
+
+
+// FAILS
+//clearCart method test unit
+
+test("It should clear the cart", async () => {
+    const testUser = { 
+        username: "test",
+        name: "test",
+        surname: "test",
+        password: "test",
+        role: Role.CUSTOMER,
+        address: "test",
+        birthdate: "test"
+    };
+
+    jest.spyOn(CartDAO.prototype, "clearCart").mockResolvedValueOnce(true);
+
+    const controller = new CartController();
+    const response = await controller.clearCart(testUser);
+
+    expect(CartDAO.prototype.clearCart).toHaveBeenCalledTimes(1);
+    expect(CartDAO.prototype.clearCart).toHaveBeenCalledWith(testUser);
+    expect(response).toBe(true);
+});
+
+test("It should throw CartNotFoundError if the cart is not found", async () => {
+    const testUser = { 
+        username: "test",
+        name: "test",
+        surname: "test",
+        password: "test",
+        role: Role.CUSTOMER,
+        address: "test",
+        birthdate: "test"
+    };
+
+    jest.spyOn(CartDAO.prototype, "clearCart").mockRejectedValueOnce(new CartNotFoundError());
+
+    const controller = new CartController();
+
+    await expect(controller.clearCart(testUser)).rejects.toThrow(CartNotFoundError);
+
+    expect(CartDAO.prototype.clearCart).toHaveBeenCalledTimes(1);
+    expect(CartDAO.prototype.clearCart).toHaveBeenCalledWith(testUser);
 });

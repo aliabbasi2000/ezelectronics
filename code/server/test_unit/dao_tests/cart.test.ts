@@ -6,8 +6,10 @@ import { Cart, ProductInCart } from "../../src/components/cart";
 import { Database } from "sqlite3";
 import { User } from "../../src/components/user";
 import { Category } from "../../src/components/product";
+import { CartNotFoundError } from  "../../src/errors/cartError"; 
 
 jest.mock("../../src/db/db.ts");
+jest.mock("crypto");
 
 //addTOCart method unit test
 test("It should resolve true", async () => {
@@ -71,9 +73,6 @@ test("It should resolve true", async () => {
 
 //getCart method unit test
 
-jest.mock("../../src/db/db.ts");
-jest.mock("crypto");
-
 test("It should retrieve the cart with products", async () => {
     const cartDAO = new CartDAO();
     const testUser = {
@@ -127,8 +126,6 @@ test("It should retrieve the cart with products", async () => {
 
 
 //CheckoutCart method unit test
-
-jest.mock("../../src/db/db.ts");
 
 test("It should checkout the cart", async () => {
     const cartDAO = new CartDAO();
@@ -191,9 +188,6 @@ test("It should checkout the cart", async () => {
 
 //getCustomerCarts method unit test
 
-jest.mock("../../src/db/db.ts");
-jest.mock("crypto");
-
 test("It should return customer carts", async () => {
     const cartDAO = new CartDAO();
     const testUser = { 
@@ -210,11 +204,11 @@ test("It should return customer carts", async () => {
         { product_model: "testModel", quantity: 1, category: Category.APPLIANCE, price: 100 }
     ];
 
-    const mockCarts = [
-        { id: 1, customer: testUser.username, paid: true, paymentDate: "2023-01-01", total: 100, products: [] }
+    const mockCarts: Cart[] = [
+        { id: 1, customer: testUser.username, paid: true, paymentDate: "2023-01-01", total: 100, products: [] as ProductInCart[] }
     ];
 
-    const mockCartsWithProducts = [
+    const mockCartsWithProducts: Cart[] = [
         { ...mockCarts[0], products: mockProductsInCart }
     ];
 
@@ -240,9 +234,8 @@ test("It should return customer carts", async () => {
 });
 
 
+
 //removeProductFromCart method unit test
-jest.mock("../../src/db/db.ts");
-jest.mock("crypto");
 
 test("It should remove product from cart", async () => {
     const cartDAO = new CartDAO();
@@ -310,6 +303,95 @@ test("It should remove product from cart", async () => {
     );
 
     expect(result).toBe(true);
+
+    jest.restoreAllMocks();
+});
+
+
+// FAILS
+//clearCart method test unit
+
+test("It should clear the cart", async () => {
+    const cartDAO = new CartDAO();
+    const testUser = { 
+        username: "test",
+        name: "test",
+        surname: "test",
+        password: "test",
+        role: Role.CUSTOMER,
+        address: "test",
+        birthdate: "test"
+    };
+
+    const mockCart: Cart = {
+        id: 1,
+        customer: testUser.username,
+        paid: false,
+        paymentDate: null as unknown as string,
+        total: 100,
+        products: []
+    };
+
+    jest.spyOn(db, "get").mockImplementation((sql: string, params: any, callback: (err: Error | null, row: any) => void) => {
+        if (sql.includes("SELECT * FROM carts WHERE customer = ? AND paid = ?")) {
+            callback(null, mockCart);
+        } else {
+            callback(null, null);
+        }
+        return {} as any;
+    });
+
+    const dbRunSpy = jest.spyOn(db, "run").mockImplementation((sql: string, params: any, callback: (err: Error | null) => void) => {
+        callback(null);
+        return {} as any;
+    });
+
+    const result = await cartDAO.clearCart(testUser);
+
+    expect(db.get).toHaveBeenCalledTimes(1); // Check if db.get was called once
+    expect(db.get).toHaveBeenCalledWith(
+        "SELECT * FROM carts WHERE customer = ? AND paid = ?",
+        [testUser.username, false],
+        expect.any(Function)
+    );
+
+    expect(dbRunSpy).toHaveBeenCalledTimes(1); // Check if db.run was called once for deleting products from cart
+    expect(dbRunSpy).toHaveBeenCalledWith(
+        "DELETE FROM products_in_cart WHERE cart_id = ?",
+        [mockCart.id],
+        expect.any(Function)
+    );
+
+    expect(result).toBe(true);
+
+    jest.restoreAllMocks();
+});
+
+test("It should throw CartNotFoundError if the cart is not found", async () => {
+    const cartDAO = new CartDAO();
+    const testUser = { 
+        username: "test",
+        name: "test",
+        surname: "test",
+        password: "test",
+        role: Role.CUSTOMER,
+        address: "test",
+        birthdate: "test"
+    };
+
+    jest.spyOn(db, "get").mockImplementation((sql: string, params: any, callback: (err: Error | null, row: any) => void) => {
+        callback(null, null);
+        return {} as any;
+    });
+
+    await expect(cartDAO.clearCart(testUser)).rejects.toThrow(CartNotFoundError);
+
+    expect(db.get).toHaveBeenCalledTimes(1); // Check if db.get was called once
+    expect(db.get).toHaveBeenCalledWith(
+        "SELECT * FROM carts WHERE customer = ? AND paid = ?",
+        [testUser.username, false],
+        expect.any(Function)
+    );
 
     jest.restoreAllMocks();
 });
