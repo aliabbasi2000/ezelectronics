@@ -238,3 +238,78 @@ test("It should return customer carts", async () => {
 
     jest.restoreAllMocks();
 });
+
+
+//removeProductFromCart method unit test
+jest.mock("../../src/db/db.ts");
+jest.mock("crypto");
+
+test("It should remove product from cart", async () => {
+    const cartDAO = new CartDAO();
+    const testUser = { 
+        username: "test",
+        name: "test",
+        surname: "test",
+        password: "test",
+        role: Role.CUSTOMER,
+        address: "test",
+        birthdate: "test"
+    };
+
+    const mockCart: Cart = {
+        id: 1,
+        customer: testUser.username,
+        paid: false,
+        paymentDate: null as unknown as string,
+        total: 100,
+        products: []
+    };
+
+    const mockProductInCart: ProductInCart = {
+        product_model: "testModel",
+        quantity: 1,
+        category: Category.APPLIANCE,
+        price: 100
+    };
+
+    jest.spyOn(db, "get").mockImplementation((sql: string, params: any, callback: (err: Error | null, row: any) => void) => {
+        if (sql.includes("SELECT * FROM carts WHERE customer = ? AND paid = ?")) {
+            callback(null, mockCart);
+        } else if (sql.includes("SELECT * FROM products_in_cart WHERE cart_id = ? AND product_model = ?")) {
+            callback(null, mockProductInCart);
+        } else {
+            callback(null, null);
+        }
+        return {} as any;
+    });
+
+    const dbRunSpy = jest.spyOn(db, "run").mockImplementation((sql: string, params: any, callback: (err: Error | null) => void) => {
+        callback(null);
+        return {} as any;
+    });
+
+    const result = await cartDAO.removeProductFromCart(testUser, "testModel");
+
+    expect(db.get).toHaveBeenCalledTimes(2); // Check if db.get was called twice
+    expect(db.get).toHaveBeenCalledWith(
+        "SELECT * FROM carts WHERE customer = ? AND paid = ?",
+        [testUser.username, false],
+        expect.any(Function)
+    );
+    expect(db.get).toHaveBeenCalledWith(
+        "SELECT * FROM products_in_cart WHERE cart_id = ? AND product_model = ?",
+        [mockCart.id, "testModel"],
+        expect.any(Function)
+    );
+
+    expect(dbRunSpy).toHaveBeenCalledTimes(1); // Check if db.run was called once for deleting product from cart
+    expect(dbRunSpy).toHaveBeenCalledWith(
+        "DELETE FROM products_in_cart WHERE cart_id = ? AND product_model = ?",
+        [mockCart.id, "testModel"],
+        expect.any(Function)
+    );
+
+    expect(result).toBe(true);
+
+    jest.restoreAllMocks();
+});

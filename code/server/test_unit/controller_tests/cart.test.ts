@@ -139,3 +139,29 @@ test("It should return customer carts", async () => {
     expect(CartDAO.prototype.getCustomerCarts).toHaveBeenCalledWith(testUser);
     expect(response).toEqual(mockCarts);
 });
+
+
+
+//removeProductFromCart method test unit
+jest.mock("../../src/dao/cartDAO");
+
+test("It should remove product from cart", async () => {
+    const testUser = { 
+        username: "test",
+        name: "test",
+        surname: "test",
+        password: "test",
+        role: Role.CUSTOMER,
+        address: "test",
+        birthdate: "test"
+    };
+
+    jest.spyOn(CartDAO.prototype, "removeProductFromCart").mockResolvedValueOnce(true);
+
+    const controller = new CartController();
+    const response = await controller.removeProductFromCart(testUser, "testModel");
+
+    expect(CartDAO.prototype.removeProductFromCart).toHaveBeenCalledTimes(1);
+    expect(CartDAO.prototype.removeProductFromCart).toHaveBeenCalledWith(testUser, "testModel");
+    expect(response).toBe(true);
+});
