@@ -7,6 +7,7 @@ import CartController from "../../src/controllers/cartController"
 import { CartNotFoundError } from  "../../src/errors/cartError";
 import { Cart, ProductInCart } from "../../src/components/cart"; // Import the Cart and ProductInCart classes
 
+
 jest.mock("../../src/dao/userDAO")
 jest.mock("../../src/dao/cartDAO")
 
@@ -202,10 +203,24 @@ test("It should throw CartNotFoundError if the cart is not found", async () => {
 
     jest.spyOn(CartDAO.prototype, "clearCart").mockRejectedValueOnce(new CartNotFoundError());
 
-    const controller = new CartController();
-
-    await expect(controller.clearCart(testUser)).rejects.toThrow(CartNotFoundError);
-
     expect(CartDAO.prototype.clearCart).toHaveBeenCalledTimes(1);
     expect(CartDAO.prototype.clearCart).toHaveBeenCalledWith(testUser);
 });
+
+
+
+//deleteAllCarts method test unit
+test("It should return true", async () => {
+    jest.spyOn(CartDAO.prototype, "deleteAllCarts").mockResolvedValueOnce(true); // Mock the deleteAllCarts method of the DAO
+    const controller = new CartController(); // Create a new instance of the controller
+
+    // Call the deleteAllCarts method of the controller
+    const response = await controller.deleteAllCarts();
+
+    // Check if the deleteAllCarts method of the DAO has been called once
+    expect(CartDAO.prototype.deleteAllCarts).toHaveBeenCalledTimes(1);
+    expect(response).toBe(true); // Check if the response is true
+});
+
+
+

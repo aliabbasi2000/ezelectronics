@@ -395,3 +395,73 @@ test("It should throw CartNotFoundError if the cart is not found", async () => {
 
     jest.restoreAllMocks();
 });
+
+
+
+
+//deleteAllCarts method test unit
+test("It should delete all carts and resolve true", async () => {
+    const cartDAO = new CartDAO();
+
+    // Mock db.run for various SQL commands
+    jest.spyOn(db, "run").mockImplementation((sql: string, callback: (err: Error | null) => void) => {
+        console.log(`SQL: ${sql}`);
+        callback(null);
+        return {} as Database;
+    });
+
+    const result = await cartDAO.deleteAllCarts();
+    expect(result).toBe(true);
+
+    // Check the calls
+    expect(db.run).toHaveBeenCalledTimes(2);
+    expect(db.run).toHaveBeenCalledWith("DELETE FROM products_in_cart", expect.any(Function));
+    expect(db.run).toHaveBeenCalledWith("DELETE FROM carts", expect.any(Function));
+
+    jest.restoreAllMocks();
+});
+
+test("It should reject if there is an error deleting products in carts", async () => {
+    const cartDAO = new CartDAO();
+
+    // Mock db.run to throw an error on the first call
+    jest.spyOn(db, "run").mockImplementation((sql: string, callback: (err: Error | null) => void) => {
+        if (sql === "DELETE FROM products_in_cart") {
+            callback(new Error("Delete products in carts failed"));
+        } else {
+            callback(null);
+        }
+        return {} as Database;
+    });
+
+    await expect(cartDAO.deleteAllCarts()).rejects.toThrow("Delete products in carts failed");
+
+    // Check the calls
+    expect(db.run).toHaveBeenCalledTimes(1);
+    expect(db.run).toHaveBeenCalledWith("DELETE FROM products_in_cart", expect.any(Function));
+
+    jest.restoreAllMocks();
+});
+
+test("It should reject if there is an error deleting carts", async () => {
+    const cartDAO = new CartDAO();
+
+    // Mock db.run to throw an error on the second call
+    jest.spyOn(db, "run").mockImplementation((sql: string, callback: (err: Error | null) => void) => {
+        if (sql === "DELETE FROM carts") {
+            callback(new Error("Delete carts failed"));
+        } else {
+            callback(null);
+        }
+        return {} as Database;
+    });
+
+    await expect(cartDAO.deleteAllCarts()).rejects.toThrow("Delete carts failed");
+
+    // Check the calls
+    expect(db.run).toHaveBeenCalledTimes(2);
+    expect(db.run).toHaveBeenCalledWith("DELETE FROM products_in_cart", expect.any(Function));
+    expect(db.run).toHaveBeenCalledWith("DELETE FROM carts", expect.any(Function));
+
+    jest.restoreAllMocks();
+});
