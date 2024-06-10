@@ -265,7 +265,18 @@ deleteProduct(model: string): Promise<boolean> {
         }
     })
 }
-
+productModelExists(model: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const sql = "SELECT COUNT(*) as count FROM products WHERE model = ?";
+      db.get(sql, [model], (err: Error | null, row: { count: number }) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(row.count > 0);
+        }
+      });
+    });
+  }
 
 }
 
