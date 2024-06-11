@@ -18,34 +18,49 @@ class ReviewDAO {
   * @param comment The comment made by the user
   * @returns A Promise that resolves to nothing
   */
-  addReview(model: string, user: User, score: number, comment: string) /**:Promise<void> */ {
+  addReview(model: string, user: User, score: number, comment: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
-        const checkReviewSql = "SELECT COUNT(*) as count FROM ProductReview WHERE product_model = ? AND user = ?"
-        db.get(checkReviewSql, [model, user.username], (err: Error | null, row: any) => {
+        // Prima controlla se il prodotto esiste
+        const checkProductSql = "SELECT COUNT(*) as count FROM Product WHERE model = ?";
+        db.get(checkProductSql, [model], (err: Error | null, row: any) => {
           if (err) {
-            reject(err)
-            return
+            reject(err);
+            return;
           }
-          if (row.count > 0) {
-            reject(new ExistingReviewError);
-            return
+          if (row.count === 0) {
+            reject(new ProductNotFoundError());
+            return;
           }
-        })
-        const now = dayjs().format('YYYY-MM-DD')
-        const sql = "INSERT INTO ProductReview(product_model, user, score, date, comment) VALUES(? ? ? ? ?)"
-        db.run(sql, [model, user.username, score, now, comment], (err: Error | null) => {
-          if (err) {
-            if (err)
-              reject(err)
-              return
-          }
-          resolve()
-        })
+
+          // Controlla se esiste già una recensione per questo prodotto da parte di questo utente
+          const checkReviewSql = "SELECT COUNT(*) as count FROM ProductReview WHERE product_model = ? AND user = ?";
+          db.get(checkReviewSql, [model, user.username], (err: Error | null, row: any) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            if (row.count > 0) {
+              reject(new ExistingReviewError());
+              return;
+            }
+
+            // Inserisci la nuova recensione
+            const now = dayjs().format('YYYY-MM-DD');
+            const sql = "INSERT INTO ProductReview(product_model, user, score, date, comment) VALUES(?, ?, ?, ?, ?)";
+            db.run(sql, [model, user.username, score, now, comment], (err: Error | null) => {
+              if (err) {
+                reject(err);
+                return;
+              }
+              resolve();
+            });
+          });
+        });
       } catch (error) {
-        reject(error)
+        reject(error);
       }
-    })
+    });
   }
 
   /**

@@ -74,7 +74,7 @@ test("addReview: it should return an ExistingReviewError", async () => {
 
 // get reviews for a product successfully
 test("getProductReviews successfully", async () => {
-    const reviews: ProductReview[] = [{ model: "iPhone13", user: user.name + user.surname, score: 5, date: "2024-05-02", comment: "A very cool smartphone!" }];
+    const reviews: ProductReview[] = [{ product_model: "iPhone13", user: user.name + user.surname, score: 5, date: "2024-05-02", comment: "A very cool smartphone!" }];
     jest.spyOn(ReviewDAO.prototype, "getProductReviews").mockResolvedValueOnce(reviews);
 
     const controller = new ReviewController();
