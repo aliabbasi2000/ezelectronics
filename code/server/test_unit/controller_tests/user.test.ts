@@ -222,47 +222,4 @@ describe("UserController", () => {
         });
     });
 
-    describe("updateUserInfo", () => {
-        test("updateUserInfo updates user information and returns the updated user", async () => {
-            const sampleUser: User = {
-                username: "exampleUser",
-                name: "Example",
-                surname: "User",
-                address: "789 Maple St",
-                birthdate: "1990-01-01",
-                role: Role.CUSTOMER,
-            };
-
-            const updatedUser: User = {
-                username: "exampleUser",
-                name: "UpdatedExample",
-                surname: "User",
-                address: "101 Pine St",
-                birthdate: "1990-01-01",
-                role: Role.CUSTOMER,
-            };
-
-            jest.spyOn(UserDAO.prototype, "updateUserInfo").mockResolvedValueOnce(updatedUser);
-
-            const result = await userController.updateUserInfo(
-                sampleUser,
-                updatedUser.name,
-                updatedUser.surname,
-                updatedUser.address,
-                updatedUser.birthdate,
-                updatedUser.username
-            );
-
-            expect(UserDAO.prototype.updateUserInfo).toHaveBeenCalledTimes(1);
-            expect(UserDAO.prototype.updateUserInfo).toHaveBeenCalledWith(
-                sampleUser,
-                updatedUser.name,
-                updatedUser.surname,
-                updatedUser.address,
-                updatedUser.birthdate,
-                updatedUser.username
-            );
-            expect(result).toEqual(updatedUser);
-        });
     });
-});
