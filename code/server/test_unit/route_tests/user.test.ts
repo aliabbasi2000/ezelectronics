@@ -273,6 +273,90 @@ describe("UserRoutes", () => {
     });
 
 
+    describe("DELETE /users/:username", () => {
+        test("It should delete a user and return a 200 success code", async () => {
+            jest.spyOn(
+                Authenticator.prototype,
+                "isLoggedIn"
+            ).mockImplementation((req, res, next) => {
+                req.user = testAdmin;
+                return next();
+            });
+
+            jest.spyOn(
+                ErrorHandler.prototype,
+                "validateRequest"
+            ).mockImplementation((req, res, next) => {
+                return next();
+            });
+
+            jest.spyOn(
+                UserController.prototype,
+                "deleteUser"
+            ).mockResolvedValueOnce(true);
+
+            const response = await request(app).delete(
+                `${baseURL}/users/testUser`
+            );
+
+            expect(response.status).toBe(200);
+            expect(UserController.prototype.deleteUser).toHaveBeenCalledWith(
+                testAdmin,
+                "testUser"
+            );
+        });
+
+        test("It should fail if the user is not authenticated", async () => {
+            jest.spyOn(
+                Authenticator.prototype,
+                "isLoggedIn"
+            ).mockImplementation((req, res, next) => {
+                return res.status(401).json({ error: "Unauthorized" });
+            });
+
+            const response = await request(app).delete(
+                `${baseURL}/users/testUser`
+            );
+
+            expect(response.status).toBe(401);
+        });
+
+        test("It should fail if the non-Admin user tries to delete the user", async () => {
+            jest.spyOn(Authenticator.prototype, "isAdmin").mockImplementation(
+                (req, res, next) => {
+                    return res.status(401).json({ error: "Unauthorized" });
+                }
+            );
+
+            const response = await request(app).delete(
+                `${baseURL}/users/testUser`
+            );
+
+            expect(response.status).toBe(401);
+        });
+
+        test("It should fail if the username is invalid", async () => {
+            jest.spyOn(
+                Authenticator.prototype,
+                "isLoggedIn"
+            ).mockImplementation((req, res, next) => {
+                req.user = testAdmin;
+                return next();
+            });
+
+            jest.spyOn(
+                ErrorHandler.prototype,
+                "validateRequest"
+            ).mockImplementation((req, res, next) => {
+                return res.status(401).json({ error: "Invalid username" });
+            });
+
+            const response = await request(app).delete(`${baseURL}/users/`);
+
+            expect(response.status).toBe(401);
+        });
+    });
+
     describe("DELETE /users", () => {
         test("It should successfully delete all users as an admin", async () => {
             jest.spyOn(
@@ -300,7 +384,209 @@ describe("UserRoutes", () => {
             expect(UserController.prototype.deleteAll).toHaveBeenCalled();
         });
 
+
+        
         
     });
+
+    describe("PATCH /users/:username", () => {
+        test("It should update user information for an admin", async () => {
+            jest.spyOn(
+                Authenticator.prototype,
+                "isLoggedIn"
+            ).mockImplementation((req, res, next) => {
+                req.user = testAdmin;
+                return next();
+            });
+
+            jest.spyOn(
+                ErrorHandler.prototype,
+                "validateRequest"
+            ).mockImplementation((req, res, next) => {
+                return next();
+            });
+
+            const updatedUser = {
+                ...testCustomer,
+                name: "newName",
+                surname: "newSurname",
+                address: "newAddress",
+                birthdate: "2000-01-01",
+            };
+            jest.spyOn(
+                UserController.prototype,
+                "updateUserInfo"
+            ).mockResolvedValueOnce(updatedUser);
+
+            const response = await request(app)
+                .patch(`${baseURL}/users/${testCustomer.username}`)
+                .send({
+                    name: "newName",
+                    surname: "newSurname",
+                    address: "newAddress",
+                    birthdate: "2000-01-01",
+                });
+
+            expect(response.status).toBe(200);
+            expect(response.body).toEqual(updatedUser);
+            expect(
+                UserController.prototype.updateUserInfo
+            ).toHaveBeenCalledWith(
+                testAdmin,
+                "newName",
+                "newSurname",
+                "newAddress",
+                "2000-01-01",
+                testCustomer.username
+            );
+        });
+
+        test("It should fail to update if the user is not authenticated", async () => {
+            jest.spyOn(
+                Authenticator.prototype,
+                "isLoggedIn"
+            ).mockImplementation((req, res, next) => {
+                return res.status(401).json({ error: "Unauthenticated user" });
+            });
+
+            const response = await request(app)
+                .patch(`${baseURL}/users/${testCustomer.username}`)
+                .send({
+                    name: "newName",
+                    surname: "newSurname",
+                    address: "newAddress",
+                    birthdate: "2000-01-01",
+                });
+
+            expect(response.status).toBe(401);
+            expect(response.body).toEqual({ error: "Unauthenticated user" });
+        });
+
+        test("It should fail to update if validation fails", async () => {
+            jest.spyOn(
+                Authenticator.prototype,
+                "isLoggedIn"
+            ).mockImplementation((req, res, next) => {
+                req.user = testAdmin;
+                return next();
+            });
+
+            jest.spyOn(
+                ErrorHandler.prototype,
+                "validateRequest"
+            ).mockImplementation((req, res, next) => {
+                return res.status(422).json({
+                    error: "The parameters are not formatted properly\n\n",
+                });
+            });
+
+            const response = await request(app)
+                .patch(`${baseURL}/users/${testCustomer.username}`)
+                .send({
+                    name: "",
+                    surname: "newSurname",
+                    address: "newAddress",
+                    birthdate: "2000-01-01",
+                });
+
+            expect(response.status).toBe(422);
+        });
+
+        test("It should fail if a non-admin tries to update another user's data", async () => {
+            jest.spyOn(
+                Authenticator.prototype,
+                "isLoggedIn"
+            ).mockImplementation((req, res, next) => {
+                return res.status(401).json({ error: "Unauthorized" });
+            });
+
+            const response = await request(app)
+                .patch(`${baseURL}/users/anotherUser`)
+                .send({
+                    name: "newName",
+                    surname: "newSurname",
+                    address: "newAddress",
+                    birthdate: "2000-01-01",
+                });
+
+            expect(response.status).toBe(401);
+            expect(response.body).toEqual({ error: "Unauthorized" });
+        });
+
+        test("It should update own data for non-admin users", async () => {
+            jest.spyOn(
+                Authenticator.prototype,
+                "isLoggedIn"
+            ).mockImplementation((req, res, next) => {
+                req.user = testCustomer;
+                return next();
+            });
+
+            jest.spyOn(
+                UserController.prototype,
+                "updateUserInfo"
+            ).mockImplementation(
+                (user, name, surname, address, birthdate, username) => {
+                    if (
+                        user.username !== username &&
+                        user.role !== Role.ADMIN
+                    ) {
+                        throw new Error("Unauthorized");
+                    }
+                    return Promise.resolve({
+                        ...testCustomer,
+                        name,
+                        surname,
+                        address,
+                        birthdate,
+                    });
+                }
+            );
+
+            const response = await request(app)
+                .patch(`${baseURL}/users/${testCustomer.username}`)
+                .send({
+                    name: "newName",
+                    surname: "newSurname",
+                    address: "newAddress",
+                    birthdate: "2000-01-01",
+                });
+
+            expect(response.status).toBe(200);
+            expect(response.body).toEqual({
+                ...testCustomer,
+                name: "newName",
+                surname: "newSurname",
+                address: "newAddress",
+                birthdate: "2000-01-01",
+            });
+            expect(
+                UserController.prototype.updateUserInfo
+            ).toHaveBeenCalledWith(
+                testCustomer,
+                "newName",
+                "newSurname",
+                "newAddress",
+                "2000-01-01",
+                testCustomer.username
+            );
+        });
+    });
+
+
+    
+describe("AuthRoutes", () => {
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+    describe("POST /users", () => {
+        test("It should log in a user with valid credentials", async () => {
+            // do something...
+        });
+    });
+});
+
+
+    
 
 });

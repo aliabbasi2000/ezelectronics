@@ -76,13 +76,16 @@ class UserRoutes {
          * It requires the user to be logged in and to be an admin.
          * It returns an array of users.
          */
+
         this.router.get(
             "/",
-            body("role").isString().isIn(["Admin"]), 
+            this.authService.isLoggedIn,
+            this.authService.isAdmin,
             (req: any, res: any, next: any) => this.controller.getUsers()
-                .then(users => res.status(200).json(users))
+                .then((users: any /**User[] */) => res.status(200).json(users))
                 .catch((err) => next(err))
         )
+
 
         /**
          * Route for retrieving all users of a specific role.
@@ -92,12 +95,15 @@ class UserRoutes {
          */
         this.router.get(
             "/roles/:role",
-            body("role").isString().isIn(["Admin"]), 
+            this.authService.isLoggedIn,
+            this.authService.isAdmin,
+            param("role").isString().isIn(["Manager", "Customer", "Admin"]),
             this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.getUsersByRole(req.params.role)
-                .then(users => res.status(200).json(users))
+                .then((users: any /**User[] */) => res.status(200).json(users))
                 .catch((err) => next(err))
         )
+
 
         /**
          * Route for retrieving a user by its username.
@@ -105,27 +111,15 @@ class UserRoutes {
          * It expects the username of the user in the request parameters: the username must represent an existing user.
          * It returns the user.
          */
-        this.router.get( "/:username",
+        this.router.get(
+            "/:username",
+            this.authService.isLoggedIn,
+            param("username").isString().isLength({ min: 1 }),
             this.errorHandler.validateRequest,
-            async (req: any, res: any, next: any) => {
-
-                try{           
-                    const user = await this.controller.getUserByUsername(req.user, req.params.username)
-
-                    if (req.user.role !== 'Admin') {
-                        // Other user types can only see their own information
-                        // Modify the user object to remove address and birthday information before sending the response
-                        delete user.address;
-                        delete user.birthdate;
-                    }
-        
-                    // Send the user information in the response
-                    res.status(200).json(user)
-
-            } catch(err) { 
-                next(err)
-            }
-    });
+            (req: any, res: any, next: any) => this.controller.getUserByUsername(req.user, req.params.username)
+                .then((user: any /**User */) => res.status(200).json(user))
+                .catch((err: any) => next(err))
+        )
 
 
 
@@ -137,6 +131,9 @@ class UserRoutes {
          */
         this.router.delete(
             "/:username",
+            this.authService.isLoggedIn,
+            param("username").isString().isLength({ min: 1 }),
+            this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.deleteUser(req.user, req.params.username)
                 .then(() => res.status(200).end())
                 .catch((err: any) => next(err))
