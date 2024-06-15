@@ -1,195 +1,123 @@
-import db from "../db/db"
-import dayjs from "dayjs"
-import { User } from "../components/user"
-import { ProductReview } from "../components/review"
-import { ExistingReviewError, NoReviewProductError } from "../errors/reviewError"
-import { ProductNotFoundError } from "../errors/productError"
+import db from '../db/db';
+import * as reviewErrors from '../errors/reviewError';
+import { ProductReview } from '../components/review';
+
 /**
  * A class that implements the interaction with the database for all review-related operations.
  * You are free to implement any method you need here, as long as the requirements are satisfied.
  */
 class ReviewDAO {
 
-  /**
-  * Adds a new review for a product
-  * @param model The model of the product to review
-  * @param user The username of the user who made the review
-  * @param score The score assigned to the product, in the range [1, 5]
-  * @param comment The comment made by the user
-  * @returns A Promise that resolves to nothing
-  */
-  addReview(model: string, user: User, score: number, comment: string): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      try {
-        // Prima controlla se il prodotto esiste
-        const checkProductSql = "SELECT COUNT(*) as count FROM Product WHERE model = ?";
-        db.get(checkProductSql, [model], (err: Error | null, row: any) => {
-          if (err) {
-            reject(err);
-            return;
-          }
-          if (row.count === 0) {
-            reject(new ProductNotFoundError());
-            return;
-          }
+	/**
+	 * This function adds a review to a product with the provided date
+	 * @param model The model of the product which is being reviewed
+	 * @param score The score of the review
+	 * @param comment The comment written in the review
+	 * @param username The username of the author of the review
+	 * @param todayDate The date of today
+	 * @returns A Promise that will not resolve to anything
+	 */
+	addReview(model: string, score: number, comment: string, username: string, todayDate: string): Promise<void> {
+		return new Promise<void>((resolve, reject) => {
+			let sql = 'INSERT INTO reviews VALUES (?, ?, ?, ?, ?)';
+			db.run(sql, [model, score, comment, username, todayDate], (err: Error | null) => {
+				if (err) {
+					console.log(err.message);
+					if (err.message.includes('UNIQUE constraint failed')) {
+						return reject(new reviewErrors.ExistingReviewError());
+					}
+					return reject();
+				}
+				resolve();
+			});
+		});
+	}
 
-          // Controlla se esiste già una recensione per questo prodotto da parte di questo utente
-          const checkReviewSql = "SELECT COUNT(*) as count FROM ProductReview WHERE product_model = ? AND user = ?";
-          db.get(checkReviewSql, [model, user.username], (err: Error | null, row: any) => {
-            if (err) {
-              reject(err);
-              return;
-            }
-            if (row.count > 0) {
-              reject(new ExistingReviewError());
-              return;
-            }
+	/**
+	 * Function that retrieves all the reviews of one product
+	 * @param model The product model of which we want the reviews
+	 * @returns A Promise that will resolve to a (possibly empty) array of reviews of products
+	 */
+	getProductReviews(model: string): Promise<ProductReview[]> {
+		var productReviews: ProductReview[] = [];
+		return new Promise<ProductReview[]>((resolve, reject) => {
+			try {
+				let sql = 'SELECT * FROM reviews WHERE model = ?';
+				db.each(sql, [model], (err: Error | null, row: any) => {
+					if (err) {
+						console.log(err);
+						return reject(err);
+					}
+					let review: ProductReview = new ProductReview(row.model, row.username, row.score, row.date, row.comment);
+					productReviews.push(review);
+				},
+					() => {
+						resolve(productReviews);
+					},
+				);
+			} catch (error) {
+				console.log(error.message);
+				reject(error);
+			}
+		});
+	}
 
-            // Inserisci la nuova recensione
-            const now = dayjs().format('YYYY-MM-DD');
-            const sql = "INSERT INTO ProductReview(product_model, user, score, date, comment) VALUES(?, ?, ?, ?, ?)";
-            db.run(sql, [model, user.username, score, now, comment], (err: Error | null) => {
-              if (err) {
-                reject(err);
-                return;
-              }
-              resolve();
-            });
-          });
-        });
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
+	/**
+	 * Function used to delete a specific review made by a specific username
+	 * @param model The model for which the review exists
+	 * @param username The username of the author of the review
+	 * @returns A Promise that will resolve to nothing
+	 */
+	deleteReview(model: string, username: string): Promise<void> {
+		return new Promise<void>((resolve, reject) => {
+			let sql = 'DELETE FROM reviews WHERE username = ? AND model = ?';
+			db.run(sql, [username, model], function (err: Error | null) {
+				if (err) {
+					console.log(err.message);
+					return reject(err);
+				}
+				if (this.changes === 0) {
+					return reject(new reviewErrors.NoReviewProductError());
+				}
+				resolve();
+			});
+		});
+	}
 
-  /**
-  * Returns all reviews for a product
-  * @param model The model of the product to get reviews from
-  * @returns A Promise that resolves to an array of ProductReview objects
-  */
-  getProductReviews(model: string): Promise<ProductReview[]> {
-    return new Promise<ProductReview[]>((resolve, reject) => {
-      try {
-        const sql = "SELECT * FROM ProductReview"
-        db.all(sql, (err: Error | null, rows: any[]) => {
-          if (err) {
-            reject(err)
-            return
-          }
-          if (!rows) {
-            reject(new NoReviewProductError())
-            return
-          }
-          const reviews: ProductReview[] = rows.map(row => new ProductReview(row.ProductReview, row.user, row.score, row.date, row.comment))
-          resolve(reviews)
-        })
-      } catch (error) {
-        reject(error)
-      }
-    })
-  }
-
-  /**
-  * Deletes the review made by a user for a product
-  * @param model The model of the product to delete the review from
-  * @param user The user who made the review to delete
-  * @returns A Promise that resolves to nothing
-  */
-  deleteReview(model: string, user: User): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      try {
-        const checkProductSql = "SELECT * FROM products where model = ?"
-        db.get(checkProductSql, [model], (err: Error | null, row: any) =>{
-          if (err) {
-            reject(err)
-            return
-          }
-          if (!row) {
-            reject(new ProductNotFoundError)
-            return
-          }
-        })
-
-        const checkReviewSql = "SELECT * FROM ProductReview WHERE product_model = ? AND user = ?"
-        db.get(checkReviewSql, [model, user.username], (err: Error | null, row: any) => {
-          if (err) {
-            reject(err)
-            return
-          }
-          if (!row) {
-            reject(new NoReviewProductError)
-            return
-          }
-        })
-
-        const sql = "DELETE FROM ProductReview WHERE product_model = ? AND user = ?"
-        db.run(sql, [model, user.username], (err: Error | null) => {
-          if (err) {
-            reject(err)
-            return
-        }
-        resolve()
-        })
-      } catch(error){
-        reject(error)
-      }
-    })
-   }
-
-  /**
-  * Deletes all reviews for a product
-  * @param model The model of the product to delete the reviews from
-  * @returns A Promise that resolves to nothing
-  */
-  deleteReviewsOfProduct(model: string): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      try {
-        const checkProductSql = "SELECT * FROM products where model = ?"
-        db.get(checkProductSql, [model], (err: Error | null, row: any) =>{
-          if (err) {
-            reject(err)
-            return
-          }
-          if (!row) {
-            reject(new ProductNotFoundError)
-            return
-          }
-        })
-        
-        const sql = "DELETE FROM ProductReview WHERE product_model = ?"
-        db.run(sql, [model], (err: Error | null) => {
-          if (err) {
-            reject(err)
-            return
-          }
-          resolve()
-        })
-      } catch (error) {
-        reject(error)
-      }
-    })
-  }
-
-  /**
-  * Deletes all reviews of all products
-  * @returns A Promise that resolves to nothing
-  */
-  deleteAllReviews():Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      try {
-        const sql = "DELETE FROM ProductReview"
-        db.run(sql, (err: Error | null) => {
-          if (err) {
-            reject(err)
-          }
-          resolve()
-        })
-      } catch (error) {
-        reject(error)
-      }
-    })
-   }
+	/**
+	 * A function used to delete all the reviews either of all the products or only of
+	 * a specific one
+	 * @param model The optional parameter indicating the product model of which we want
+	 * to delete the reviews
+	 * @returns A Promise that will resolve to nothing
+	 */
+	deleteAllReviews(model: string | null): Promise<void> {
+		if (model === null) {
+			// we need to delete all reviews of all products
+			return new Promise<void>((resolve, reject) => {
+				let sql = 'DELETE FROM reviews';
+				db.run(sql, [], (err: Error | null) => {
+					if (err) {
+						console.log(err.message);
+						return reject(err);
+					}
+					resolve();
+				});
+			});
+		} else {
+			// we need to delete reviews of a specific product
+			return new Promise<void>((resolve, reject) => {
+				let sql = 'DELETE FROM reviews WHERE model = ?';
+				db.run(sql, [model], (err: Error | null) => {
+					if (err) {
+						console.log(err.message);
+						return reject(err);
+					}
+					resolve();
+				});
+			});
+		}
+	}
 }
 
 export default ReviewDAO;
