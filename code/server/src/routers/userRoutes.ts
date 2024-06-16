@@ -4,6 +4,9 @@ import { body, param } from "express-validator"
 import { User } from "../components/user"
 import ErrorHandler from "../helper"
 import UserController from "../controllers/userController"
+import { DateError } from '../utilities';
+
+
 
 /**
  * Represents a class that defines the routes for handling users.
@@ -43,6 +46,7 @@ class UserRoutes {
      */
     initRoutes() {
 
+
         /**
          * Route for creating a user.
          * It does not require authentication.
@@ -54,22 +58,24 @@ class UserRoutes {
          * - role: string (one of "Manager", "Customer", "Admin")
          * It returns a 200 status code.
          */
-
         this.router.post(
-            "/",
-            body("username").isString().isLength({ min: 1 }), //the request body must contain an attribute named "username", the attribute must be a non-empty string
-            body("surname").isString().isLength({ min: 1 }), //the request body must contain an attribute named "surname", the attribute must be a non-empty string
-            body("name").isString().isLength({ min: 1 }), //the request body must contain an attribute named "name", the attribute must be a non-empty string
-            body("password").isString().isLength({ min: 1 }), //the request body must contain an attribute named "password", the attribute must be a non-empty string
-            body("role").isString().isIn(["Manager", "Customer"]), //the request body must contain an attribute named "role", the attribute must be a string and its value must be one of the two allowed options
-            this.errorHandler.validateRequest, //middleware defined in `helper.ts`, checks the result of all the evaluations performed above and returns a 422 error if at least one fails or continues if there are no issues
-            (req: any, res: any, next: any) => this.controller.createUser(req.body.username, req.body.name, req.body.surname, req.body.password, req.body.role)
-                .then(() => res.status(200).end())
-                .catch((err) => {
-                  next(err);
-                })
-          );
-          
+			'/',
+			body('username').isString().notEmpty(),
+			body('name').isString().notEmpty(),
+			body('surname').isString().notEmpty(),
+			body('password').isString().notEmpty(),
+			body('role').isString().isIn(['Manager', 'Customer', 'Admin']),
+			this.errorHandler.validateRequest,
+			(req: any, res: any, next: any) =>
+				this.controller
+					.createUser(req.body.username, req.body.name, req.body.surname, req.body.password, req.body.role)
+					.then(() => res.status(200).end())
+					.catch(err => {
+						next(err);
+					}),
+		);
+
+
 
         /**
          * Route for retrieving all users.
@@ -77,32 +83,37 @@ class UserRoutes {
          * It returns an array of users.
          */
 
-        this.router.get(
-            "/",
-            this.authService.isLoggedIn,
-            this.authService.isAdmin,
-            (req: any, res: any, next: any) => this.controller.getUsers()
-                .then((users: any /**User[] */) => res.status(200).json(users))
-                .catch((err) => next(err))
-        )
+		this.router.get(
+			'/',
+			this.authService.isLoggedIn,
+			this.authService.isAdmin,
+			(req: any, res: any, next: any) =>
+				this.controller
+					.getUsers()
+					.then((users: User[]) => res.status(200).json(users))
+					.catch(err => next(err)),
+		);
 
 
         /**
-         * Route for retrieving all users of a specific role.
-         * It requires the user to be logged in and to be an admin.
-         * It expects the role of the users in the request parameters: the role must be one of ("Manager", "Customer", "Admin").
-         * It returns an array of users.
-         */
-        this.router.get(
-            "/roles/:role",
-            this.authService.isLoggedIn,
-            this.authService.isAdmin,
-            param("role").isString().isIn(["Manager", "Customer", "Admin"]),
-            this.errorHandler.validateRequest,
-            (req: any, res: any, next: any) => this.controller.getUsersByRole(req.params.role)
-                .then((users: any /**User[] */) => res.status(200).json(users))
-                .catch((err) => next(err))
-        )
+		 * Route for retrieving all users of a specific role.
+		 * It requires the user to be logged in and to be an admin.
+		 * It expects the role of the users in the request parameters: the role must be one of ("Manager", "Customer", "Admin").
+		 * It returns an array of users.
+		 */
+		this.router.get(
+			'/roles/:role',
+			this.authService.isLoggedIn,
+			this.authService.isAdmin,
+			param("role").isIn(['Admin', 'Manager', 'Customer']),
+			this.errorHandler.validateRequest,
+			(req: any, res: any, next: any) =>
+				this.controller
+					.getUsersByRole(req.params.role)
+					.then((users: User[]) => res.status(200).json(users))
+					.catch(err => next(err)),
+		);
+
 
 
         /**
@@ -112,14 +123,16 @@ class UserRoutes {
          * It returns the user.
          */
         this.router.get(
-            "/:username",
-            this.authService.isLoggedIn,
-            param("username").isString().isLength({ min: 1 }),
-            this.errorHandler.validateRequest,
-            (req: any, res: any, next: any) => this.controller.getUserByUsername(req.user, req.params.username)
-                .then((user: any /**User */) => res.status(200).json(user))
-                .catch((err: any) => next(err))
-        )
+			'/:username',
+			this.authService.isLoggedIn,
+			param('username').isString().notEmpty(),
+			(req: any, res: any, next: any) => {
+				this.controller
+					.getUserByUsername(req.user, req.params.username)
+					.then((user: User) => res.status(200).json(user))
+					.catch(err => next(err));
+			},
+		);
 
 
 
@@ -130,14 +143,19 @@ class UserRoutes {
          * It returns a 200 status code.
          */
         this.router.delete(
-            "/:username",
-            this.authService.isLoggedIn,
-            param("username").isString().isLength({ min: 1 }),
-            this.errorHandler.validateRequest,
-            (req: any, res: any, next: any) => this.controller.deleteUser(req.user, req.params.username)
-                .then(() => res.status(200).end())
-                .catch((err: any) => next(err))
-        )
+			'/:username',
+			this.authService.isLoggedIn,
+			param('username').isString().notEmpty(),
+			this.errorHandler.validateRequest,
+			(req: any, res: any, next: any) => {
+				this.controller
+					.deleteUser(req.user, req.params.username)
+					.then(() => res.status(200).end())
+					.catch((err: any) => next(err));
+			},
+		);
+
+
 
         /**
          * Route for deleting all users.
@@ -146,13 +164,14 @@ class UserRoutes {
          */
         this.router.delete(
             "/",
+            this.authService.isLoggedIn,
+            this.authService.isAdmin,
             (req: any, res: any, next: any) => this.controller.deleteAll()
                 .then(() => res.status(200).end())
                 .catch((err: any) => next(err))
         )
 
-        
-        
+
 
         /**
          * Route for updating the information of a user.
@@ -167,25 +186,34 @@ class UserRoutes {
          */
         this.router.patch(
             "/:username",
-            body("name").isString().notEmpty(),
-            body("surname").isString().notEmpty(),
-            body("address").isString().notEmpty(),
-            body("birthdate").isDate().notEmpty(),
-            this.errorHandler.validateRequest, 
-            async (req: any, res: any, next: any) => {
+            this.authService.isLoggedIn,
+            param('username').isString().notEmpty(),
+            body('name').isString().notEmpty(),
+            body('surname').isString().notEmpty(),
+            body('address').isString().notEmpty(),
+            body('birthdate').isDate({ format: 'YYYY-MM-DD' }).notEmpty().isBefore(new Date().toISOString().split('T')[0]).withMessage('Birthdate must be a valid date and not in the future'),
+            this.errorHandler.validateRequest,
+            (req: any, res: any, next: any) =>  {
                 try {
-                    const { name, surname, address, birthdate } = req.body;
-                    const { username } = req.params;
-                    const updatedUser = await this.controller.updateUserInfo(req.user, name, surname, address, birthdate, username);
-                    res.status(200).json(updatedUser);
-                } catch (err) {
-                    next(err);
+                    const currentUser = req.user as User;
+                    const usernameToEdit = req.params.username;
+                    if (currentUser.role !== 'Admin' && currentUser.username !== usernameToEdit) {
+                        return res.status(403).json({ error: 'Unauthorized access' });
+                    }
+                    this.controller.updateUserInfo(req.user, req.body.name, req.body.surname, req.body.address, req.body.birthdate, req.params.username)
+                    .then((user: User) => res.status(200).json(user))
+                    .catch((err: any) => next(err))
+                }
+                catch(err) {
+                    console.error(err);
+                    next(err); 
                 }
             }
-        );
-
+        )
     }
 }
+
+
 
 /**
  * Represents a class that defines the authentication routes for the application.
@@ -228,34 +256,47 @@ class AuthRoutes {
          * It returns an error if the username represents a non-existing user or if the password is incorrect.
          * It returns the logged in user.
          */
+
+
+
         this.router.post(
-            "/",
-            (req, res, next) => this.authService.login(req, res, next)
-                .then((user: User) => res.status(200).json(user))
-                .catch((err: any) => { res.status(401).json(err) })
-        )
+			'/',
+			body('username').isString().notEmpty(),
+			body('password').isString().notEmpty(),
+			this.errorHandler.validateRequest,
+			(req, res, next) =>
+				this.authService
+					.login(req, res, next)
+					.then((user: User) => res.status(200).json(user))
+					.catch((err: any) => {
+						res.status(401).json(err);
+					}),
+		);
+
+
 
         /**
          * Route for logging out the currently logged in user.
          * It expects the user to be logged in.
          * It returns a 200 status code.
          */
-        this.router.delete(
-            "/current",
-            (req, res, next) => this.authService.logout(req, res, next)
-                .then(() => res.status(200).end())
-                .catch((err: any) => next(err))
-        )
+        this.router.delete('/current', this.authService.isLoggedIn, this.errorHandler.validateRequest, (req, res, next) =>
+			this.authService
+				.logout(req, res, next)
+				.then(() => res.status(200).end())
+				.catch((err: any) => next(err)),
+		);
 
+
+        
         /**
          * Route for retrieving the currently logged in user.
          * It expects the user to be logged in.
          * It returns the logged in user.
          */
-        this.router.get(
-            "/current",
-            (req: any, res: any) => res.status(200).json(req.user)
-        )
+        this.router.get('/current', this.authService.isLoggedIn, this.errorHandler.validateRequest, (req: any, res: any) =>
+			res.status(200).json(req.user),
+		);
     }
 }
 

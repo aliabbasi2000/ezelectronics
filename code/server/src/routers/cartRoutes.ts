@@ -8,6 +8,8 @@ import { CartNotFoundError, ProductInCartError, ProductNotInCartError, WrongUser
 import { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, EmptyProductStockError, LowProductStockError } from "../errors/productError";
 
 
+
+
 /**
  * Represents a class that defines the routes for handling carts.
  */
@@ -47,43 +49,25 @@ class CartRoutes {
     initRoutes() {
 
 
-
-
         /**
          * Route for getting the cart of the logged in customer.
          * It requires the user to be logged in and to be a customer.
          * It returns the cart of the logged in customer.
          */
-        this.router.get(
-            "/",
-            (req: any, res: any, next: any) => {
-                // Check if the user is authenticated and has the role of "Customer"
-                if (!req.user) {
-                    return next(new Error('Unauthorized')); 
-                }
-                if (req.user.role !== 'Customer') {
-                    return next(new Error('Forbidden'));
-                }
-                next();
-            },
-            (req: any, res: any, next: any) => this.controller.getCart(req.user)
-                .then((cart: any /**Cart */) => {
-                    // Handle empty cart case
-                    if (!cart.products || cart.products.length === 0) {
-                        return next(new EmptyCartError());
-                    }
-                    res.status(200).json(cart);
-                })
-                .catch((err) => {
-                    if (err instanceof CartNotFoundError) {
-                        next(new CartNotFoundError());
-                    } else if (err instanceof WrongUserCartError) {
-                        next(new WrongUserCartError());
-                    } else {
-                        next(err);
-                    }
-                })
-        );
+		this.router.get(
+			'/',
+			this.authenticator.isLoggedIn,
+			this.authenticator.isCustomer,
+			(req: any, res: any, next: any) =>
+				this.controller
+					.getCart(req.user)
+					.then((cart: Cart) => {
+						res.status(200).json(cart);
+					})
+					.catch(err => {
+						next(err);
+					}),
+		);
 
 
 
@@ -95,25 +79,19 @@ class CartRoutes {
          * It returns a 200 status code if the product was added to the cart.
          */
         this.router.post(
-            "/",
-            body("model").isString().isLength({ min: 1 }),
-            this.errorHandler.validateRequest,
-            async (req: any, res: any, next: any) => {
-                try {
-                    if (!req.user || req.user.role !== 'Customer') {
-                        return next(new Error('Unauthorized or Forbidden'));
-                    }
-                    await this.controller.addToCart(req.user, req.body.model);
-                    res.status(200).end();
-                } catch (err) {
-                    if (err instanceof ProductNotFoundError || err instanceof EmptyProductStockError) {
-                        res.status(err.customCode).json({ message: err.customMessage });
-                    } else {
-                        next(err);
-                    }
-                }
-            }
-        );
+			'/',
+			this.authenticator.isLoggedIn,
+			this.authenticator.isCustomer,
+			body('model').isString().notEmpty(),
+			this.errorHandler.validateRequest,
+			(req: any, res: any, next: any) =>
+				this.controller
+					.addToCart(req.user, req.body.model)
+					.then(() => res.status(200).end())
+					.catch(err => {
+						next(err);
+					}),
+		)
 
 
 
@@ -125,25 +103,17 @@ class CartRoutes {
          * It fails if the cart is empty, there is no current cart in the database, or at least one of the products in the cart is not available in the required quantity.
          */
         this.router.patch(
-            "/",
-            this.errorHandler.validateRequest,
-            async (req: any, res: any, next: any) => {
-                try {
-                    if (!req.user || req.user.role !== 'Customer') {
-                        throw new WrongUserCartError();
-                    }
-                    await this.controller.checkoutCart(req.user);
-                    res.status(200).end();
-                } catch (err) {
-                    if (err instanceof CartNotFoundError || err instanceof EmptyCartError || err instanceof ProductNotFoundError || err instanceof EmptyProductStockError || err instanceof LowProductStockError) {
-                        res.status(err.customCode).json({ message: err.customMessage });
-                    } else {
-                        next(err);
-                    }
-                }
-            }
-        );
-
+			'/',
+			this.authenticator.isLoggedIn,
+			this.authenticator.isCustomer,
+			(req: any, res: any, next: any) =>
+				this.controller
+					.checkoutCart(req.user)
+					.then(() => res.status(200).end())
+					.catch(err => {
+						next(err);
+					}),
+		);
 
 
 
@@ -155,31 +125,15 @@ class CartRoutes {
          */
         
         this.router.get(
-            "/history",
-            this.errorHandler.validateRequest,
-            async (req: any, res: any, next: any) => {
-                try {
-                    if (!req.user || req.user.role !== 'Customer') {
-                        throw new WrongUserCartError(); 
-                    }
-
-                    const carts = await this.controller.getCustomerCarts(req.user);
-                    if (!carts.length) {
-                        throw new CartNotFoundError(); 
-                    }
-
-                    res.status(200).json(carts);
-                } catch (err) {
-                    if (err instanceof CartNotFoundError || err instanceof EmptyCartError || err instanceof WrongUserCartError) {
-                        res.status(err.customCode).json({ message: err.customMessage });
-                    } else {
-                        next(err);
-                    }
-                }
-            }
-        );
-
-
+			'/history',
+			this.authenticator.isLoggedIn,
+			this.authenticator.isCustomer,
+			(req: any, res: any, next: any) =>
+				this.controller
+					.getCustomerCarts(req.user)
+					.then((carts: Cart[]) => res.status(200).json(carts))
+					.catch(err => next(err)),
+		);
 
         
 
@@ -190,28 +144,19 @@ class CartRoutes {
          * It returns a 200 status code if the product was removed from the cart.
          */
         this.router.delete(
-            "/products/:model",
-            this.errorHandler.validateRequest,
-            async (req: any, res: any, next: any) => {
-                try {
-                    if (!req.user || req.user.role !== 'Customer') {
-                        throw new WrongUserCartError(); 
-                    }
-                    const model = req.params.model;
-                    if (!model) {
-                        throw new ProductNotFoundError();
-                    }
-                    await this.controller.removeProductFromCart(req.user, model);
-                    res.status(200).end();
-                } catch (err) {
-                    if (err instanceof CartNotFoundError || err instanceof ProductNotInCartError || err instanceof ProductNotFoundError) {
-                        res.status(err.customCode).json({ message: err.customMessage });
-                    } else {
-                        next(err);
-                    }
-                }
-            }
-        );
+			'/products/:model',
+			this.authenticator.isLoggedIn,
+			this.authenticator.isCustomer,
+			param('model').isString().notEmpty(),
+			this.errorHandler.validateRequest,
+			(req: any, res: any, next: any) =>
+				this.controller
+					.removeProductFromCart(req.user, req.params.model)
+					.then(() => res.status(200).end())
+					.catch(err => {
+						next(err);
+					}),
+		);
 
 
 
@@ -222,24 +167,15 @@ class CartRoutes {
          * It returns a 200 status code if the products were removed from the cart.
          */
         this.router.delete(
-            "/current",
-            this.errorHandler.validateRequest,
-            async (req: any, res: any, next: any) => {
-                try {
-                    if (!req.user || req.user.role !== 'Customer') {
-                        throw new WrongUserCartError(); 
-                    }
-                    await this.controller.clearCart(req.user);
-                    res.status(200).end();
-                } catch (err) {
-                    if (err instanceof CartNotFoundError) {
-                        res.status(err.customCode).json({ message: err.customMessage });
-                    } else {
-                        next(err);
-                    }
-                }
-            }
-        );
+			'/current',
+			this.authenticator.isLoggedIn,
+			this.authenticator.isCustomer,
+			(req: any, res: any, next: any) =>
+				this.controller
+					.clearCart(req.user)
+					.then(() => res.status(200).end())
+					.catch(err => next(err)),
+		);
 
 
 
@@ -249,24 +185,15 @@ class CartRoutes {
          * It returns a 200 status code.
          */
         this.router.delete(
-            "/",
-            this.errorHandler.validateRequest,
-            async (req: any, res: any, next: any) => {
-                try {
-                    if (!req.user || (req.user.role !== 'Admin' && req.user.role !== 'Manager')) {
-                        throw new WrongUserCartError(); 
-                    }
-                    await this.controller.deleteAllCarts();
-                    res.status(200).end();
-                } catch (err) {
-                    if (err instanceof WrongUserCartError) {
-                        res.status(err.customCode).json({ message: err.customMessage });
-                    } else {
-                        next(err);
-                    }
-                }
-            }
-        );
+			'/',
+			this.authenticator.isLoggedIn,
+			this.authenticator.isAdminOrManager,
+			(req: any, res: any, next: any) =>
+				this.controller
+					.deleteAllCarts()
+					.then(() => res.status(200).end())
+					.catch((err: any) => next(err)),
+		);
 
 
 
@@ -277,24 +204,17 @@ class CartRoutes {
          * It returns an array of carts.
          */
         this.router.get(
-            "/all",
-            this.errorHandler.validateRequest,
-            async (req: any, res: any, next: any) => {
-                try {
-                    if (!req.user || (req.user.role !== 'Admin' && req.user.role !== 'Manager')) {
-                        throw new WrongUserCartError(); 
-                    }
-                    const carts = await this.controller.getAllCarts();
-                    res.status(200).json(carts);
-                } catch (err) {
-                    if (err instanceof WrongUserCartError) {
-                        res.status(err.customCode).json({ message: err.customMessage });
-                    } else {
-                        next(err);
-                    }
-                }
-            }
-        );
+			'/all',
+			this.authenticator.isLoggedIn,
+			this.authenticator.isAdminOrManager,
+			(req: any, res: any, next: any) =>
+				this.controller
+					.getAllCarts()
+					.then((carts: Cart[]) => res.status(200).json(carts))
+					.catch((err: any) => next(err)),
+		);
+
+
 
 
     }
