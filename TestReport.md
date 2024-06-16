@@ -60,15 +60,15 @@ We used a bottom-up approach in our method. Initially, we tested the three diffe
 | :------------------------------------------------------------: | :-----: |
 |                                                                |         |
 |                             USER                               |         |
-|                           Create User                          |         |
-|                             Login                              |         |
-|                             Logout                             |         |
-|                   Show the list of all users                   |         |
-|        Show the list of all users with a specific role         |         |
-|             Show the information of a single user              |         |
-|            Update the information of a single user             |         |
-|                 Delete a single non Admin user                 |         |
-|                   Delete all non Admin users                   |         |
+|                           Create User                          |   4     |
+|                             Login                              |    2    |
+|                             Logout                             |     2   |
+|                   Show the list of all users                   |      6  |
+|        Show the list of all users with a specific role         |     6   |
+|             Show the information of a single user              |      8  |
+|            Update the information of a single user             |      10 |
+|                 Delete a single non Admin user                 |    6    |
+|                   Delete all non Admin users                   |     4   |
 |                                                                |         |
 |                          PRODUCT                               |         |
 |                 Register a set of new products                 |    9    |
@@ -76,10 +76,10 @@ We used a bottom-up approach in our method. Initially, we tested the three diffe
 |                         Sell a product                         |    6    |
 |                 Show the list of all products                  |    10   |
 |            Show the list of all available products             |    11   |
-|      Show the list of all products with the same category      |         |
-| Show the list of all available products with the samSe category |         |
-|       Show the list of all products with the same model        |         |
-|  Show the list of all available products with the same model   |         |
+|      Show the list of all products with the same category      |    3    |
+| Show the list of all available products with the samSe category|  3      |
+|       Show the list of all products with the same model        |    5    |
+|  Show the list of all available products with the same model   |     3   |
 |                        Delete a product                        |    7    |
 |                      Delete all products                       |    9    |
 |                                                                |         |
