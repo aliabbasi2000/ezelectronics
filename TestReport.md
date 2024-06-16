@@ -70,17 +70,17 @@ We used a bottom-up approach in our method. Initially, we tested the three diffe
 |                   Delete all non Admin users                   |         |
 |                                                                |         |
 |                          PRODUCT                               |         |
-|                 Register a set of new products                 |         |
-|                Update the quantity of a product                |         |
-|                         Sell a product                         |         |
-|                 Show the list of all products                  |         |
-|            Show the list of all available products             |         |
+|                 Register a set of new products                 |    9    |
+|                Update the quantity of a product                |    9    |
+|                         Sell a product                         |    6    |
+|                 Show the list of all products                  |    10   |
+|            Show the list of all available products             |    11   |
 |      Show the list of all products with the same category      |         |
 | Show the list of all available products with the same category |         |
 |       Show the list of all products with the same model        |         |
 |  Show the list of all available products with the same model   |         |
-|                        Delete a product                        |         |
-|                      Delete all products                       |         |
+|                        Delete a product                        |    7    |
+|                      Delete all products                       |    9    |
 |                                                                |         |
 |                           REVIEW                               |         |
 |                 Add a new review to a product                  |         |
