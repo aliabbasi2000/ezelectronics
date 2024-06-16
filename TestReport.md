@@ -60,14 +60,15 @@ We used a bottom-up approach in our method. Initially, we tested the three diffe
 | :------------------------------------------------------------: | :-----: |
 |                                                                |         |
 |                             USER                               |         |
-|                             Login                              |         |
-|                             Logout                             |         |
-|                   Show the list of all users                   |         |
-|        Show the list of all users with a specific role         |         |
-|             Show the information of a single user              |         |
-|            Update the information of a single user             |         |
-|                 Delete a single non Admin user                 |         |
-|                   Delete all non Admin users                   |         |
+|                           Create User                          |    4    |
+|                             Login                              |    5    |
+|                             Logout                             |    2    |
+|                   Show the list of all users                   |    6    |
+|        Show the list of all users with a specific role         |    7    |
+|             Show the information of a single user              |    8    |
+|            Update the information of a single user             |   10    |
+|                 Delete a single non Admin user                 |   5     |
+|                   Delete all non Admin users                   |    5    |
 |                                                                |         |
 |                          PRODUCT                               |         |
 |                 Register a set of new products                 |    9    |
@@ -83,11 +84,11 @@ We used a bottom-up approach in our method. Initially, we tested the three diffe
 |                      Delete all products                       |    9    |
 |                                                                |         |
 |                           REVIEW                               |         |
-|                 Add a new review to a product                  |         |
-|       Get the list of all reviews assigned to a product        |         |
-|               Delete a review given to a product               |         |
-|                Delete all reviews of a product                 |         |
-|               Delete all reviews of all products               |         |
+|                 Add a new review to a product                  |    -     |
+|       Get the list of all reviews assigned to a product        |    -     |
+|               Delete a review given to a product               |    -     |
+|                Delete all reviews of a product                 |    -     |
+|               Delete all reviews of all products               |    -     |
 |                                                                |         |
 |                             CART                               |         |
 |            Show the information of the current cart            |         |
