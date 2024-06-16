@@ -60,15 +60,15 @@ We used a bottom-up approach in our method. Initially, we tested the three diffe
 | :------------------------------------------------------------: | :-----: |
 |                                                                |         |
 |                             USER                               |         |
-|                           Create User                          |    4    |
-|                             Login                              |    5    |
-|                             Logout                             |    2    |
-|                   Show the list of all users                   |    6    |
-|        Show the list of all users with a specific role         |    7    |
-|             Show the information of a single user              |    8    |
-|            Update the information of a single user             |   10    |
-|                 Delete a single non Admin user                 |   5     |
-|                   Delete all non Admin users                   |    5    |
+|                           Create User                          |         |
+|                             Login                              |         |
+|                             Logout                             |         |
+|                   Show the list of all users                   |         |
+|        Show the list of all users with a specific role         |         |
+|             Show the information of a single user              |         |
+|            Update the information of a single user             |         |
+|                 Delete a single non Admin user                 |         |
+|                   Delete all non Admin users                   |         |
 |                                                                |         |
 |                          PRODUCT                               |         |
 |                 Register a set of new products                 |    9    |
@@ -77,7 +77,7 @@ We used a bottom-up approach in our method. Initially, we tested the three diffe
 |                 Show the list of all products                  |    10   |
 |            Show the list of all available products             |    11   |
 |      Show the list of all products with the same category      |         |
-| Show the list of all available products with the same category |         |
+| Show the list of all available products with the samSe category |         |
 |       Show the list of all products with the same model        |         |
 |  Show the list of all available products with the same model   |         |
 |                        Delete a product                        |    7    |
@@ -91,14 +91,14 @@ We used a bottom-up approach in our method. Initially, we tested the three diffe
 |               Delete all reviews of all products               |    -     |
 |                                                                |         |
 |                             CART                               |         |
-|            Show the information of the current cart            |         |
-|               Add a product to the current cart                |         |
-|                   Checkout the current cart                    |         |
-|               Show the history of the paid carts               |         |
-|             Remove a product from the current cart             |         |
-|                    Delete the current cart                     |         |
-|             See the list of all carts of all users             |         |
-|                        Delete all carts                        |         |
+|            Show the information of the current cart            |    5     |
+|               Add a product to the current cart                |    10     |
+|                   Checkout the current cart                    |    10     |
+|               Show the history of the paid carts               |     5    |
+|             Remove a product from the current cart             |    7     |
+|                    Delete the current cart                     |    5     |
+|             See the list of all carts of all users             |     6    |
+|                        Delete all carts                        |     6    |
 |                                                                |         |
 |                                                                |         |
 
