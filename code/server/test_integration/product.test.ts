@@ -7,18 +7,15 @@ const routePath = "/ezelectronics";
 
 
 
-//Default user information. We use them to create users and evaluate the returned values
 const customer = { username: "customer", name: "customer", surname: "customer", password: "customer", role: "Customer" }
 const admin = { username: "admin", name: "admin", surname: "admin", password: "admin", role: "Admin" }
 const manager = { username: "manager", name: "manager", surname: "manager", password: "manager", role: "Manager" }
-//Cookies for the users. We use them to keep users logged in. Creating them once and saving them in a variables outside of the tests will make cookies reusable
+
 let customerCookie: string
 let adminCookie: string
 let managerCookie: string
 
-//Helper function that creates a new user in the database.
-//Can be used to create a user before the tests or in the tests
-//Is an implicit test because it checks if the return code is successful
+
 const postUser = async (userInfo: any) => {
     await request(app)
         .post(routePath+'/users')
@@ -26,8 +23,7 @@ const postUser = async (userInfo: any) => {
         .expect(200)
 }
 
-//Helper function that logs in a user and returns the cookie
-//Can be used to log in a user before the tests or in the tests
+
 const login = async (userInfo: any) => {
     return new Promise<string>((resolve, reject) => {
         request(app)
@@ -43,7 +39,7 @@ const login = async (userInfo: any) => {
     })
 }
 
-//Before executing tests, we remove everything from our test database, create an Admin user and log in as Admin, saving the cookie in the corresponding variable
+
 beforeAll(async () => {
     cleanup()
     await postUser(admin)
@@ -54,7 +50,7 @@ beforeAll(async () => {
     managerCookie = await login(manager)
 })
 
-//After executing tests, we remove everything from our test database
+
 afterAll(() => {
     cleanup()
 })
@@ -70,7 +66,6 @@ describe("Product routes integration tests", () => {
 
     describe("POST /products", () => {
         test("It should return a 401 error code Unautgorized", async () => {    
-            // product with invalid date
             await request(app)
             .post(routePath+'/products')
             .send(product1)
@@ -93,7 +88,6 @@ describe("Product routes integration tests", () => {
         })
 
         test("It should return a 422 error code as the date is invalid", async () => {    
-            // product with invalid date
             await request(app)
             .post(routePath+'/products')
             .send(product3)
@@ -233,7 +227,6 @@ describe("Product routes integration tests", () => {
             let product = await request(app)
             .get(routePath+'/products')
             .set("Cookie", adminCookie)
-            //Either category or model has to be defined, not both
             .query({grouping: "model", category:"Smartphone"})
             .expect(422)
         })
@@ -242,7 +235,6 @@ describe("Product routes integration tests", () => {
             let product = await request(app)
             .get(routePath+'/products')
             .set("Cookie", adminCookie)
-            //Either category or model has to be defined, not both
             .query({grouping: "category", category:"bad"})
             .expect(422)
         })
@@ -251,7 +243,6 @@ describe("Product routes integration tests", () => {
             let product = await request(app)
             .get(routePath+'/products')
             .set("Cookie", adminCookie)
-            //Either category or model has to be defined, not both
             .query({grouping: "category", model:"product1"})
             .expect(422)
         })
@@ -260,7 +251,6 @@ describe("Product routes integration tests", () => {
             let product = await request(app)
             .get(routePath+'/products')
             .set("Cookie", adminCookie)
-            //Either category or model has to be defined, not both
             .query({grouping: "model", model:" "})
             .expect(422)
         })
@@ -310,7 +300,6 @@ describe("Product routes integration tests", () => {
             let product = await request(app)
             .get(routePath+'/products/available')
             .set("Cookie", adminCookie)
-            //Either category or model has to be defined, not both
             .query({grouping: "model", category:"Smartphone"})
             .expect(422)
         })
@@ -319,7 +308,6 @@ describe("Product routes integration tests", () => {
             let product = await request(app)
             .get(routePath+'/products/available')
             .set("Cookie", adminCookie)
-            //Either category or model has to be defined, not both
             .query({grouping: "category", category:"bad"})
             .expect(422)
         })
@@ -328,7 +316,6 @@ describe("Product routes integration tests", () => {
             let product = await request(app)
             .get(routePath+'/products/available')
             .set("Cookie", adminCookie)
-            //Either category or model has to be defined, not both
             .query({grouping: "category", model:"product1"})
             .expect(422)
         })
@@ -337,7 +324,6 @@ describe("Product routes integration tests", () => {
             let product = await request(app)
             .get(routePath+'/products/available')
             .set("Cookie", adminCookie)
-            //Either category or model has to be defined, not both
             .query({grouping: "model", model:" "})
             .expect(422)
         })
