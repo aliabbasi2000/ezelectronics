@@ -47,6 +47,7 @@ We used a bottom-up approach in our method. Initially, we tested the three diffe
 |  integration/user   |      User routes / controller / DOA      | Integration | Equivalence classes partitioning |
 | integration/product | Product & User routes / controller / DOA | Integration | Equivalence classes partitioning |
 |  integration/cart   |  Cart & User routes / controller / DOA   | Integration | Equivalence classes partitioning |
+| integration/review  | -  | - | - |
 
 # Coverage
 
@@ -54,11 +55,51 @@ We used a bottom-up approach in our method. Initially, we tested the three diffe
 
 <Report in the following table the coverage of functional requirements and scenarios(from official requirements) >
 
-| Functional Requirement or scenario | Test(s) |
-| :--------------------------------: | :-----: |
-|                FRx                 |         |
-|                FRy                 |         |
-|                ...                 |         |
+
+|               Functional Requirement or scenario               | Test(s) |
+| :------------------------------------------------------------: | :-----: |
+|                                                                |         |
+|                             USER                               |         |
+|                             Login                              |         |
+|                             Logout                             |         |
+|                   Show the list of all users                   |         |
+|        Show the list of all users with a specific role         |         |
+|             Show the information of a single user              |         |
+|            Update the information of a single user             |         |
+|                 Delete a single non Admin user                 |         |
+|                   Delete all non Admin users                   |         |
+|                                                                |         |
+|                          PRODUCT                               |         |
+|                 Register a set of new products                 |         |
+|                Update the quantity of a product                |         |
+|                         Sell a product                         |         |
+|                 Show the list of all products                  |         |
+|            Show the list of all available products             |         |
+|      Show the list of all products with the same category      |         |
+| Show the list of all available products with the same category |         |
+|       Show the list of all products with the same model        |         |
+|  Show the list of all available products with the same model   |         |
+|                        Delete a product                        |         |
+|                      Delete all products                       |         |
+|                                                                |         |
+|                           REVIEW                               |         |
+|                 Add a new review to a product                  |         |
+|       Get the list of all reviews assigned to a product        |         |
+|               Delete a review given to a product               |         |
+|                Delete all reviews of a product                 |         |
+|               Delete all reviews of all products               |         |
+|                                                                |         |
+|                             CART                               |         |
+|            Show the information of the current cart            |         |
+|               Add a product to the current cart                |         |
+|                   Checkout the current cart                    |         |
+|               Show the history of the paid carts               |         |
+|             Remove a product from the current cart             |         |
+|                    Delete the current cart                     |         |
+|             See the list of all carts of all users             |         |
+|                        Delete all carts                        |         |
+|                                                                |         |
+|                                                                |         |
 
 ## Coverage white box
 
