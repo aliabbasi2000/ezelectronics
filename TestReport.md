@@ -103,4 +103,4 @@ We used a bottom-up approach in our method. Initially, we tested the three diffe
 
 ## Coverage white box
 
-Report here the screenshot of coverage values obtained with jest-- coverage
+![Coverage](./diagrams/test/coverage.png)
