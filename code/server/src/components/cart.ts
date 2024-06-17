@@ -4,6 +4,7 @@ import { Category } from "./product"
  * Represents a shopping cart.
  */
 class Cart {
+    id: number
     customer: string
     paid: boolean
     paymentDate: string
@@ -31,7 +32,7 @@ class Cart {
  * Represents a product in a shopping cart.
  */
 class ProductInCart {
-    model: string
+    product_model: string
     quantity: number
     category: Category
     price: number
@@ -44,7 +45,7 @@ class ProductInCart {
      * @param price - The price of a single product unit.
      */
     constructor(model: string, quantity: number, category: Category, price: number) {
-        this.model = model
+        this.product_model = model
         this.quantity = quantity
         this.category = category
         this.price = price

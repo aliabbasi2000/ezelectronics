@@ -1,9 +1,10 @@
 import express, { Router } from "express"
 import ErrorHandler from "../helper"
-import { body, param, query } from "express-validator"
+import { body, oneOf, param, query } from "express-validator"
 import ProductController from "../controllers/productController"
 import Authenticator from "./auth"
 import { Product } from "../components/product"
+
 
 /**
  * Represents a class that defines the routes for handling proposals.
@@ -46,9 +47,9 @@ class ProductRoutes {
 
         /**
          * Route for registering the arrival of a set of products.
-         * It requires the user to be logged in and to be either an admin or a manager.
+         * It requires the user to be logged in and to be a manager.
          * It requires the following parameters:
-         * - model: string. It cannot be empty and it cannot be repeated in the database.
+         * - model: string. It cannot be empty, and it cannot be repeated in the database.
          * - category: string (one of "Smartphone", "Laptop", "Appliance")
          * - quantity: number. It must be greater than 0.
          * - details: string. It can be empty.
@@ -58,14 +59,27 @@ class ProductRoutes {
          */
         this.router.post(
             "/",
+            body("model").isString().isLength({ min: 1 }),
+            body("category").isString().isIn(["Smartphone", "Laptop", "Appliance"]),
+            body("quantity").isInt({gt: 0}),
+            body("details").isString(),
+            body("sellingPrice").isFloat({gt: 0}),
+            oneOf([
+                body("arrivalDate").isEmpty(),
+                body("arrivalDate").isDate().not().isAfter({comparisonDate: Date.now().toString()})
+            ]),
+            this.authenticator.isLoggedIn,
+            this.authenticator.isManager,
+            this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.registerProducts(req.body.model, req.body.category, req.body.quantity, req.body.details, req.body.sellingPrice, req.body.arrivalDate)
                 .then(() => res.status(200).end())
                 .catch((err) => next(err))
         )
 
+
         /**
          * Route for registering the increase in quantity of a product.
-         * It requires the user to be logged in and to be either an admin or a manager.
+         * It requires the user to be logged in and to be a manager.
          * It requires the product model as a request parameter. The model must be a string and cannot be empty, and it must represent an existing product.
          * It requires the following body parameters:
          * - quantity: number. It must be greater than 0. This number represents the increase in quantity, to be added to the existing quantity.
@@ -74,14 +88,24 @@ class ProductRoutes {
          */
         this.router.patch(
             "/:model",
+            param("model").isString().isLength({ min: 1 }),
+            body("quantity").isInt({gt: 0}),
+            oneOf([
+                body("arrivalDate").isEmpty(),
+                body("arrivalDate").isDate().not().isAfter({comparisonDate: Date.now().toString()})
+            ]),
+            this.authenticator.isLoggedIn,
+            this.authenticator.isManager,
+            this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.changeProductQuantity(req.params.model, req.body.quantity, req.body.changeDate)
                 .then((quantity: any /**number */) => res.status(200).json({ quantity: quantity }))
                 .catch((err) => next(err))
         )
 
+
         /**
          * Route for selling a product.
-         * It requires the user to be logged in and to be either an admin or a manager.
+         * It requires the user to be logged in and to be a manager.
          * It requires the product model as a request parameter. The model must be a string and cannot be empty, and it must represent an existing product.
          * It requires the following body parameters:
          * - quantity: number. It must be greater than 0. This number represents the quantity of units sold. It must be less than or equal to the available quantity of the product.
@@ -90,8 +114,17 @@ class ProductRoutes {
          */
         this.router.patch(
             "/:model/sell",
+            param("model").isString().isLength({ min: 1 }),
+            body("quantity").isInt({gt: 0}),
+            oneOf([
+                body("sellingDate").isEmpty(),
+                body("sellingDate").isDate().not().isAfter({comparisonDate: Date.now().toString()})
+            ]),
+            this.authenticator.isLoggedIn,
+            this.authenticator.isManager,
+            this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.sellProduct(req.params.model, req.body.quantity, req.body.sellingDate)
-                .then((quantity: any /**number */) => res.status(200).json({ quantity: quantity }))
+                .then((quantity: number /**number */) => res.status(200).json({ quantity: quantity }))
                 .catch((err) => {
                     console.log(err)
                     next(err)
@@ -109,8 +142,16 @@ class ProductRoutes {
          */
         this.router.get(
             "/",
+            oneOf([
+                query("category").isString().isIn(["Smartphone", "Laptop", "Appliance"]).if(query("grouping").isString().equals("category")),
+                query("model").isString().notEmpty().if(query("grouping").isString().equals("model")),
+                query("model").not().exists().if(query("category").not().exists()).if(query("grouping").not().exists())
+            ]),
+            this.authenticator.isLoggedIn,
+            this.authenticator.isAdminOrManager,
+            this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.getProducts(req.query.grouping, req.query.category, req.query.model)
-                .then((products: any /*Product[]*/) => res.status(200).json(products))
+                .then((products: Product[]) => res.status(200).json(products))
                 .catch((err) => {
                     console.log(err)
                     next(err)
@@ -119,7 +160,7 @@ class ProductRoutes {
 
         /**
          * Route for retrieving all available products.
-         * It requires the user to be logged in.
+         * It requires the user to be logged in and to be a customer.
          * It can have the following optional query parameters:
          * - grouping: string. It can be either "category" or "model". If absent, then all products are returned and the other query parameters must also be absent.
          * - category: string. It can only be present if grouping is equal to "category" (in which case it must be present) and, when present, it must be one of "Smartphone", "Laptop", "Appliance".
@@ -128,8 +169,16 @@ class ProductRoutes {
          */
         this.router.get(
             "/available",
+            oneOf([
+                query("category").isString().isIn(["Smartphone", "Laptop", "Appliance"]).if(query("grouping").isString().equals("category")),
+                query("model").isString().notEmpty().if(query("grouping").isString().equals("model")),
+                query("model").not().exists().if(query("category").not().exists()).if(query("grouping").not().exists())
+            ]),
+            this.authenticator.isLoggedIn,
+            this.authenticator.isCustomer,
+            this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.getAvailableProducts(req.query.grouping, req.query.category, req.query.model)
-                .then((products: any/*Product[]*/) => res.status(200).json(products))
+                .then((products: Product[]) => res.status(200).json(products))
                 .catch((err) => next(err))
         )
 
@@ -140,7 +189,10 @@ class ProductRoutes {
          */
         this.router.delete(
             "/",
-            (req: any, res: any, next: any) => this.controller.deleteAllProducts()
+            this.authenticator.isLoggedIn,
+            this.authenticator.isAdminOrManager,
+            this.errorHandler.validateRequest,
+            (_req: any, res: any, next: any) => this.controller.deleteAllProducts()
                 .then(() => res.status(200).end())
                 .catch((err: any) => next(err))
         )
@@ -153,13 +205,22 @@ class ProductRoutes {
          */
         this.router.delete(
             "/:model",
+            param("model").isString().isLength({ min: 1 }),
+            this.authenticator.isLoggedIn,
+            this.authenticator.isAdminOrManager,
+            this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.deleteProduct(req.params.model)
                 .then(() => res.status(200).end())
-                .catch((err: any) => next(err))
+                .catch((err: any) => {
+                    next(err)
+                })
         )
-
-
     }
+    
 }
+
+
+    
+
 
 export default ProductRoutes
