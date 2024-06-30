@@ -105,3 +105,9 @@ We used a bottom-up approach in our method. Initially, we tested the three diffe
 ## Coverage white box
 
 ![Coverage](./diagrams/test/coverage.png)
+
+
+
+- Our test results on Official Tests after improvements:
+
+![FinalCoverage](./diagrams/test/finalcoverage.png)
