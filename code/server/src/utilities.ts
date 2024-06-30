@@ -1,5 +1,6 @@
 import { User, Role } from "./components/user"
 const DATE_ERROR = "Input date is not compatible with the current date"
+const Future_DATE_ERROR = "The date is in the future"
 
 /**
  * Represents a utility class.
@@ -39,4 +40,16 @@ class DateError extends Error {
     }
 }
 
-export { Utility, DateError }
+class FutureDateError extends Error {
+    customMessage: string
+    customCode: number
+
+    constructor() {
+        super()
+        this.customMessage = Future_DATE_ERROR
+        this.customCode = 400
+    }
+}
+
+
+export { Utility, DateError, FutureDateError }
